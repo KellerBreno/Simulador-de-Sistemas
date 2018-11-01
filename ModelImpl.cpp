@@ -2,6 +2,7 @@
 // Created by brenokeller on 10/31/18.
 //
 
+#include <iostream>
 #include "ModelImpl.h"
 
 ModelImpl::ModelImpl(const string &name) : name(name) {}
@@ -15,15 +16,19 @@ void ModelImpl::simulate(int initialTime, int endTime) {
 
 void ModelImpl::simulate(int initialTime, int endTime, int step) {
     double values[flows.size()];
-    for (int time = initialTime; time <= endTime; time += step) {
-        for (int i = 0; i <= flows.size(); ++i) {
+    for (int time = initialTime; time < endTime; time += step) {
+        for (int i = 0; i < flows.size(); i++) {
             values[i] = flows[i]->execute();
         }
-        for (int i = 0; i <= flows.size(); ++i) {
+        for (int i = 0; i < flows.size(); i++) {
             System *source = flows[i]->getSource();
             System *target = flows[i]->getTarget();
-            source->setValue(source->getValue() - values[i]);
-            target->setValue(target->getValue() - values[i]);
+            if (source != nullptr) {
+                source->setValue(source->getValue() - values[i]);
+            }
+            if (target != nullptr) {
+                target->setValue(target->getValue() + values[i]);
+            }
         }
     }
 }

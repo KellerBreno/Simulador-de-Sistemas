@@ -4,7 +4,7 @@
 
 #include "FlowExp.h"
 
-FlowExp::FlowExp(const string &name) : name(name), source(nullptr), target(nullptr) {}
+FlowExp::FlowExp(const string &name, double taxa) : name(name), taxa(taxa), source(nullptr), target(nullptr) {}
 
 FlowExp::~FlowExp() {
 
@@ -13,9 +13,8 @@ FlowExp::~FlowExp() {
 double FlowExp::execute() {
     if (source == nullptr) {
         return 0;
-    } else {
-        return 0.3 * source->getValue();
     }
+    return taxa * source->getValue();
 }
 
 System *FlowExp::getSource() {

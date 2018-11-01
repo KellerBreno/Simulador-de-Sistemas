@@ -3,90 +3,128 @@
 #include "FlowExp.h"
 #include "ModelImpl.h"
 #include "SystemImpl.h"
+#include "FlowLog.h"
 
-// Fluxo Sozinho
-void testeFuncional1() {
-    Flow *flow = new FlowExp("flowExp");
-    Model *model = new ModelImpl("model");
-    model->add(flow);
-    model->simulate(0, 10);
+// Modelo "exponencial"
+void testVensim1() {
+    System *p1 = new SystemImpl("pop1", 100);
+    System *p2 = new SystemImpl("pop2", 0);
 
-    delete flow;
-    delete model;
+    Flow *exp = new FlowExp("exp", 0.01);
+    exp->setSource(p1);
+    exp->setTarget(p2);
+
+    Model *m = new ModelImpl("exponencial");
+    m->add(p1);
+    m->add(p2);
+    m->add(exp);
+
+    m->simulate(0, 100);
+
+    assert(p1->getValue() - 36.6032 < 0.0001);
+    assert(p2->getValue() - 63.3968 < 0.0001);
+
+    delete p1;
+    delete p2;
+    delete exp;
+    delete m;
 }
 
-// Fluxo sem destino
-void testeFuncional2() {
-    Flow *flow = new FlowExp("flowExp");
-    System *source = new SystemImpl("source", 100);
-    Model *model = new ModelImpl("model");
+// Modelo "logistico"
+void testVensim2() {
+    System *p1 = new SystemImpl("pop1", 100);
+    System *p2 = new SystemImpl("pop2", 10);
 
-    flow->setSource(source);
+    Flow *log = new FlowLog("log");
+    log->setSource(p1);
+    log->setTarget(p2);
 
-    model->add(source);
-    model->add(flow);
-    model->simulate(0, 10);
+    Model *m = new ModelImpl("logistico");
+    m->add(p1);
+    m->add(p2);
+    m->add(log);
 
-    assert(source->getValue() - 50 > 0.001);
+    m->simulate(0, 100);
 
-    delete flow;
-    delete source;
-    delete model;
+    assert(p1->getValue() - 88.2167 < 0.0001);
+    assert(p2->getValue() - 21.7834 < 0.0001);
+
+    delete p1;
+    delete p2;
+    delete log;
+    delete m;
 }
 
-// Fluxo sem origem
-void testeFuncional3() {
-    Flow *flow = new FlowExp("flowExp");
-    System *target = new SystemImpl("target", 0);
-    Model *model = new ModelImpl("model");
+// Sistema "complexo"
+void testVensim3() {
+    System *q1 = new SystemImpl("Q1", 100);
+    System *q2 = new SystemImpl("Q2", 0);
+    System *q3 = new SystemImpl("Q3", 100);
+    System *q4 = new SystemImpl("Q4", 0);
+    System *q5 = new SystemImpl("Q5", 0);
 
-    flow->setTarget(target);
+    Flow *f = new FlowExp("f", 0.01);
+    f->setSource(q1);
+    f->setTarget(q2);
 
-    model->add(target);
-    model->add(flow);
-    model->simulate(0, 10);
+    Flow *g = new FlowExp("g", 0.01);
+    g->setSource(q1);
+    g->setTarget(q3);
 
-    assert(target->getValue() - 50 > 0.001);
+    Flow *u = new FlowExp("u", 0.01);
+    u->setSource(q3);
+    u->setTarget(q4);
 
-    delete flow;
-    delete target;
-    delete model;
-}
+    Flow *v = new FlowExp("v", 0.01);
+    v->setSource(q4);
+    v->setTarget(q1);
 
-// Fluxo com origem e destino
-void testeFuncional4() {
-    Flow *flow = new FlowExp("flowExp");
-    System *source = new SystemImpl("source", 50);
-    System *target = new SystemImpl("target", 0);
-    Model *model = new ModelImpl("model");
+    Flow *r = new FlowExp("r", 0.01);
+    r->setSource(q2);
+    r->setTarget(q5);
 
-    flow->setSource(source);
-    flow->setTarget(target);
+    Flow *t = new FlowExp("t", 0.01);
+    t->setSource(q2);
+    t->setTarget(q3);
 
-    model->add(source);
-    model->add(target);
-    model->add(flow);
-    model->simulate(0, 10);
+    Model *m = new ModelImpl("complexo");
+    m->add(q1);
+    m->add(q2);
+    m->add(q3);
+    m->add(q4);
+    m->add(q5);
+    m->add(f);
+    m->add(g);
+    m->add(u);
+    m->add(v);
+    m->add(r);
+    m->add(t);
 
-    assert(source->getValue() - 50 > 0.001);
-    assert(target->getValue() - 50 > 0.001);
+    m->simulate(0, 100);
 
-    delete flow;
-    delete source;
-    delete target;
-    delete model;
-}
+    assert(q1->getValue() - 31.8513 < 0.0001);
+    assert(q2->getValue() - 18.4003 < 0.0001);
+    assert(q3->getValue() - 77.1143 < 0.0001);
+    assert(q4->getValue() - 56.1728 < 0.0001);
+    assert(q5->getValue() - 16.4612 < 0.0001);
 
-// Multiplos fluxos
-void testeFuncional5() {
-
+    delete q1;
+    delete q2;
+    delete q3;
+    delete q4;
+    delete q5;
+    delete f;
+    delete g;
+    delete u;
+    delete v;
+    delete r;
+    delete t;
+    delete m;
 }
 
 int main() {
-    testeFuncional1();
-    testeFuncional2();
-    testeFuncional3();
-    testeFuncional4();
-    testeFuncional5();
+    testVensim1();
+    testVensim2();
+    testVensim3();
     return 0;
 }

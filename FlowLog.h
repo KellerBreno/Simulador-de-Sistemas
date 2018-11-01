@@ -1,26 +1,21 @@
 //
-// Created by brenokeller on 10/31/18.
+// Created by brenokeller on 11/1/18.
 //
 
-#ifndef SIMULADOR_FLOWEXP_H
-#define SIMULADOR_FLOWEXP_H
+#ifndef SIMULADOR_FLOWLOG_H
+#define SIMULADOR_FLOWLOG_H
 
 #include "Flow.h"
 
-using namespace std;
-
-class FlowExp : public Flow {
+class FlowLog : public Flow{
 
 private:
+    string name;
     System *source;
     System *target;
-    string name;
-    double taxa;
 
 public:
-    FlowExp(const string &name, double taxa);
-
-    virtual ~FlowExp();
+    FlowLog(const string &name);
 
     double execute() override;
 
@@ -38,4 +33,4 @@ public:
 };
 
 
-#endif //SIMULADOR_FLOWEXP_H
+#endif //SIMULADOR_FLOWLOG_H
