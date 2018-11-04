@@ -26,9 +26,9 @@ public:
 
     void simulate(int initialTime, int endTime, int step) override;
 
-    bool add(Flow *f) override;
+    void add(Flow *f) override;
 
-    bool add(System *s) override;
+    void add(System *s) override;
 
     Flow *getFlow(string name) override;
 

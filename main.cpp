@@ -7,6 +7,8 @@
 
 // Modelo "exponencial"
 void testVensim1() {
+    cout << "Teste Vensim 1: ";
+
     System *p1 = new SystemImpl("pop1", 100);
     System *p2 = new SystemImpl("pop2", 0);
 
@@ -24,14 +26,15 @@ void testVensim1() {
     assert(p1->getValue() - 36.6032 < 0.0001);
     assert(p2->getValue() - 63.3968 < 0.0001);
 
-    delete p1;
-    delete p2;
-    delete exp;
     delete m;
+
+    cout << "OK" << endl;
 }
 
 // Modelo "logistico"
 void testVensim2() {
+    cout << "Teste Vensim 2: ";
+
     System *p1 = new SystemImpl("pop1", 100);
     System *p2 = new SystemImpl("pop2", 10);
 
@@ -49,14 +52,15 @@ void testVensim2() {
     assert(p1->getValue() - 88.2167 < 0.0001);
     assert(p2->getValue() - 21.7834 < 0.0001);
 
-    delete p1;
-    delete p2;
-    delete log;
     delete m;
+
+    cout << "OK" << endl;
 }
 
 // Sistema "complexo"
 void testVensim3() {
+    cout << "Teste Vensim 3: ";
+
     System *q1 = new SystemImpl("Q1", 100);
     System *q2 = new SystemImpl("Q2", 0);
     System *q3 = new SystemImpl("Q3", 100);
@@ -108,31 +112,16 @@ void testVensim3() {
     assert(q4->getValue() - 56.1728 < 0.0001);
     assert(q5->getValue() - 16.4612 < 0.0001);
 
-    delete q1;
-    delete q2;
-    delete q3;
-    delete q4;
-    delete q5;
-    delete f;
-    delete g;
-    delete u;
-    delete v;
-    delete r;
-    delete t;
     delete m;
+
+    cout << "OK" << endl;
 }
 
 int main() {
-    cout << "Teste Vensim 1: ";
     testVensim1();
-    cout << "OK" << endl;
 
-    cout << "Teste Vensim 2: ";
     testVensim2();
-    cout << "OK" << endl;
 
-    cout << "Teste Vensim 3: ";
     testVensim3();
-    cout << "OK" << endl;
     return 0;
 }

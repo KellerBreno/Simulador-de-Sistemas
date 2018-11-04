@@ -3,12 +3,23 @@
 //
 
 #include <iostream>
+#include <sstream>
 #include "ModelImpl.h"
 
 ModelImpl::ModelImpl(const string &name) : name(name) {}
 
-// TODO
-ModelImpl::~ModelImpl() {}
+ModelImpl::~ModelImpl() {
+    for (auto &system : systems) {
+        delete system;
+        system = nullptr;
+    }
+    systems.clear();
+    for (auto &flow : flows) {
+        delete flow;
+        flow = nullptr;
+    }
+    flows.clear();
+}
 
 void ModelImpl::simulate(int initialTime, int endTime) {
     simulate(initialTime, endTime, 1);
@@ -33,35 +44,12 @@ void ModelImpl::simulate(int initialTime, int endTime, int step) {
     }
 }
 
-bool ModelImpl::add(Flow *f) {
-    for (auto &flow:flows) {
-        if (flow->getName() == f->getName()) {
-            return false;
-        }
-    }
-    for (auto &system:systems) {
-        if (system->getName() == f->getName()) {
-            return false;
-        }
-    }
+void ModelImpl::add(Flow *f) {
     flows.push_back(f);
-    return true;
 }
 
-bool ModelImpl::add(System *s) {
-    for (auto &flow:flows) {
-        if (flow->getName() == s->getName()) {
-            return false;
-        }
-    }
-    for (auto &system:systems) {
-        if (system->getName() == s->getName()) {
-            return false;
-        }
-    }
+void ModelImpl::add(System *s) {
     systems.push_back(s);
-    return true;
-
 }
 
 Flow *ModelImpl::getFlow(string name) {
@@ -106,17 +94,19 @@ void ModelImpl::setName(string name) {
     this->name = name;
 }
 
-// TODO
-Flow *ModelImpl::getFlows() {
-    return nullptr;
-}
-
-// TODO
-System *ModelImpl::getSystems() {
-    return nullptr;
-}
-
-// TODO
 string ModelImpl::report() {
-    return std::__cxx11::string();
+    stringstream ss;
+    ss << "===========================================================" << endl;
+    ss << "Modelo: " << this->getName() << endl;
+    ss << endl;
+    ss << "----------------------- Sistemas --------------------------" << endl;
+    for (auto &system:systems) {
+        ss << "Sistema: " << system->getName() << " - " << system->getValue() << endl;
+    }
+    ss << "------------------------ Fluxos ---------------------------" << endl;
+    for (auto &flow:flows) {
+        ss << "Fluxo: " << flow->getName() << endl;
+    }
+    ss << "===========================================================" << endl;
+    return ss.str();
 }

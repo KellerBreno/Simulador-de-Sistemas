@@ -17,9 +17,9 @@ public:
 
     virtual void simulate(int initialTime, int endTime, int step) = 0;
 
-    virtual bool add(Flow *f) = 0;
+    virtual void add(Flow *f) = 0;
 
-    virtual bool add(System *s) = 0;
+    virtual void add(System *s) = 0;
 
     virtual Flow *getFlow(string name) = 0;
 
