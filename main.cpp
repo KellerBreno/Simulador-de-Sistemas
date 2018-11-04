@@ -19,7 +19,7 @@ void testVensim1() {
     m->add(p2);
     m->add(exp);
 
-    m->simulate(0, 100);
+    m->simulate(1, 100);
 
     assert(p1->getValue() - 36.6032 < 0.0001);
     assert(p2->getValue() - 63.3968 < 0.0001);
@@ -44,7 +44,7 @@ void testVensim2() {
     m->add(p2);
     m->add(log);
 
-    m->simulate(0, 100);
+    m->simulate(1, 100);
 
     assert(p1->getValue() - 88.2167 < 0.0001);
     assert(p2->getValue() - 21.7834 < 0.0001);
@@ -100,7 +100,7 @@ void testVensim3() {
     m->add(r);
     m->add(t);
 
-    m->simulate(0, 100);
+    m->simulate(1, 100);
 
     assert(q1->getValue() - 31.8513 < 0.0001);
     assert(q2->getValue() - 18.4003 < 0.0001);
@@ -123,8 +123,16 @@ void testVensim3() {
 }
 
 int main() {
+    cout << "Teste Vensim 1: ";
     testVensim1();
+    cout << "OK" << endl;
+
+    cout << "Teste Vensim 2: ";
     testVensim2();
+    cout << "OK" << endl;
+
+    cout << "Teste Vensim 3: ";
     testVensim3();
+    cout << "OK" << endl;
     return 0;
 }

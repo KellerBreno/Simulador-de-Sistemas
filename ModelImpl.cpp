@@ -16,7 +16,7 @@ void ModelImpl::simulate(int initialTime, int endTime) {
 
 void ModelImpl::simulate(int initialTime, int endTime, int step) {
     double values[flows.size()];
-    for (int time = initialTime; time < endTime; time += step) {
+    for (int time = initialTime; time <= endTime; time += step) {
         for (int i = 0; i < flows.size(); i++) {
             values[i] = flows[i]->execute();
         }
