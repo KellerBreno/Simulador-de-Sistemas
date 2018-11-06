@@ -11,6 +11,8 @@ using namespace std;
 
 class System {
 public:
+    virtual ~System() {};
+
     virtual double getValue() const = 0;
 
     virtual void setValue(double value) = 0;

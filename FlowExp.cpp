@@ -6,6 +6,13 @@
 
 FlowExp::FlowExp(const string &name, double taxa) : name(name), taxa(taxa), source(nullptr), target(nullptr) {}
 
+FlowExp::FlowExp(const FlowExp &rhs) {
+    this->setTarget(rhs.getTarget());
+    this->setSource(rhs.getSource());
+    this->setName(rhs.getName());
+    this->setTaxa(taxa);
+}
+
 FlowExp::~FlowExp() {
 
 }
@@ -47,4 +54,15 @@ double FlowExp::getTaxa() const {
 
 void FlowExp::setTaxa(double taxa) {
     FlowExp::taxa = taxa;
+}
+
+FlowExp &FlowExp::operator=(const FlowExp &rhs) {
+    if (&rhs == this) {
+        return *this;
+    }
+    this->setTarget(rhs.getTarget());
+    this->setSource(rhs.getSource());
+    this->setName(rhs.getName());
+    this->setTaxa(taxa);
+    return *this;
 }

@@ -6,6 +6,11 @@
 
 SystemImpl::SystemImpl(const string &name, double value) : name(name), value(value) {}
 
+SystemImpl::SystemImpl(const SystemImpl &rhs) {
+    this->setName(rhs.getName());
+    this->setValue(rhs.getValue());
+}
+
 SystemImpl::~SystemImpl() {}
 
 double SystemImpl::getValue() const {
@@ -22,4 +27,13 @@ string SystemImpl::getName() const {
 
 void SystemImpl::setName(string name) {
     this->name = name;
+}
+
+SystemImpl &SystemImpl::operator=(const SystemImpl &rhs) {
+    if (&rhs == this) {
+        return *this;
+    }
+    this->setName(rhs.getName());
+    this->setValue(rhs.getValue());
+    return *this;
 }

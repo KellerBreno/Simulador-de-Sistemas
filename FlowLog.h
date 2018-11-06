@@ -17,6 +17,8 @@ private:
 public:
     FlowLog(const string &name);
 
+    virtual ~FlowLog();
+
     double execute() override;
 
     System *getSource() const override;
@@ -32,21 +34,9 @@ public:
     void setName(string name) override;
 
 private:
-    FlowLog(const FlowLog &rhs) {
-        this->setTarget(rhs.getTarget());
-        this->setSource(rhs.getSource());
-        this->setName(rhs.getName());
-    }
+    FlowLog(const FlowLog &rhs);
 
-    FlowLog &operator=(const FlowLog &rhs) {
-        if (&rhs == this) {
-            return *this;
-        }
-        this->setTarget(rhs.getTarget());
-        this->setSource(rhs.getSource());
-        this->setName(rhs.getName());
-        return *this;
-    }
+    FlowLog &operator=(const FlowLog &rhs);
 };
 
 

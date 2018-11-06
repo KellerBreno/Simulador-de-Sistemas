@@ -41,23 +41,9 @@ public:
     void setTaxa(double taxa);
 
 private:
-    FlowExp(const FlowExp &rhs) {
-        this->setTarget(rhs.getTarget());
-        this->setSource(rhs.getSource());
-        this->setName(rhs.getName());
-        this->setTaxa(taxa);
-    }
+    FlowExp(const FlowExp &rhs);
 
-    FlowExp &operator=(const FlowExp &rhs) {
-        if (&rhs == this) {
-            return *this;
-        }
-        this->setTarget(rhs.getTarget());
-        this->setSource(rhs.getSource());
-        this->setName(rhs.getName());
-        this->setTaxa(taxa);
-        return *this;
-    }
+    FlowExp &operator=(const FlowExp &rhs);
 
 };
 

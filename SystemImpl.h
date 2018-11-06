@@ -20,7 +20,7 @@ public:
 
     virtual ~SystemImpl();
 
-    double getValue() const override ;
+    double getValue() const override;
 
     void setValue(double value) override;
 
@@ -29,19 +29,9 @@ public:
     void setName(string name) override;
 
 private:
-    SystemImpl(const SystemImpl &rhs) {
-        this->setName(rhs.getName());
-        this->setValue(rhs.getValue());
-    }
+    SystemImpl(const SystemImpl &rhs);
 
-    SystemImpl &operator=(const SystemImpl &rhs) {
-        if (&rhs == this) {
-            return *this;
-        }
-        this->setName(rhs.getName());
-        this->setValue(rhs.getValue());
-        return *this;
-    }
+    SystemImpl &operator=(const SystemImpl &rhs);
 };
 
 

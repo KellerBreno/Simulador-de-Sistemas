@@ -12,6 +12,8 @@ using namespace std;
 
 class Flow {
 public:
+    virtual ~Flow() {};
+
     virtual double execute() = 0;
 
     virtual System *getSource() const = 0;

@@ -6,6 +6,16 @@
 
 FlowLog::FlowLog(const string &name) : name(name), source(nullptr), target(nullptr) {}
 
+FlowLog::FlowLog(const FlowLog &rhs) {
+    this->setTarget(rhs.getTarget());
+    this->setSource(rhs.getSource());
+    this->setName(rhs.getName());
+}
+
+FlowLog::~FlowLog() {
+
+}
+
 double FlowLog::execute() {
     if (target == nullptr) {
         return 0;
@@ -36,4 +46,14 @@ string FlowLog::getName() const {
 
 void FlowLog::setName(string name) {
     this->name = name;
+}
+
+FlowLog &FlowLog::operator=(const FlowLog &rhs) {
+    if (&rhs == this) {
+        return *this;
+    }
+    this->setTarget(rhs.getTarget());
+    this->setSource(rhs.getSource());
+    this->setName(rhs.getName());
+    return *this;
 }
