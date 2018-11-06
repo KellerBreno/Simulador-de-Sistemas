@@ -8,7 +8,7 @@ SystemImpl::SystemImpl(const string &name, double value) : name(name), value(val
 
 SystemImpl::~SystemImpl() {}
 
-double SystemImpl::getValue() {
+double SystemImpl::getValue() const {
     return value;
 }
 
@@ -16,7 +16,7 @@ void SystemImpl::setValue(double value) {
     this->value = value;
 }
 
-string SystemImpl::getName() {
+string SystemImpl::getName() const {
     return name;
 }
 

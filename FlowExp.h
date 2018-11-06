@@ -24,17 +24,41 @@ public:
 
     double execute() override;
 
-    System *getSource() override;
+    System *getSource() const override;
 
     void setSource(System *source) override;
 
-    System *getTarget() override;
+    System *getTarget() const override;
 
     void setTarget(System *target) override;
 
-    string getName() override;
+    string getName() const override;
 
     void setName(string name) override;
+
+    double getTaxa() const;
+
+    void setTaxa(double taxa);
+
+private:
+    FlowExp(const FlowExp &rhs) {
+        this->setTarget(rhs.getTarget());
+        this->setSource(rhs.getSource());
+        this->setName(rhs.getName());
+        this->setTaxa(taxa);
+    }
+
+    FlowExp &operator=(const FlowExp &rhs) {
+        if (&rhs == this) {
+            return *this;
+        }
+        this->setTarget(rhs.getTarget());
+        this->setSource(rhs.getSource());
+        this->setName(rhs.getName());
+        this->setTaxa(taxa);
+        return *this;
+    }
+
 };
 
 

@@ -13,20 +13,35 @@ class SystemImpl : public System {
 
 private:
     string name;
-    double value;
+    double value{};
 
 public:
     SystemImpl(const string &name, double value);
 
     virtual ~SystemImpl();
 
-    double getValue() override;
+    double getValue() const override ;
 
     void setValue(double value) override;
 
-    string getName() override;
+    string getName() const override;
 
     void setName(string name) override;
+
+private:
+    SystemImpl(const SystemImpl &rhs) {
+        this->setName(rhs.getName());
+        this->setValue(rhs.getValue());
+    }
+
+    SystemImpl &operator=(const SystemImpl &rhs) {
+        if (&rhs == this) {
+            return *this;
+        }
+        this->setName(rhs.getName());
+        this->setValue(rhs.getValue());
+        return *this;
+    }
 };
 
 

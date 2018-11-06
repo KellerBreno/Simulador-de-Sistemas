@@ -86,7 +86,7 @@ bool ModelImpl::remove(string name) {
     return false;
 }
 
-string ModelImpl::getName() {
+string ModelImpl::getName() const {
     return name;
 }
 

@@ -27,13 +27,9 @@ public:
 
     virtual bool remove(string name) = 0;
 
-    virtual string getName() = 0;
+    virtual string getName() const = 0;
 
     virtual void setName(string name) = 0;
-
-    virtual Flow *getFlows() = 0;
-
-    virtual System *getSystems() = 0;
 
     virtual string report() = 0;
 };

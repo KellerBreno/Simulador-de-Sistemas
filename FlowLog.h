@@ -7,7 +7,7 @@
 
 #include "Flow.h"
 
-class FlowLog : public Flow{
+class FlowLog : public Flow {
 
 private:
     string name;
@@ -19,17 +19,34 @@ public:
 
     double execute() override;
 
-    System *getSource() override;
+    System *getSource() const override;
 
     void setSource(System *source) override;
 
-    System *getTarget() override;
+    System *getTarget() const override;
 
     void setTarget(System *target) override;
 
-    string getName() override;
+    string getName() const override;
 
     void setName(string name) override;
+
+private:
+    FlowLog(const FlowLog &rhs) {
+        this->setTarget(rhs.getTarget());
+        this->setSource(rhs.getSource());
+        this->setName(rhs.getName());
+    }
+
+    FlowLog &operator=(const FlowLog &rhs) {
+        if (&rhs == this) {
+            return *this;
+        }
+        this->setTarget(rhs.getTarget());
+        this->setSource(rhs.getSource());
+        this->setName(rhs.getName());
+        return *this;
+    }
 };
 
 

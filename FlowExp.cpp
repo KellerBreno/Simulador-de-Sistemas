@@ -17,7 +17,7 @@ double FlowExp::execute() {
     return taxa * source->getValue();
 }
 
-System *FlowExp::getSource() {
+System *FlowExp::getSource() const {
     return source;
 }
 
@@ -25,7 +25,7 @@ void FlowExp::setSource(System *source) {
     this->source = source;
 }
 
-System *FlowExp::getTarget() {
+System *FlowExp::getTarget() const {
     return target;
 }
 
@@ -33,10 +33,18 @@ void FlowExp::setTarget(System *target) {
     this->target = target;
 }
 
-string FlowExp::getName() {
+string FlowExp::getName() const {
     return name;
 }
 
 void FlowExp::setName(string name) {
     this->name = name;
+}
+
+double FlowExp::getTaxa() const {
+    return taxa;
+}
+
+void FlowExp::setTaxa(double taxa) {
+    FlowExp::taxa = taxa;
 }

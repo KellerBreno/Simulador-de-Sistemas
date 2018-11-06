@@ -14,7 +14,7 @@ double FlowLog::execute() {
     return 0.01 * aux * (1 - (aux / 70));
 }
 
-System *FlowLog::getSource() {
+System *FlowLog::getSource() const {
     return source;
 }
 
@@ -22,7 +22,7 @@ void FlowLog::setSource(System *source) {
     this->source = source;
 }
 
-System *FlowLog::getTarget() {
+System *FlowLog::getTarget() const {
     return target;
 }
 
@@ -30,7 +30,7 @@ void FlowLog::setTarget(System *target) {
     this->target = target;
 }
 
-string FlowLog::getName() {
+string FlowLog::getName() const {
     return name;
 }
 

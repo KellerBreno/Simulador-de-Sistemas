@@ -14,15 +14,15 @@ class Flow {
 public:
     virtual double execute() = 0;
 
-    virtual System *getSource() = 0;
+    virtual System *getSource() const = 0;
 
     virtual void setSource(System *source) = 0;
 
-    virtual System *getTarget() = 0;
+    virtual System *getTarget() const = 0;
 
     virtual void setTarget(System *target) = 0;
 
-    virtual string getName() = 0;
+    virtual string getName() const = 0;
 
     virtual void setName(string name) = 0;
 };

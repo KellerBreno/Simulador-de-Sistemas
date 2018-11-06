@@ -11,11 +11,11 @@ using namespace std;
 
 class System {
 public:
-    virtual double getValue() = 0;
+    virtual double getValue() const = 0;
 
     virtual void setValue(double value) = 0;
 
-    virtual string getName() = 0;
+    virtual string getName() const = 0;
 
     virtual void setName(string name) = 0;
 };
