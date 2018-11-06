@@ -4,6 +4,7 @@
 #include "ModelImpl.h"
 #include "SystemImpl.h"
 #include "FlowLog.h"
+#include "test/TestSystem.h"
 
 // Modelo "exponencial"
 void testVensim1() {
@@ -123,5 +124,8 @@ int main() {
     testVensim2();
 
     testVensim3();
+
+    TestSystem::run();
+
     return 0;
 }
