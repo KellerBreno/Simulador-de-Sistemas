@@ -5,14 +5,9 @@
 #ifndef SIMULADOR_FLOWLOG_H
 #define SIMULADOR_FLOWLOG_H
 
-#include "Flow.h"
+#include "FlowImpl.h"
 
-class FlowLog : public Flow {
-
-private:
-    string name;
-    System *source;
-    System *target;
+class FlowLog : public FlowImpl {
 
 public:
     FlowLog(const string &name);
@@ -20,18 +15,6 @@ public:
     virtual ~FlowLog();
 
     double execute() override;
-
-    System *getSource() const override;
-
-    void setSource(System *source) override;
-
-    System *getTarget() const override;
-
-    void setTarget(System *target) override;
-
-    string getName() const override;
-
-    void setName(string name) override;
 
 private:
     FlowLog(const FlowLog &rhs);

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <cmath>
 #include "TestSystem.h"
 #include "../src/SystemImpl.h"
 
@@ -18,10 +19,10 @@ void TestSystem::run() {
 
 void TestSystem::unitConstructor() {
     cout << "Construtor: ";
-    System *t = new SystemImpl("t", 0);
+    System *t = new SystemImpl("t", 5);
 
     assert(t->getName().compare("t") == 0);
-    assert(t->getValue() - 0 == 0);
+    assert(fabs(t->getValue() - 5) == 0);
 
     delete t;
     cout << "OK" << endl;
@@ -29,11 +30,11 @@ void TestSystem::unitConstructor() {
 
 void TestSystem::unitGetValue() {
     cout << "getValue: ";
-    System *t1 = new SystemImpl("t1", 0);
+    System *t1 = new SystemImpl("t1", 5);
     System *t2 = new SystemImpl("t2", (1 / 3));
 
-    assert(t1->getValue() - 0 < 0.0001);
-    assert(t2->getValue() - (1 / 3) < 0.0001);
+    assert(fabs(t1->getValue() - 5) < 0.0001);
+    assert(fabs(t2->getValue() - (1 / 3)) < 0.0001);
 
     delete t1;
     delete t2;
@@ -45,7 +46,7 @@ void TestSystem::unitSetValue() {
     System *t1 = new SystemImpl("t", 0);
     t1->setValue(2);
 
-    assert(t1->getValue() - 2 < 0.0001);
+    assert(fabs(t1->getValue() - 2) < 0.0001);
 
     delete t1;
     cout << "OK " << endl;
@@ -54,7 +55,7 @@ void TestSystem::unitSetValue() {
 void TestSystem::unitGetName() {
     cout << "getName: ";
     System *t1 = new SystemImpl("t1", 0);
-    System *t2 = new SystemImpl("t2", (1 / 3));
+    System *t2 = new SystemImpl("t2", 2);
 
     assert(t1->getName() == "t1");
     assert(t2->getName() == "t2");

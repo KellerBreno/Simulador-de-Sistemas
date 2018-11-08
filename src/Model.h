@@ -13,8 +13,6 @@ using namespace std;
 
 class Model {
 public:
-    virtual ~Model() {};
-
     virtual void simulate(int initialTime, int endTime) = 0;
 
     virtual void simulate(int initialTime, int endTime, int step) = 0;

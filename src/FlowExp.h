@@ -5,16 +5,11 @@
 #ifndef SIMULADOR_FLOWEXP_H
 #define SIMULADOR_FLOWEXP_H
 
-#include "Flow.h"
+#include "FlowImpl.h"
 
-using namespace std;
-
-class FlowExp : public Flow {
+class FlowExp : public FlowImpl {
 
 private:
-    System *source;
-    System *target;
-    string name;
     double taxa;
 
 public:
@@ -23,18 +18,6 @@ public:
     virtual ~FlowExp();
 
     double execute() override;
-
-    System *getSource() const override;
-
-    void setSource(System *source) override;
-
-    System *getTarget() const override;
-
-    void setTarget(System *target) override;
-
-    string getName() const override;
-
-    void setName(string name) override;
 
     double getTaxa() const;
 

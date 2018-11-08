@@ -19,4 +19,4 @@ add_executable(Simulador
         test/TestVensim.cpp
         test/TestVensim.h
         test/TestSystem.cpp
-        test/TestSystem.h)
+        test/TestSystem.h test/TestFlow.cpp test/TestFlow.h test/TestModel.cpp test/TestModel.h src/FlowImpl.cpp src/FlowImpl.h)

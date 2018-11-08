@@ -4,12 +4,11 @@
 
 #include "FlowExp.h"
 
-FlowExp::FlowExp(const string &name, double taxa) : name(name), taxa(taxa), source(nullptr), target(nullptr) {}
+FlowExp::FlowExp(const string &name, double taxa) : FlowImpl(name), taxa(taxa) {}
 
-FlowExp::FlowExp(const FlowExp &rhs) {
+FlowExp::FlowExp(const FlowExp &rhs) : FlowImpl(rhs.getName()) {
     this->setTarget(rhs.getTarget());
     this->setSource(rhs.getSource());
-    this->setName(rhs.getName());
     this->setTaxa(taxa);
 }
 
@@ -18,34 +17,10 @@ FlowExp::~FlowExp() {
 }
 
 double FlowExp::execute() {
-    if (source == nullptr) {
+    if (this->getSource() == nullptr) {
         return 0;
     }
-    return taxa * source->getValue();
-}
-
-System *FlowExp::getSource() const {
-    return source;
-}
-
-void FlowExp::setSource(System *source) {
-    this->source = source;
-}
-
-System *FlowExp::getTarget() const {
-    return target;
-}
-
-void FlowExp::setTarget(System *target) {
-    this->target = target;
-}
-
-string FlowExp::getName() const {
-    return name;
-}
-
-void FlowExp::setName(string name) {
-    this->name = name;
+    return taxa * this->getSource()->getValue();
 }
 
 double FlowExp::getTaxa() const {
