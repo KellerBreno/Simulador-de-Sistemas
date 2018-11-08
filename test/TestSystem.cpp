@@ -4,16 +4,16 @@
 
 #include <iostream>
 #include "TestSystem.h"
-#include "../SystemImpl.h"
+#include "../src/SystemImpl.h"
 
 void TestSystem::run() {
-    cout << "================= Testes Unitarios System =================" << endl;
+    cout << "============ Testes Unitarios System ============" << endl;
     TestSystem::unitConstructor();
     TestSystem::unitGetValue();
     TestSystem::unitSetValue();
     TestSystem::unitGetName();
     TestSystem::unitSetName();
-    cout << "===========================================================" << endl;
+    cout << "=================================================" << endl;
 }
 
 void TestSystem::unitConstructor() {

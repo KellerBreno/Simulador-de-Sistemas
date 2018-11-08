@@ -6,10 +6,10 @@
 #include <cassert>
 #include <cmath>
 #include "TestVensim.h"
-#include "../ModelImpl.h"
-#include "../FlowExp.h"
-#include "../SystemImpl.h"
-#include "../FlowLog.h"
+#include "../src/ModelImpl.h"
+#include "../src/FlowExp.h"
+#include "../src/SystemImpl.h"
+#include "../src/FlowLog.h"
 
 void TestVensim::run() {
     cout << "================= Testes Vensim =================" << endl;
