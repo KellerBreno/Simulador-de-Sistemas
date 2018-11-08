@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <cmath>
 #include "TestVensim.h"
 #include "../ModelImpl.h"
 #include "../FlowExp.h"
@@ -36,8 +37,8 @@ void TestVensim::test1() {
 
     m->simulate(1, 100);
 
-    assert(p1->getValue() - 36.6032 < 0.0001);
-    assert(p2->getValue() - 63.3968 < 0.0001);
+    assert(fabs(p1->getValue() - 36.6032) < 0.0001);
+    assert(fabs(p2->getValue() - 63.3968) < 0.0001);
 
     delete m;
 
@@ -63,8 +64,8 @@ void TestVensim::test2() {
 
     m->simulate(1, 100);
 
-    assert(p1->getValue() - 88.2167 < 0.0001);
-    assert(p2->getValue() - 21.7834 < 0.0001);
+    assert(fabs(p1->getValue() - 88.2167) < 0.0001);
+    assert(fabs(p2->getValue() - 21.7834) < 0.0001);
 
     delete m;
 
@@ -121,11 +122,11 @@ void TestVensim::test3() {
 
     m->simulate(1, 100);
 
-    assert(q1->getValue() - 31.8513 < 0.0001);
-    assert(q2->getValue() - 18.4003 < 0.0001);
-    assert(q3->getValue() - 77.1143 < 0.0001);
-    assert(q4->getValue() - 56.1728 < 0.0001);
-    assert(q5->getValue() - 16.4612 < 0.0001);
+    assert(fabs(q1->getValue() - 31.8513) < 0.0001);
+    assert(fabs(q2->getValue() - 18.4003) < 0.0001);
+    assert(fabs(q3->getValue() - 77.1143) < 0.0001);
+    assert(fabs(q4->getValue() - 56.1728) < 0.0001);
+    assert(fabs(q5->getValue() - 16.4612) < 0.0001);
 
     delete m;
 
