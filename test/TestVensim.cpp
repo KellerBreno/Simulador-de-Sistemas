@@ -13,14 +13,13 @@
 
 void TestVensim::run() {
     cout << "================= Testes Vensim =================" << endl;
-    TestVensim::test1();
-    TestVensim::test2();
-    TestVensim::test3();
+    TestVensim::modelExp();
+    TestVensim::modelLog();
+    TestVensim::modelWithLoop();
     cout << "=================================================" << endl;
 }
 
-// Modelo "exponencial"
-void TestVensim::test1() {
+void TestVensim::modelExp() {
     cout << "Teste Vensim 1: ";
 
     System *p1 = new SystemImpl("pop1", 100);
@@ -40,14 +39,11 @@ void TestVensim::test1() {
     assert(fabs(p1->getValue() - 36.6032) < 0.0001);
     assert(fabs(p2->getValue() - 63.3968) < 0.0001);
 
-    delete m;
-
     cout << "OK" << endl;
 
 }
 
-// Modelo "logistico"
-void TestVensim::test2() {
+void TestVensim::modelLog() {
     cout << "Teste Vensim 2: ";
 
     System *p1 = new SystemImpl("pop1", 100);
@@ -67,14 +63,11 @@ void TestVensim::test2() {
     assert(fabs(p1->getValue() - 88.2167) < 0.0001);
     assert(fabs(p2->getValue() - 21.7834) < 0.0001);
 
-    delete m;
-
     cout << "OK" << endl;
 
 }
 
-// Sistema "complexo"
-void TestVensim::test3() {
+void TestVensim::modelWithLoop() {
     cout << "Teste Vensim 3: ";
 
     System *q1 = new SystemImpl("Q1", 100);
@@ -127,8 +120,6 @@ void TestVensim::test3() {
     assert(fabs(q3->getValue() - 77.1143) < 0.0001);
     assert(fabs(q4->getValue() - 56.1728) < 0.0001);
     assert(fabs(q5->getValue() - 16.4612) < 0.0001);
-
-    delete m;
 
     cout << "OK" << endl;
 }

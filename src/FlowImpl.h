@@ -8,7 +8,7 @@
 
 #include "Flow.h"
 
-class FlowImpl : public Flow{
+class FlowImpl : public Flow {
 private:
     System *source;
     System *target;
@@ -16,6 +16,8 @@ private:
 
 public:
     FlowImpl(const string &name);
+
+    FlowImpl(const FlowImpl &rhs);
 
     virtual ~FlowImpl();
 
@@ -30,9 +32,6 @@ public:
     string getName() const override;
 
     void setName(string name) override;
-
-private:
-    FlowImpl(const FlowImpl &rhs);
 
     FlowImpl &operator=(const FlowImpl &rhs);
 

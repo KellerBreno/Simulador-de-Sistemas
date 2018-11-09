@@ -14,6 +14,10 @@ public:
 private:
     static void unitConstructor();
 
+    static void unitCopyConstructor();
+
+    static void unitOperator();
+
     static void unitGetValue();
 
     static void unitSetValue();

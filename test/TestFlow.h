@@ -14,13 +14,17 @@ public:
 private:
     static void unitConstructor();
 
+    static void unitCopyConstructor();
+
+    static void unitOperator();
+
     static void unitExecute();
 
     static void unitGetSource();
 
-    static void unitSetSource() ;
+    static void unitSetSource();
 
-    static void unitGetTarget() ;
+    static void unitGetTarget();
 
     static void unitSetTarget();
 

@@ -9,7 +9,7 @@ FlowExp::FlowExp(const string &name, double tax) : FlowImpl(name), tax(tax) {}
 FlowExp::FlowExp(const FlowExp &rhs) : FlowImpl(rhs.getName()) {
     this->setTarget(rhs.getTarget());
     this->setSource(rhs.getSource());
-    this->setTax(tax);
+    this->setTax(rhs.getTax());
 }
 
 FlowExp::~FlowExp() {
@@ -28,7 +28,7 @@ double FlowExp::getTax() const {
 }
 
 void FlowExp::setTax(double tax) {
-    FlowExp::tax = tax;
+    this->tax = tax;
 }
 
 FlowExp &FlowExp::operator=(const FlowExp &rhs) {
@@ -38,6 +38,6 @@ FlowExp &FlowExp::operator=(const FlowExp &rhs) {
     this->setTarget(rhs.getTarget());
     this->setSource(rhs.getSource());
     this->setName(rhs.getName());
-    this->setTax(tax);
+    this->setTax(rhs.getTax());
     return *this;
 }

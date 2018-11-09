@@ -12,12 +12,11 @@ class FlowLog : public FlowImpl {
 public:
     FlowLog(const string &name);
 
+    FlowLog(const FlowLog &rhs);
+
     virtual ~FlowLog();
 
     double execute() override;
-
-private:
-    FlowLog(const FlowLog &rhs);
 
     FlowLog &operator=(const FlowLog &rhs);
 };

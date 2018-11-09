@@ -13,6 +13,8 @@
 void TestFlow::run() {
     cout << "============= Testes Unitarios Flow =============" << endl;
     TestFlow::unitConstructor();
+    TestFlow::unitCopyConstructor();
+    TestFlow::unitOperator();
     TestFlow::unitGetName();
     TestFlow::unitSetName();
     TestFlow::unitGetSource();
@@ -41,6 +43,62 @@ void TestFlow::unitConstructor() {
     cout << "OK" << endl;
 }
 
+void TestFlow::unitCopyConstructor() {
+    cout << "Copy Constructor: ";
+    System *s1 = new SystemImpl("s1", 0);
+    System *s2 = new SystemImpl("s2", 0);
+    FlowLog *log = new FlowLog("log");
+    log->setSource(s1);
+    log->setTarget(s2);
+    FlowLog *newLog = new FlowLog((*log));
+
+    assert(log->getName() == newLog->getName());
+    assert(log->getSource() == newLog->getSource());
+    assert(log->getTarget() == newLog->getTarget());
+
+    FlowExp *exp = new FlowExp("exp", 50);
+    exp->setSource(s1);
+    exp->setTarget(s2);
+    FlowExp *newExp = new FlowExp((*exp));
+
+    assert(exp->getName() == newExp->getName());
+    assert(exp->getSource() == newExp->getSource());
+    assert(exp->getTarget() == newExp->getTarget());
+    assert(exp->getTax() == newExp->getTax());
+    cout << "OK" << endl;
+}
+
+void TestFlow::unitOperator() {
+    cout << "operator=: ";
+    System *s1 = new SystemImpl("s1", 0);
+    System *s2 = new SystemImpl("s2", 0);
+    FlowLog *log = new FlowLog("log");
+    log->setSource(s1);
+    log->setTarget(s2);
+    FlowLog *newLog = new FlowLog("newLog");
+    (*newLog) = (*log);
+
+    assert(newLog != log);
+    assert(log->getName() == newLog->getName());
+    assert(log->getSource() == newLog->getSource());
+    assert(log->getTarget() == newLog->getTarget());
+
+    FlowExp *exp = new FlowExp("exp", 50);
+    exp->setSource(s1);
+    exp->setTarget(s2);
+    FlowExp *newExp = new FlowExp("newExp", 25);
+    (*newExp) = (*exp);
+
+    assert(newExp != exp);
+    assert(exp->getName() == newExp->getName());
+    assert(exp->getSource() == newExp->getSource());
+    assert(exp->getTarget() == newExp->getTarget());
+    assert(fabs(exp->getTax() - newExp->getTax()) < 0.0001);
+
+    cout << "OK" << endl;
+}
+
+
 void TestFlow::unitExecute() {
     cout << "Execute: ";
     System *s1 = new SystemImpl("s1", 50);
@@ -54,9 +112,6 @@ void TestFlow::unitExecute() {
     assert(fabs(log->execute() - 0.1429) < 0.0001);
     assert(fabs(exp->execute() - 0.5) < 0.0001);
 
-    delete log;
-    delete exp;
-    delete s1;
     cout << "OK" << endl;
 }
 
@@ -68,8 +123,6 @@ void TestFlow::unitGetSource() {
     assert(log->getSource() == nullptr);
     assert(exp->getSource() == nullptr);
 
-    delete log;
-    delete exp;
     cout << "OK" << endl;
 }
 
@@ -86,9 +139,6 @@ void TestFlow::unitSetSource() {
     assert(log->getSource() == s1);
     assert(exp->getSource() == s1);
 
-    delete log;
-    delete exp;
-    delete s1;
     cout << "OK" << endl;
 }
 
@@ -100,8 +150,6 @@ void TestFlow::unitGetTarget() {
     assert(log->getTarget() == nullptr);
     assert(exp->getTarget() == nullptr);
 
-    delete log;
-    delete exp;
     cout << "OK" << endl;
 }
 
@@ -118,9 +166,6 @@ void TestFlow::unitSetTarget() {
     assert(log->getTarget() == s1);
     assert(exp->getTarget() == s1);
 
-    delete log;
-    delete exp;
-    delete s1;
     cout << "OK" << endl;
 }
 
@@ -132,8 +177,6 @@ void TestFlow::unitGetName() {
     assert(log->getName() == "log");
     assert(exp->getName() == "exp");
 
-    delete log;
-    delete exp;
     cout << "OK" << endl;
 }
 
@@ -147,7 +190,5 @@ void TestFlow::unitSetName() {
     assert(log->getName() == "lognew");
     assert(exp->getName() == "expnew");
 
-    delete log;
-    delete exp;
     cout << "OK" << endl;
 }

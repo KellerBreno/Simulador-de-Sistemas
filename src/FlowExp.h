@@ -15,6 +15,8 @@ private:
 public:
     FlowExp(const string &name, double tax);
 
+    FlowExp(const FlowExp &rhs);
+
     virtual ~FlowExp();
 
     double execute() override;
@@ -22,9 +24,6 @@ public:
     double getTax() const;
 
     void setTax(double tax);
-
-private:
-    FlowExp(const FlowExp &rhs);
 
     FlowExp &operator=(const FlowExp &rhs);
 

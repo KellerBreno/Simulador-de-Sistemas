@@ -20,6 +20,8 @@ private:
 public:
     ModelImpl(const string &name);
 
+    ModelImpl(const ModelImpl &rhs);
+
     virtual ~ModelImpl();
 
     void simulate(int initialTime, int endTime) override;
@@ -41,9 +43,6 @@ public:
     void setName(string name) override;
 
     string report() override;
-
-private:
-    ModelImpl(const ModelImpl &rhs);
 
     ModelImpl &operator=(const ModelImpl &rhs);
 };

@@ -14,6 +14,8 @@
 void TestModel::run() {
     cout << "============ Testes Unitarios Model =============" << endl;
     TestModel::unitConstructor();
+    TestModel::unitCopyConstructor();
+    TestModel::unitOperator();
     TestModel::unitAdd();
     TestModel::unitGetFlow();
     TestModel::unitGetSystem();
@@ -30,9 +32,78 @@ void TestModel::unitConstructor() {
     Model *model = new ModelImpl("model");
 
     assert(model->getName() == "model");
-    // TODO Testes para iterators
 
-    delete model;
+    cout << "OK" << endl;
+}
+
+void TestModel::unitCopyConstructor() {
+    cout << "Copy Constructor: ";
+    ModelImpl *model = new ModelImpl("model");
+    System *s1 = new SystemImpl("s1", 0);
+    System *s2 = new SystemImpl("s2", 0);
+    Flow *f1 = new FlowLog("f1");
+    Flow *f2 = new FlowExp("f2", 0.01);
+    model->add(s1);
+    model->add(s2);
+    model->add(f1);
+    model->add(f2);
+
+    ModelImpl *newModel = new ModelImpl((*model));
+    System *s3 = newModel->getSystem("s1");
+    System *s4 = newModel->getSystem("s2");
+
+    assert(s3 != nullptr);
+    assert(s3 == s1);
+    assert(s4 != nullptr);
+    assert(s4 == s2);
+
+    Flow *f3 = newModel->getFlow("f1");
+    Flow *f4 = newModel->getFlow("f2");
+
+    assert(f3 != nullptr);
+    assert(f3 == f1);
+    assert(f4 != nullptr);
+    assert(f4 == f2);
+
+    assert(model->getName() == newModel->getName());
+
+    cout << "OK" << endl;
+}
+
+void TestModel::unitOperator() {
+    cout << "operator=: ";
+    ModelImpl *model = new ModelImpl("model");
+    System *s1 = new SystemImpl("s1", 0);
+    System *s2 = new SystemImpl("s2", 0);
+    Flow *f1 = new FlowLog("f1");
+    Flow *f2 = new FlowExp("f2", 0.01);
+    model->add(s1);
+    model->add(s2);
+    model->add(f1);
+    model->add(f2);
+
+    ModelImpl *newModel = new ModelImpl("newModel");
+    (*newModel) = (*model);
+    assert(newModel != model);
+
+    System *s3 = newModel->getSystem("s1");
+    System *s4 = newModel->getSystem("s2");
+
+    assert(s3 != nullptr);
+    assert(s3 == s1);
+    assert(s4 != nullptr);
+    assert(s4 == s2);
+
+    Flow *f3 = newModel->getFlow("f1");
+    Flow *f4 = newModel->getFlow("f2");
+
+    assert(f3 != nullptr);
+    assert(f3 == f1);
+    assert(f4 != nullptr);
+    assert(f4 == f2);
+
+    assert(model->getName() == newModel->getName());
+
     cout << "OK" << endl;
 }
 
@@ -55,7 +126,6 @@ void TestModel::unitSimulate() {
     assert(fabs(p1->getValue() - 45.2191) < 0.0001);
     assert(fabs(p2->getValue() - 4.7809) < 0.0001);
 
-    delete model;
     cout << "OK" << endl;
 }
 
@@ -75,7 +145,6 @@ void TestModel::unitAdd() {
     assert(f2 != nullptr);
     assert(f2 == f1);
 
-    delete model;
     cout << "OK" << endl;
 }
 
@@ -129,7 +198,6 @@ void TestModel::unitRemove() {
     assert(f3 == nullptr);
     assert(f3 != f1);
 
-    delete model;
     cout << "OK" << endl;
 }
 
@@ -174,7 +242,6 @@ void TestModel::unitReport() {
                       "===========================================================\n";
     string actual = model->report();
     assert(expected == actual);
-    delete model;
 
     model = new ModelImpl("vazio");
     expected = "===========================================================\n"

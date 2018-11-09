@@ -18,6 +18,8 @@ private:
 public:
     SystemImpl(const string &name, double value);
 
+    SystemImpl(const SystemImpl &rhs);
+
     virtual ~SystemImpl();
 
     double getValue() const override;
@@ -27,9 +29,6 @@ public:
     string getName() const override;
 
     void setName(string name) override;
-
-private:
-    SystemImpl(const SystemImpl &rhs);
 
     SystemImpl &operator=(const SystemImpl &rhs);
 };

@@ -10,6 +10,8 @@
 void TestSystem::run() {
     cout << "============ Testes Unitarios System ============" << endl;
     TestSystem::unitConstructor();
+    TestSystem::unitCopyConstructor();
+    TestSystem::unitOperator();
     TestSystem::unitGetValue();
     TestSystem::unitSetValue();
     TestSystem::unitGetName();
@@ -28,6 +30,30 @@ void TestSystem::unitConstructor() {
     cout << "OK" << endl;
 }
 
+void TestSystem::unitCopyConstructor() {
+    cout << "Copy Constructor: ";
+    SystemImpl *system = new SystemImpl("s1", 0);
+    SystemImpl *newSystem = new SystemImpl((*system));
+
+    assert(system->getName() == newSystem->getName());
+    assert(system->getValue() == newSystem->getValue());
+
+    cout << "OK" << endl;
+}
+
+void TestSystem::unitOperator() {
+    cout << "operator=: ";
+    SystemImpl *system = new SystemImpl("s1", 0);
+    SystemImpl *newSystem = new SystemImpl("s2", 50);
+    (*newSystem) = (*system);
+
+    assert(system != newSystem);
+    assert(system->getName() == newSystem->getName());
+    assert(system->getValue() == newSystem->getValue());
+
+    cout << "OK" << endl;
+}
+
 void TestSystem::unitGetValue() {
     cout << "getValue: ";
     System *t1 = new SystemImpl("t1", 5);
@@ -36,8 +62,6 @@ void TestSystem::unitGetValue() {
     assert(fabs(t1->getValue() - 5) < 0.0001);
     assert(fabs(t2->getValue() - (1 / 3)) < 0.0001);
 
-    delete t1;
-    delete t2;
     cout << "OK " << endl;
 }
 
@@ -48,7 +72,6 @@ void TestSystem::unitSetValue() {
 
     assert(fabs(t1->getValue() - 2) < 0.0001);
 
-    delete t1;
     cout << "OK " << endl;
 }
 
@@ -60,8 +83,6 @@ void TestSystem::unitGetName() {
     assert(t1->getName() == "t1");
     assert(t2->getName() == "t2");
 
-    delete t1;
-    delete t2;
     cout << "OK " << endl;
 }
 
@@ -72,7 +93,6 @@ void TestSystem::unitSetName() {
 
     assert(t1->getName() == "tnew");
 
-    delete t1;
     cout << "OK " << endl;
 }
 

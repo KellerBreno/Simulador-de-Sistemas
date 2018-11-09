@@ -11,11 +11,11 @@ public:
     static void run();
 
 private:
-    static void test1();
+    static void modelExp();
 
-    static void test2();
+    static void modelLog();
 
-    static void test3();
+    static void modelWithLoop();
 };
 
 
