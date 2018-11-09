@@ -11,6 +11,7 @@
 
 using namespace std;
 
+// TODO Iterators
 class Model {
 public:
     virtual void simulate(int initialTime, int endTime) = 0;

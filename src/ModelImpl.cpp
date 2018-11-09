@@ -108,7 +108,6 @@ string ModelImpl::report() {
     stringstream ss;
     ss << "===========================================================" << endl;
     ss << "Modelo: " << this->getName() << endl;
-    ss << endl;
     ss << "----------------------- Sistemas --------------------------" << endl;
     for (auto &system:systems) {
         ss << "Sistema: " << system->getName() << " - " << system->getValue() << endl;

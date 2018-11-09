@@ -11,6 +11,23 @@ public:
     static void run();
 
 private:
+    static void unitConstructor();
+
+    static void unitSimulate();
+
+    static void unitAdd();
+
+    static void unitGetFlow();
+
+    static void unitGetSystem();
+
+    static void unitRemove();
+
+    static void unitGetName();
+
+    static void unitSetName();
+
+    static void unitReport();
 
 };
 
