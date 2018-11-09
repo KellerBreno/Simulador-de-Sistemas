@@ -4,12 +4,12 @@
 
 #include "FlowExp.h"
 
-FlowExp::FlowExp(const string &name, double taxa) : FlowImpl(name), taxa(taxa) {}
+FlowExp::FlowExp(const string &name, double tax) : FlowImpl(name), tax(tax) {}
 
 FlowExp::FlowExp(const FlowExp &rhs) : FlowImpl(rhs.getName()) {
     this->setTarget(rhs.getTarget());
     this->setSource(rhs.getSource());
-    this->setTaxa(taxa);
+    this->setTax(tax);
 }
 
 FlowExp::~FlowExp() {
@@ -20,15 +20,15 @@ double FlowExp::execute() {
     if (this->getSource() == nullptr) {
         return 0;
     }
-    return taxa * this->getSource()->getValue();
+    return tax * this->getSource()->getValue();
 }
 
-double FlowExp::getTaxa() const {
-    return taxa;
+double FlowExp::getTax() const {
+    return tax;
 }
 
-void FlowExp::setTaxa(double taxa) {
-    FlowExp::taxa = taxa;
+void FlowExp::setTax(double tax) {
+    FlowExp::tax = tax;
 }
 
 FlowExp &FlowExp::operator=(const FlowExp &rhs) {
@@ -38,6 +38,6 @@ FlowExp &FlowExp::operator=(const FlowExp &rhs) {
     this->setTarget(rhs.getTarget());
     this->setSource(rhs.getSource());
     this->setName(rhs.getName());
-    this->setTaxa(taxa);
+    this->setTax(tax);
     return *this;
 }

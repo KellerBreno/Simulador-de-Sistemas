@@ -10,18 +10,18 @@
 class FlowExp : public FlowImpl {
 
 private:
-    double taxa;
+    double tax;
 
 public:
-    FlowExp(const string &name, double taxa);
+    FlowExp(const string &name, double tax);
 
     virtual ~FlowExp();
 
     double execute() override;
 
-    double getTaxa() const;
+    double getTax() const;
 
-    void setTaxa(double taxa);
+    void setTax(double tax);
 
 private:
     FlowExp(const FlowExp &rhs);

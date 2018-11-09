@@ -21,8 +21,8 @@ void TestSystem::unitConstructor() {
     cout << "Construtor: ";
     System *t = new SystemImpl("t", 5);
 
-    assert(t->getName().compare("t") == 0);
-    assert(fabs(t->getValue() - 5) == 0);
+    assert(t->getName() == "t");
+    assert(fabs(t->getValue() - 5) < 0.0001);
 
     delete t;
     cout << "OK" << endl;
