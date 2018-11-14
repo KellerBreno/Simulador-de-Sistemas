@@ -9,7 +9,7 @@
 #include "../src/SystemImpl.h"
 
 void TestSystem::run() {
-    cout << "============ Testes Unitarios System ============" << endl;
+    cout << "============ Testes Unitários System ============" << endl;
     TestSystem::unitConstructor();
     TestSystem::unitCopyConstructor();
     TestSystem::unitOperator();

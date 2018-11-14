@@ -12,7 +12,7 @@
 #include "../src/SystemImpl.h"
 
 void TestFlow::run() {
-    cout << "============= Testes Unitarios Flow =============" << endl;
+    cout << "============= Testes Unitários Flow =============" << endl;
     TestFlow::unitConstructor();
     TestFlow::unitCopyConstructor();
     TestFlow::unitOperator();

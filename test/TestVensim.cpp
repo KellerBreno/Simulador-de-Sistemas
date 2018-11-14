@@ -40,7 +40,6 @@ void TestVensim::modelExp() {
     assert(fabs(p2->getValue() - 63.3968) < 0.0001);
 
     cout << "OK" << endl;
-
 }
 
 void TestVensim::modelLog() {
@@ -64,7 +63,6 @@ void TestVensim::modelLog() {
     assert(fabs(p2->getValue() - 21.7834) < 0.0001);
 
     cout << "OK" << endl;
-
 }
 
 void TestVensim::modelWithLoop() {
