@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <cassert>
 #include "TestSystem.h"
 #include "../src/SystemImpl.h"
 

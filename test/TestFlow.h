@@ -5,8 +5,6 @@
 #ifndef SIMULADOR_TESTFLOW_H
 #define SIMULADOR_TESTFLOW_H
 
-#include "../src/Flow.h"
-
 class TestFlow {
 public:
     static void run();
