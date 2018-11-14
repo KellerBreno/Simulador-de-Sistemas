@@ -5,8 +5,6 @@
 #ifndef SIMULADOR_TESTSYSTEM_H
 #define SIMULADOR_TESTSYSTEM_H
 
-#include <cassert>
-
 class TestSystem {
 public:
     static void run();
