@@ -7,6 +7,9 @@
 FlowExp::FlowExp(const string &name, double tax) : FlowImpl(name), tax(tax) {}
 
 FlowExp::FlowExp(const FlowExp &rhs) : FlowImpl(rhs.getName()) {
+    if (&rhs == this) {
+        return;
+    }
     this->setTarget(rhs.getTarget());
     this->setSource(rhs.getSource());
     this->setTax(rhs.getTax());

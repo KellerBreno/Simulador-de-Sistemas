@@ -7,6 +7,9 @@
 SystemImpl::SystemImpl(const string &name, double value) : name(name), value(value) {}
 
 SystemImpl::SystemImpl(const SystemImpl &rhs) {
+    if (&rhs == this) {
+        return;
+    }
     this->setName(rhs.getName());
     this->setValue(rhs.getValue());
 }

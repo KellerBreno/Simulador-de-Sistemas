@@ -7,6 +7,9 @@
 FlowLog::FlowLog(const string &name) : FlowImpl(name) {}
 
 FlowLog::FlowLog(const FlowLog &rhs) : FlowImpl(rhs.getName()) {
+    if (&rhs == this) {
+        return;
+    }
     this->setTarget(rhs.getTarget());
     this->setSource(rhs.getSource());
 }

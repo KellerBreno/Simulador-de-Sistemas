@@ -39,6 +39,11 @@ void TestVensim::modelExp() {
     assert(fabs(p1->getValue() - 36.6032) < 0.0001);
     assert(fabs(p2->getValue() - 63.3968) < 0.0001);
 
+    delete (SystemImpl *) p1;
+    delete (SystemImpl *) p2;
+    delete (FlowExp *) exp;
+    delete (ModelImpl *) m;
+
     cout << "OK" << endl;
 }
 
@@ -61,6 +66,11 @@ void TestVensim::modelLog() {
 
     assert(fabs(p1->getValue() - 88.2167) < 0.0001);
     assert(fabs(p2->getValue() - 21.7834) < 0.0001);
+
+    delete (SystemImpl *) p1;
+    delete (SystemImpl *) p2;
+    delete (FlowLog *) log;
+    delete (ModelImpl *) m;
 
     cout << "OK" << endl;
 }
@@ -118,6 +128,19 @@ void TestVensim::modelWithLoop() {
     assert(fabs(q3->getValue() - 77.1143) < 0.0001);
     assert(fabs(q4->getValue() - 56.1728) < 0.0001);
     assert(fabs(q5->getValue() - 16.4612) < 0.0001);
+
+    delete (SystemImpl *) q1;
+    delete (SystemImpl *) q2;
+    delete (SystemImpl *) q3;
+    delete (SystemImpl *) q4;
+    delete (SystemImpl *) q5;
+    delete (FlowExp *) f;
+    delete (FlowExp *) g;
+    delete (FlowExp *) u;
+    delete (FlowExp *) v;
+    delete (FlowExp *) r;
+    delete (FlowExp *) t;
+    delete (ModelImpl *) m;
 
     cout << "OK" << endl;
 }

@@ -5,27 +5,45 @@
 #include <iostream>
 #include <sstream>
 #include "ModelImpl.h"
+#include "FlowExp.h"
+#include "FlowLog.h"
+#include "SystemImpl.h"
 
 ModelImpl::ModelImpl(const string &name) : name(name) {}
 
 ModelImpl::ModelImpl(const ModelImpl &rhs) {
-    for (auto &flow:rhs.flows) {
-        this->add(flow);
+    if (&rhs == this) {
+        return;
     }
+    for (auto &flow:rhs.flows) {
+        auto *flowExp = dynamic_cast<FlowExp *>(flow);
+        if (flowExp != nullptr) {
+            Flow *copyFlow = new FlowExp((*flowExp));
+            this->add(copyFlow);
+            continue;
+        }
+        auto *flowLog = dynamic_cast<FlowLog *>(flow);
+        if (flowLog != nullptr) {
+            Flow *copyFlow = new FlowLog((*flowLog));
+            this->add(copyFlow);
+            continue;
+        }
+    }
+
     for (auto &system:rhs.systems) {
-        this->add(system);
+        auto *newSystem = dynamic_cast<SystemImpl *>(system);
+        auto *copySystem = new SystemImpl((*newSystem));
+        this->add(copySystem);
     }
     this->setName(rhs.getName());
 }
 
 ModelImpl::~ModelImpl() {
     for (auto &system : systems) {
-        delete system;
         system = nullptr;
     }
     systems.clear();
     for (auto &flow : flows) {
-        delete flow;
         flow = nullptr;
     }
     flows.clear();
@@ -124,6 +142,7 @@ ModelImpl &ModelImpl::operator=(const ModelImpl &rhs) {
     if (&rhs == this) {
         return *this;
     }
+    // TODO corrigir, utilizar copia
     for (auto &flow:flows) {
         delete flow;
         flow = nullptr;

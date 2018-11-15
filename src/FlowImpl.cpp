@@ -7,6 +7,9 @@
 FlowImpl::FlowImpl(const string &name) : name(name), source(nullptr), target(nullptr) {}
 
 FlowImpl::FlowImpl(const FlowImpl &rhs) {
+    if (&rhs == this) {
+        return;
+    }
     this->setTarget(rhs.getTarget());
     this->setSource(rhs.getSource());
     this->setName(rhs.getName());
