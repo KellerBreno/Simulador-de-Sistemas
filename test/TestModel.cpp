@@ -46,6 +46,9 @@ void TestModel::unitConstructor() {
     Flow *nf = newModel->getFlow("f");
     assert(nf == nullptr);
 
+    delete (ModelImpl *) model;
+    delete (ModelImpl *) newModel;
+
     cout << "OK" << endl;
 }
 
@@ -83,6 +86,13 @@ void TestModel::unitCopyConstructor() {
     assert(f4 == f2);
 
     assert(model->getName() == newModel->getName());
+
+    delete model;
+    delete newModel;
+    delete (SystemImpl *) s1;
+    delete (SystemImpl *) s2;
+    delete (FlowLog *) f1;
+    delete (FlowExp *) f2;
 
     cout << "OK" << endl;
 }
@@ -122,6 +132,13 @@ void TestModel::unitOperator() {
 
     assert(model->getName() == newModel->getName());
 
+    delete model;
+    delete newModel;
+    delete (SystemImpl *) s1;
+    delete (SystemImpl *) s2;
+    delete (FlowLog *) f1;
+    delete (FlowExp *) f2;
+
     cout << "OK" << endl;
 }
 
@@ -135,7 +152,7 @@ void TestModel::unitSimulate() {
     exp->setSource(p1);
     exp->setTarget(p2);
 
-    ModelImpl *model = new ModelImpl("teste");
+    Model *model = new ModelImpl("teste");
     model->add(p1);
     model->add(p2);
     model->add(exp);
@@ -151,7 +168,7 @@ void TestModel::unitSimulate() {
     nExp->setSource(np1);
     nExp->setTarget(np2);
 
-    ModelImpl *nModel = new ModelImpl("outro teste");
+    Model *nModel = new ModelImpl("outro teste");
     nModel->add(np1);
     nModel->add(np2);
     nModel->add(nExp);
@@ -162,6 +179,15 @@ void TestModel::unitSimulate() {
 
     assert(fabs(p1->getValue() - np1->getValue()) < 0.0001);
     assert(fabs(p2->getValue() - np2->getValue()) < 0.0001);
+
+    delete (ModelImpl *) model;
+    delete (ModelImpl *) nModel;
+    delete (SystemImpl *) p1;
+    delete (SystemImpl *) p2;
+    delete (SystemImpl *) np1;
+    delete (SystemImpl *) np2;
+    delete (FlowExp *) exp;
+    delete (FlowExp *) nExp;
 
     cout << "OK" << endl;
 }
@@ -190,6 +216,11 @@ void TestModel::unitAdd() {
     assert(f4 != nullptr);
     assert(f4 == f2);
 
+    delete (ModelImpl *) model;
+    delete (FlowLog *) f1;
+    delete (FlowExp *) f2;
+    delete (SystemImpl *) s1;
+
     cout << "OK" << endl;
 }
 
@@ -215,6 +246,10 @@ void TestModel::unitGetFlow() {
     assert(f4 != nullptr);
     assert(f3 == f4);
 
+    delete (ModelImpl *) model;
+    delete (FlowLog *) f1;
+    delete (FlowExp *) f3;
+
     cout << "OK" << endl;
 }
 
@@ -232,6 +267,9 @@ void TestModel::unitGetSystem() {
     System *s2 = model->getSystem("s1");
     assert(s2 != nullptr);
     assert(s1 == s2);
+
+    delete (ModelImpl *) model;
+    delete (SystemImpl *) s1;
 
     cout << "OK" << endl;
 }
@@ -269,6 +307,12 @@ void TestModel::unitRemove() {
     assert(f3 != f1);
     assert(f3 == nullptr);
 
+    delete (ModelImpl *) model;
+    delete (SystemImpl *) s1;
+    delete (SystemImpl *) s2;
+    delete (FlowLog *) f1;
+    delete (FlowLog *) f2;
+
     cout << "OK" << endl;
 }
 
@@ -280,6 +324,9 @@ void TestModel::unitGetName() {
 
     Model *newModel = new ModelImpl("");
     assert(newModel->getName().empty());
+
+    delete (ModelImpl *) model;
+    delete (ModelImpl *) newModel;
 
     cout << "OK" << endl;
 }
@@ -295,6 +342,8 @@ void TestModel::unitSetName() {
 
     model->setName("");
     assert(model->getName().empty());
+
+    delete (ModelImpl *) model;
 
     cout << "OK" << endl;
 }
@@ -327,6 +376,8 @@ void TestModel::unitReport() {
     string actual = model->report();
     assert(expected == actual);
 
+    delete (ModelImpl*) model;
+
     model = new ModelImpl("vazio");
     expected = "===========================================================\n"
                "Modelo: vazio\n"
@@ -335,6 +386,11 @@ void TestModel::unitReport() {
                "===========================================================\n";
     actual = model->report();
     assert(expected == actual);
+
+    delete (ModelImpl *) model;
+    delete (SystemImpl *) p1;
+    delete (SystemImpl *) p2;
+    delete (FlowExp *) exp;
 
     cout << "OK" << endl;
 }
