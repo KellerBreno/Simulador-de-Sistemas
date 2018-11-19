@@ -11,6 +11,7 @@
 void TestSystem::run() {
     cout << "============ Testes Unitários System ============" << endl;
     TestSystem::unitConstructor();
+    TestSystem::unitEqual();
     TestSystem::unitCopyConstructor();
     TestSystem::unitOperator();
     TestSystem::unitGetValue();
@@ -151,3 +152,20 @@ void TestSystem::unitSetName() {
     cout << "OK " << endl;
 }
 
+void TestSystem::unitEqual() {
+    cout << "operator==: ";
+
+    System *s1 = new SystemImpl("t1", 0);
+    System *s2 = new SystemImpl("t2", 10);
+    assert(!((*s1) == (*s2)));
+
+    SystemImpl *s3 = dynamic_cast<SystemImpl *>(s1);
+    SystemImpl *s4 = dynamic_cast<SystemImpl *>(s2);
+    (*s4) = (*s3);
+    assert((*s3) == (*s4));
+
+    delete s3;
+    delete s4;
+
+    cout << "OK" << endl;
+}

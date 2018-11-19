@@ -29,6 +29,8 @@ private:
     static void unitGetName();
 
     static void unitSetName();
+
+    static void unitEqual();
 };
 
 

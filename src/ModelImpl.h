@@ -45,6 +45,8 @@ public:
     string report() override;
 
     ModelImpl &operator=(const ModelImpl &rhs);
+
+    bool operator==(const Model &rhs) override;
 };
 
 

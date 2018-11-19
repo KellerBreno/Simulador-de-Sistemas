@@ -33,6 +33,7 @@ private:
 
     static void unitReport();
 
+    static void unitEqual();
 };
 
 

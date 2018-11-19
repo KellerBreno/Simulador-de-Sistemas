@@ -15,26 +15,42 @@ ModelImpl::ModelImpl(const ModelImpl &rhs) {
     if (&rhs == this) {
         return;
     }
-    for (auto &flow:rhs.flows) {
-        auto *flowExp = dynamic_cast<FlowExp *>(flow);
-        if (flowExp != nullptr) {
-            Flow *copyFlow = new FlowExp((*flowExp));
-            this->add(copyFlow);
-            continue;
-        }
-        auto *flowLog = dynamic_cast<FlowLog *>(flow);
-        if (flowLog != nullptr) {
-            Flow *copyFlow = new FlowLog((*flowLog));
-            this->add(copyFlow);
-            continue;
-        }
-    }
 
     for (auto &system:rhs.systems) {
         auto *newSystem = dynamic_cast<SystemImpl *>(system);
         auto *copySystem = new SystemImpl((*newSystem));
         this->add(copySystem);
     }
+
+    for (auto &flow:rhs.flows) {
+        auto *flowExp = dynamic_cast<FlowExp *>(flow);
+        if (flowExp != nullptr) {
+            Flow *copyFlow = new FlowExp((*flowExp));
+            for (auto &system : systems) {
+                if (copyFlow->getSource() == system) {
+                    copyFlow->setSource(system);
+                } else if (copyFlow->getTarget() == system) {
+                    copyFlow->setTarget(system);
+                }
+            }
+            this->add(copyFlow);
+            continue;
+        }
+        auto *flowLog = dynamic_cast<FlowLog *>(flow);
+        if (flowLog != nullptr) {
+            Flow *copyFlow = new FlowLog((*flowLog));
+            for (auto &system : systems) {
+                if (copyFlow->getSource() == system) {
+                    copyFlow->setSource(system);
+                } else if (copyFlow->getTarget() == system) {
+                    copyFlow->setTarget(system);
+                }
+            }
+            this->add(copyFlow);
+            continue;
+        }
+    }
+
     this->setName(rhs.getName());
 }
 
@@ -142,24 +158,86 @@ ModelImpl &ModelImpl::operator=(const ModelImpl &rhs) {
     if (&rhs == this) {
         return *this;
     }
-    // TODO corrigir, utilizar copia
     for (auto &flow:flows) {
-        delete flow;
         flow = nullptr;
     }
     for (auto &system:systems) {
-        delete system;
         system = nullptr;
     }
     flows.clear();
     systems.clear();
 
-    for (auto &flow:rhs.flows) {
-        this->add(flow);
-    }
     for (auto &system:rhs.systems) {
-        this->add(system);
+        auto *newSystem = dynamic_cast<SystemImpl *>(system);
+        auto *copySystem = new SystemImpl((*newSystem));
+        this->add(copySystem);
     }
+
+    for (auto &flow:rhs.flows) {
+        auto *flowExp = dynamic_cast<FlowExp *>(flow);
+        if (flowExp != nullptr) {
+            Flow *copyFlow = new FlowExp((*flowExp));
+            for (auto &system : systems) {
+                if (copyFlow->getSource() == system) {
+                    copyFlow->setSource(system);
+                } else if (copyFlow->getTarget() == system) {
+                    copyFlow->setTarget(system);
+                }
+            }
+            this->add(copyFlow);
+            continue;
+        }
+        auto *flowLog = dynamic_cast<FlowLog *>(flow);
+        if (flowLog != nullptr) {
+            Flow *copyFlow = new FlowLog((*flowLog));
+            for (auto &system : systems) {
+                if (copyFlow->getSource() == system) {
+                    copyFlow->setSource(system);
+                } else if (copyFlow->getTarget() == system) {
+                    copyFlow->setTarget(system);
+                }
+            }
+            this->add(copyFlow);
+            continue;
+        }
+    }
+
     this->setName(rhs.getName());
+
     return *this;
+}
+
+bool ModelImpl::operator==(const Model &rhs) {
+    bool resp = this->getName() == rhs.getName();
+
+    ModelImpl model = (ModelImpl &) rhs;
+
+    bool aux;
+    for (System *system:systems) {
+        aux = false;
+        for (System *rhsSystem:model.systems) {
+            if ((*system) == (*rhsSystem)) {
+                aux = true;
+                continue;
+            }
+        }
+        if (!aux) {
+            resp = false;
+        }
+    }
+
+    for (auto &flow:flows) {
+        aux = false;
+        for (auto &rhsFlow:model.flows) {
+            if (flow == rhsFlow) {
+                aux = true;
+                continue;
+            }
+        }
+        if (!aux) {
+            resp = false;
+        }
+    }
+
+    return resp;
 }

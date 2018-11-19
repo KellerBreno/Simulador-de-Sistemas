@@ -14,6 +14,7 @@
 void TestModel::run() {
     cout << "============ Testes Unitários Model =============" << endl;
     TestModel::unitConstructor();
+    TestModel::unitEqual();
     TestModel::unitCopyConstructor();
     TestModel::unitOperator();
     TestModel::unitAdd();
@@ -71,19 +72,19 @@ void TestModel::unitCopyConstructor() {
 
     System *s3 = newModel->getSystem("s1");
     assert(s3 != nullptr);
-    assert(s3 == s1);
+    assert((*s3) == (*s1));
 
     System *s4 = newModel->getSystem("s2");
     assert(s4 != nullptr);
-    assert(s4 == s2);
+    assert((*s4) == (*s2));
 
     Flow *f3 = newModel->getFlow("f1");
     assert(f3 != nullptr);
-    assert(f3 == f1);
+    assert((*f3) == (*f1));
 
     Flow *f4 = newModel->getFlow("f2");
     assert(f4 != nullptr);
-    assert(f4 == f2);
+    assert((*f4) == (*f2));
 
     assert(model->getName() == newModel->getName());
 
@@ -116,19 +117,19 @@ void TestModel::unitOperator() {
 
     System *s3 = newModel->getSystem("s1");
     assert(s3 != nullptr);
-    assert(s3 == s1);
+    assert((*s3) == (*s1));
 
     System *s4 = newModel->getSystem("s2");
     assert(s4 != nullptr);
-    assert(s4 == s2);
+    assert((*s4) == (*s2));
 
     Flow *f3 = newModel->getFlow("f1");
     assert(f3 != nullptr);
-    assert(f3 == f1);
+    assert((*f3) == (*f1));
 
     Flow *f4 = newModel->getFlow("f2");
     assert(f4 != nullptr);
-    assert(f4 == f2);
+    assert((*f4) == (*f2));
 
     assert(model->getName() == newModel->getName());
 
@@ -376,7 +377,7 @@ void TestModel::unitReport() {
     string actual = model->report();
     assert(expected == actual);
 
-    delete (ModelImpl*) model;
+    delete (ModelImpl *) model;
 
     model = new ModelImpl("vazio");
     expected = "===========================================================\n"
@@ -391,6 +392,42 @@ void TestModel::unitReport() {
     delete (SystemImpl *) p1;
     delete (SystemImpl *) p2;
     delete (FlowExp *) exp;
+
+    cout << "OK" << endl;
+}
+
+void TestModel::unitEqual() {
+    cout << "operator==: ";
+
+    Model *m1 = new ModelImpl("model1");
+    Model *m2 = new ModelImpl("model2");
+    assert(!((*m1) == (*m2)));
+
+    ModelImpl *m3 = dynamic_cast<ModelImpl *>(m1);
+    ModelImpl *m4 = dynamic_cast<ModelImpl *>(m2);
+    (*m4) = (*m3);
+    assert((*m3) == (*m4));
+
+    delete m3;
+    delete m4;
+
+    ModelImpl *m5 = new ModelImpl("model3");
+    ModelImpl *m6 = new ModelImpl("model4");
+
+    System *s1 = new SystemImpl("s1", 0);
+    System *s2 = new SystemImpl("s2", 0);
+    m5->add(s1);
+    m6->add(s2);
+    assert(!((*m5) == (*m6)));
+
+    m5->add(s2);
+    (*m6) = (*m5);
+    assert((*m5) == (*m6));
+
+    delete m5;
+    delete m6;
+    delete (SystemImpl *) s1;
+    delete (SystemImpl *) s2;
 
     cout << "OK" << endl;
 }

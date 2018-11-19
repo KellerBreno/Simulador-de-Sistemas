@@ -40,3 +40,7 @@ SystemImpl &SystemImpl::operator=(const SystemImpl &rhs) {
     this->setValue(rhs.getValue());
     return *this;
 }
+
+bool SystemImpl::operator==(const System& rhs){
+    return (this->getValue()==rhs.getValue()) && (this->getName() == rhs.getName());
+}

@@ -25,6 +25,8 @@ public:
     virtual string getName() const = 0;
 
     virtual void setName(string name) = 0;
+
+    virtual bool operator==(const Flow& rhs) = 0;
 };
 
 

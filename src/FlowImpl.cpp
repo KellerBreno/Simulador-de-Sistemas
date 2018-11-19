@@ -3,6 +3,7 @@
 //
 
 #include "FlowImpl.h"
+#include "SystemImpl.h"
 
 FlowImpl::FlowImpl(const string &name) : name(name), source(nullptr), target(nullptr) {}
 
@@ -51,4 +52,13 @@ FlowImpl &FlowImpl::operator=(const FlowImpl &rhs) {
     this->setSource(rhs.getSource());
     this->setName(rhs.getName());
     return *this;
+}
+
+bool FlowImpl::operator==(const Flow& rhs){
+    bool resp = this->getName() == rhs.getName();
+
+    resp = resp && (this->getSource() == rhs.getSource());
+    resp = resp && (this->getTarget() == rhs.getTarget());
+
+    return resp;
 }

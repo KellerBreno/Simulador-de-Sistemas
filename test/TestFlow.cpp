@@ -14,6 +14,7 @@
 void TestFlow::run() {
     cout << "============= Testes Unitários Flow =============" << endl;
     TestFlow::unitConstructor();
+    TestFlow::unitEqual();
     TestFlow::unitCopyConstructor();
     TestFlow::unitOperator();
     TestFlow::unitGetName();
@@ -323,6 +324,36 @@ void TestFlow::unitSetName() {
 
     delete (FlowLog *) log;
     delete (FlowExp *) exp;
+
+    cout << "OK" << endl;
+}
+
+void TestFlow::unitEqual() {
+    cout << "operator==: ";
+
+    Flow *f1 = new FlowLog("l1");
+    Flow *f2 = new FlowLog("l2");
+    assert(!((*f1) == (*f2)));
+
+    FlowLog *f3 = dynamic_cast<FlowLog *>(f1);
+    FlowLog *f4 = dynamic_cast<FlowLog *>(f2);
+    (*f3) = (*f4);
+    assert((*f3) == (*f4));
+
+    delete f3;
+    delete f4;
+
+    Flow *f5 = new FlowExp("l5",0.01);
+    Flow *f6 = new FlowExp("l6",0.5);
+    assert(!((*f5) == (*f6)));
+
+    FlowExp *f7 = dynamic_cast<FlowExp *>(f5);
+    FlowExp *f8 = dynamic_cast<FlowExp *>(f6);
+    (*f7) = (*f8);
+    assert((*f7) == (*f8));
+
+    delete f7;
+    delete f8;
 
     cout << "OK" << endl;
 }

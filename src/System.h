@@ -18,6 +18,8 @@ public:
     virtual string getName() const = 0;
 
     virtual void setName(string name) = 0;
+
+    virtual bool operator==(const System& rhs) = 0;
 };
 
 

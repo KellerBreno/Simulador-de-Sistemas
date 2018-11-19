@@ -31,6 +31,8 @@ public:
     void setName(string name) override;
 
     SystemImpl &operator=(const SystemImpl &rhs);
+
+    bool operator==(const System& rhs) override;
 };
 
 

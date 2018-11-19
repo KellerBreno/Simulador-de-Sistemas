@@ -26,7 +26,6 @@ public:
     void setTax(double tax);
 
     FlowExp &operator=(const FlowExp &rhs);
-
 };
 
 
