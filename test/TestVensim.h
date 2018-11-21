@@ -16,6 +16,8 @@ private:
     static void modelLog();
 
     static void modelWithLoop();
+
+    static void modelCopy();
 };
 
 

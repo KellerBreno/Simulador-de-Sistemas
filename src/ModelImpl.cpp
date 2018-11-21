@@ -26,10 +26,10 @@ ModelImpl::ModelImpl(const ModelImpl &rhs) {
         auto *flowExp = dynamic_cast<FlowExp *>(flow);
         if (flowExp != nullptr) {
             Flow *copyFlow = new FlowExp((*flowExp));
-            for (auto &system : systems) {
-                if (copyFlow->getSource() == system) {
+            for (System *system : systems) {
+                if ((copyFlow->getSource()!= nullptr) && *(copyFlow->getSource()) == (*system)) {
                     copyFlow->setSource(system);
-                } else if (copyFlow->getTarget() == system) {
+                } else if ((copyFlow->getTarget()!= nullptr) && *(copyFlow->getTarget()) == (*system)) {
                     copyFlow->setTarget(system);
                 }
             }
@@ -39,10 +39,10 @@ ModelImpl::ModelImpl(const ModelImpl &rhs) {
         auto *flowLog = dynamic_cast<FlowLog *>(flow);
         if (flowLog != nullptr) {
             Flow *copyFlow = new FlowLog((*flowLog));
-            for (auto &system : systems) {
-                if (copyFlow->getSource() == system) {
+            for (System *system : systems) {
+                if ((copyFlow->getSource()!= nullptr) && *(copyFlow->getSource()) == (*system)) {
                     copyFlow->setSource(system);
-                } else if (copyFlow->getTarget() == system) {
+                } else if ((copyFlow->getTarget()!= nullptr) && *(copyFlow->getTarget()) == (*system)) {
                     copyFlow->setTarget(system);
                 }
             }
@@ -158,14 +158,6 @@ ModelImpl &ModelImpl::operator=(const ModelImpl &rhs) {
     if (&rhs == this) {
         return *this;
     }
-    for (auto &flow:flows) {
-        flow = nullptr;
-    }
-    for (auto &system:systems) {
-        system = nullptr;
-    }
-    flows.clear();
-    systems.clear();
 
     for (auto &system:rhs.systems) {
         auto *newSystem = dynamic_cast<SystemImpl *>(system);
@@ -177,10 +169,10 @@ ModelImpl &ModelImpl::operator=(const ModelImpl &rhs) {
         auto *flowExp = dynamic_cast<FlowExp *>(flow);
         if (flowExp != nullptr) {
             Flow *copyFlow = new FlowExp((*flowExp));
-            for (auto &system : systems) {
-                if (copyFlow->getSource() == system) {
+            for (System *system : systems) {
+                if ((copyFlow->getSource()!= nullptr) && *(copyFlow->getSource()) == (*system)) {
                     copyFlow->setSource(system);
-                } else if (copyFlow->getTarget() == system) {
+                } else if ((copyFlow->getTarget()!= nullptr) && *(copyFlow->getTarget()) == (*system)) {
                     copyFlow->setTarget(system);
                 }
             }
@@ -190,10 +182,10 @@ ModelImpl &ModelImpl::operator=(const ModelImpl &rhs) {
         auto *flowLog = dynamic_cast<FlowLog *>(flow);
         if (flowLog != nullptr) {
             Flow *copyFlow = new FlowLog((*flowLog));
-            for (auto &system : systems) {
-                if (copyFlow->getSource() == system) {
+            for (System *system: systems) {
+                if ((copyFlow->getSource()!= nullptr) && *(copyFlow->getSource()) == (*system)) {
                     copyFlow->setSource(system);
-                } else if (copyFlow->getTarget() == system) {
+                } else if ((copyFlow->getTarget()!= nullptr) && *(copyFlow->getTarget()) == (*system)) {
                     copyFlow->setTarget(system);
                 }
             }
