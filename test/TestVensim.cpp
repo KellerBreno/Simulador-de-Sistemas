@@ -17,6 +17,7 @@ void TestVensim::run() {
     TestVensim::modelLog();
     TestVensim::modelWithLoop();
     TestVensim::modelCopy();
+    TestVensim::modelAtrib();
     cout << "=================================================" << endl;
 }
 
@@ -147,7 +148,7 @@ void TestVensim::modelWithLoop() {
 }
 
 void TestVensim::modelCopy() {
-    cout << "Teste Vensim 4: ";
+    cout << "Teste Construtor de Copia: ";
 
     System *q1 = new SystemImpl("Q1", 100);
     System *q2 = new SystemImpl("Q2", 0);
@@ -194,6 +195,86 @@ void TestVensim::modelCopy() {
 
     ModelImpl *cast = dynamic_cast<ModelImpl *>(m);
     Model *newModel = new ModelImpl((*cast));
+
+    delete (SystemImpl *) q1;
+    delete (SystemImpl *) q2;
+    delete (SystemImpl *) q3;
+    delete (SystemImpl *) q4;
+    delete (SystemImpl *) q5;
+    delete (FlowExp *) f;
+    delete (FlowExp *) g;
+    delete (FlowExp *) u;
+    delete (FlowExp *) v;
+    delete (FlowExp *) r;
+    delete (FlowExp *) t;
+    delete (ModelImpl *) m;
+
+    newModel->simulate(1, 100);
+
+    System *nq1 = newModel->getSystem("Q1");
+    System *nq2 = newModel->getSystem("Q2");
+    System *nq3 = newModel->getSystem("Q3");
+    System *nq4 = newModel->getSystem("Q4");
+    System *nq5 = newModel->getSystem("Q5");
+
+    assert(fabs(nq1->getValue() - 31.8513) < 0.0001);
+    assert(fabs(nq2->getValue() - 18.4003) < 0.0001);
+    assert(fabs(nq3->getValue() - 77.1143) < 0.0001);
+    assert(fabs(nq4->getValue() - 56.1728) < 0.0001);
+    assert(fabs(nq5->getValue() - 16.4612) < 0.0001);
+
+    cout << "OK" << endl;
+}
+
+void TestVensim::modelAtrib() {
+    cout << "Teste Atribuição: ";
+
+    System *q1 = new SystemImpl("Q1", 100);
+    System *q2 = new SystemImpl("Q2", 0);
+    System *q3 = new SystemImpl("Q3", 100);
+    System *q4 = new SystemImpl("Q4", 0);
+    System *q5 = new SystemImpl("Q5", 0);
+
+    Flow *f = new FlowExp("f", 0.01);
+    f->setSource(q1);
+    f->setTarget(q2);
+
+    Flow *g = new FlowExp("g", 0.01);
+    g->setSource(q1);
+    g->setTarget(q3);
+
+    Flow *u = new FlowExp("u", 0.01);
+    u->setSource(q3);
+    u->setTarget(q4);
+
+    Flow *v = new FlowExp("v", 0.01);
+    v->setSource(q4);
+    v->setTarget(q1);
+
+    Flow *r = new FlowExp("r", 0.01);
+    r->setSource(q2);
+    r->setTarget(q5);
+
+    Flow *t = new FlowExp("t", 0.01);
+    t->setSource(q2);
+    t->setTarget(q3);
+
+    Model *m = new ModelImpl("complexo");
+    m->add(q1);
+    m->add(q2);
+    m->add(q3);
+    m->add(q4);
+    m->add(q5);
+    m->add(f);
+    m->add(g);
+    m->add(u);
+    m->add(v);
+    m->add(r);
+    m->add(t);
+
+    ModelImpl *cast = dynamic_cast<ModelImpl *>(m);
+    ModelImpl *newModel = new ModelImpl("model");
+    (*newModel) = (*cast);
 
     delete (SystemImpl *) q1;
     delete (SystemImpl *) q2;
