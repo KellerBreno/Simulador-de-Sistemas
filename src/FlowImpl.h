@@ -35,7 +35,9 @@ public:
 
     FlowImpl &operator=(const FlowImpl &rhs);
 
-    virtual bool operator==(const Flow& rhs) override;
+    bool operator==(const Flow &rhs) override;
+
+    bool operator!=(const Flow &rhs) override;
 };
 
 

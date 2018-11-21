@@ -54,11 +54,15 @@ FlowImpl &FlowImpl::operator=(const FlowImpl &rhs) {
     return *this;
 }
 
-bool FlowImpl::operator==(const Flow& rhs){
+bool FlowImpl::operator==(const Flow &rhs) {
     bool resp = this->getName() == rhs.getName();
 
     resp = resp && (this->getSource() == rhs.getSource());
     resp = resp && (this->getTarget() == rhs.getTarget());
 
     return resp;
+}
+
+bool FlowImpl::operator!=(const Flow &rhs) {
+    return !(*this == rhs);
 }

@@ -32,7 +32,9 @@ public:
 
     SystemImpl &operator=(const SystemImpl &rhs);
 
-    bool operator==(const System& rhs) override;
+    bool operator==(const System &rhs) override;
+
+    bool operator!=(const System &rhs) override;
 };
 
 

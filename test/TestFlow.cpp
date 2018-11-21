@@ -333,7 +333,7 @@ void TestFlow::unitEqual() {
 
     Flow *f1 = new FlowLog("l1");
     Flow *f2 = new FlowLog("l2");
-    assert(!((*f1) == (*f2)));
+    assert((*f1) != (*f2));
 
     FlowLog *f3 = dynamic_cast<FlowLog *>(f1);
     FlowLog *f4 = dynamic_cast<FlowLog *>(f2);
@@ -343,9 +343,9 @@ void TestFlow::unitEqual() {
     delete f3;
     delete f4;
 
-    Flow *f5 = new FlowExp("l5",0.01);
-    Flow *f6 = new FlowExp("l6",0.5);
-    assert(!((*f5) == (*f6)));
+    Flow *f5 = new FlowExp("l5", 0.01);
+    Flow *f6 = new FlowExp("l6", 0.5);
+    assert((*f5) != (*f6));
 
     FlowExp *f7 = dynamic_cast<FlowExp *>(f5);
     FlowExp *f8 = dynamic_cast<FlowExp *>(f6);

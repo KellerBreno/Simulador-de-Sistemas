@@ -47,6 +47,8 @@ public:
     ModelImpl &operator=(const ModelImpl &rhs);
 
     bool operator==(const Model &rhs) override;
+
+    bool operator!=(const Model &rhs) override;
 };
 
 

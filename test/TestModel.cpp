@@ -401,7 +401,7 @@ void TestModel::unitEqual() {
 
     Model *m1 = new ModelImpl("model1");
     Model *m2 = new ModelImpl("model2");
-    assert(!((*m1) == (*m2)));
+    assert((*m1) != (*m2));
 
     ModelImpl *m3 = dynamic_cast<ModelImpl *>(m1);
     ModelImpl *m4 = dynamic_cast<ModelImpl *>(m2);
@@ -418,7 +418,7 @@ void TestModel::unitEqual() {
     System *s2 = new SystemImpl("s2", 0);
     m5->add(s1);
     m6->add(s2);
-    assert(!((*m5) == (*m6)));
+    assert((*m5) != (*m6));
 
     m5->add(s2);
     (*m6) = (*m5);

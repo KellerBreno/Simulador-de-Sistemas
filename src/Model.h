@@ -35,6 +35,8 @@ public:
     virtual string report() = 0;
 
     virtual bool operator==(const Model &rhs) = 0;
+
+    virtual bool operator!=(const Model &rhs) = 0;
 };
 
 

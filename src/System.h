@@ -19,7 +19,9 @@ public:
 
     virtual void setName(string name) = 0;
 
-    virtual bool operator==(const System& rhs) = 0;
+    virtual bool operator==(const System &rhs) = 0;
+
+    virtual bool operator!=(const System &rhs) = 0;
 };
 
 

@@ -157,7 +157,7 @@ void TestSystem::unitEqual() {
 
     System *s1 = new SystemImpl("t1", 0);
     System *s2 = new SystemImpl("t2", 10);
-    assert(!((*s1) == (*s2)));
+    assert((*s1) != (*s2));
 
     SystemImpl *s3 = dynamic_cast<SystemImpl *>(s1);
     SystemImpl *s4 = dynamic_cast<SystemImpl *>(s2);

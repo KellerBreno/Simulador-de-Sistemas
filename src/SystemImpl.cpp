@@ -41,6 +41,10 @@ SystemImpl &SystemImpl::operator=(const SystemImpl &rhs) {
     return *this;
 }
 
-bool SystemImpl::operator==(const System& rhs){
-    return (this->getValue()==rhs.getValue()) && (this->getName() == rhs.getName());
+bool SystemImpl::operator==(const System &rhs) {
+    return (this->getValue() == rhs.getValue()) && (this->getName() == rhs.getName());
+}
+
+bool SystemImpl::operator!=(const System &rhs) {
+    return !(*this == rhs);
 }
