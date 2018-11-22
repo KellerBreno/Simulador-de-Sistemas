@@ -5,7 +5,7 @@
 #ifndef SIMULADOR_FLOWLOG_H
 #define SIMULADOR_FLOWLOG_H
 
-#include "FlowImpl.h"
+#include "src/FlowImpl.h"
 
 class FlowLog : public FlowImpl {
 

@@ -12,10 +12,10 @@ add_executable(Simulador
         src/ModelImpl.h
         src/SystemImpl.cpp
         src/SystemImpl.h
-        src/FlowExp.cpp
-        src/FlowExp.h
-        src/FlowLog.cpp
-        src/FlowLog.h
+        FlowExp.cpp
+        FlowExp.h
+        FlowLog.cpp
+        FlowLog.h
         test/TestVensim.cpp
         test/TestVensim.h
         test/TestSystem.cpp

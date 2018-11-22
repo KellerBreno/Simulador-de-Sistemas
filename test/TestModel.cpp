@@ -8,8 +8,8 @@
 #include "TestModel.h"
 #include "../src/ModelImpl.h"
 #include "../src/SystemImpl.h"
-#include "../src/FlowExp.h"
-#include "../src/FlowLog.h"
+#include "../FlowExp.h"
+#include "../FlowLog.h"
 
 void TestModel::run() {
     cout << "============ Testes Unitários Model =============" << endl;

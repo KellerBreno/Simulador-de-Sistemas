@@ -7,8 +7,8 @@
 #include <cmath>
 #include "TestFlow.h"
 #include "../src/Flow.h"
-#include "../src/FlowExp.h"
-#include "../src/FlowLog.h"
+#include "../FlowExp.h"
+#include "../FlowLog.h"
 #include "../src/SystemImpl.h"
 
 void TestFlow::run() {

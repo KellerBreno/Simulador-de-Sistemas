@@ -5,64 +5,102 @@
 #include <iostream>
 #include <sstream>
 #include "ModelImpl.h"
-#include "FlowExp.h"
-#include "FlowLog.h"
+#include "../FlowExp.h"
+#include "../FlowLog.h"
 #include "SystemImpl.h"
 
-ModelImpl::ModelImpl(const string &name) : name(name) {}
+static vector<Model *> models_;
 
-ModelImpl::ModelImpl(const ModelImpl &rhs) {
-    if (&rhs == this) {
-        return;
-    }
-
-    for (auto &system:rhs.systems) {
-        auto *newSystem = dynamic_cast<SystemImpl *>(system);
-        auto *copySystem = new SystemImpl((*newSystem));
-        this->add(copySystem);
-    }
-
-    for (auto &flow:rhs.flows) {
-        auto *flowExp = dynamic_cast<FlowExp *>(flow);
-        if (flowExp != nullptr) {
-            Flow *copyFlow = new FlowExp((*flowExp));
-            for (System *system : systems) {
-                if ((copyFlow->getSource() != nullptr) && *(copyFlow->getSource()) == (*system)) {
-                    copyFlow->setSource(system);
-                } else if ((copyFlow->getTarget() != nullptr) && *(copyFlow->getTarget()) == (*system)) {
-                    copyFlow->setTarget(system);
-                }
-            }
-            this->add(copyFlow);
-            continue;
-        }
-        auto *flowLog = dynamic_cast<FlowLog *>(flow);
-        if (flowLog != nullptr) {
-            Flow *copyFlow = new FlowLog((*flowLog));
-            for (System *system : systems) {
-                if ((copyFlow->getSource() != nullptr) && *(copyFlow->getSource()) == (*system)) {
-                    copyFlow->setSource(system);
-                } else if ((copyFlow->getTarget() != nullptr) && *(copyFlow->getTarget()) == (*system)) {
-                    copyFlow->setTarget(system);
-                }
-            }
-            this->add(copyFlow);
-            continue;
-        }
-    }
-
-    this->setName(rhs.getName());
+Model *Model::createModel(string name) {
+    return ModelImpl::createModel(name);
 }
 
+Model *ModelImpl::createModel(string name) {
+    Model *m = new ModelImpl(name);
+    models_.push_back(m);
+    return m;
+};
+
+bool Model::deleteModel(string name) {
+    return ModelImpl::deleteModel(name);
+}
+
+bool ModelImpl::deleteModel(string name) {
+//    for (Model *m:models_) {
+//        if (m->getName() == name) {
+//            delete (ModelImpl *) m;
+//            //delete
+//            return true;
+//        }
+//    }
+
+    for (auto it = models_.begin(); it != models_.end(); ++it) {
+        if ((*it)->getName() == name) {
+            models_.erase(it);
+            delete (ModelImpl *) (*it);
+            return true;
+        }
+    }
+    return false;
+};
+
+ModelImpl::ModelImpl(const string &name) : name_(name) {}
+
+//ModelImpl::ModelImpl(const ModelImpl &rhs) {
+//    if (&rhs == this) {
+//        return;
+//    }
+//
+//    for (auto &system:rhs.systems_) {
+//        auto *newSystem = dynamic_cast<SystemImpl *>(system);
+//        auto *copySystem = new SystemImpl((*newSystem));
+//        this->add(copySystem);
+//    }
+//
+//    for (auto &flow:rhs.flows_) {
+//        auto *flowExp = dynamic_cast<FlowExp *>(flow);
+//        if (flowExp != nullptr) {
+//            Flow *copyFlow = new FlowExp((*flowExp));
+//            for (System *system : systems_) {
+//                if ((copyFlow->getSource() != nullptr) && *(copyFlow->getSource()) == (*system)) {
+//                    copyFlow->setSource(system);
+//                } else if ((copyFlow->getTarget() != nullptr) && *(copyFlow->getTarget()) == (*system)) {
+//                    copyFlow->setTarget(system);
+//                }
+//            }
+//            this->add(copyFlow);
+//            continue;
+//        }
+//        auto *flowLog = dynamic_cast<FlowLog *>(flow);
+//        if (flowLog != nullptr) {
+//            Flow *copyFlow = new FlowLog((*flowLog));
+//            for (System *system : systems_) {
+//                if ((copyFlow->getSource() != nullptr) && *(copyFlow->getSource()) == (*system)) {
+//                    copyFlow->setSource(system);
+//                } else if ((copyFlow->getTarget() != nullptr) && *(copyFlow->getTarget()) == (*system)) {
+//                    copyFlow->setTarget(system);
+//                }
+//            }
+//            this->add(copyFlow);
+//            continue;
+//        }
+//    }
+//
+//    this->setName(rhs.getName());
+//}
+
 ModelImpl::~ModelImpl() {
-    for (auto &system : systems) {
+    for (auto &system : systems_) {
+        delete (SystemImpl *) system;
         system = nullptr;
     }
-    systems.clear();
-    for (auto &flow : flows) {
+    systems_.clear();
+
+    for (auto &flow : flows_) {
+        delete (FlowImpl *) flow;
         flow = nullptr;
     }
-    flows.clear();
+    flows_.clear();
 }
 
 void ModelImpl::simulate(int initialTime, int endTime) {
@@ -70,14 +108,14 @@ void ModelImpl::simulate(int initialTime, int endTime) {
 }
 
 void ModelImpl::simulate(int initialTime, int endTime, int step) {
-    double values[flows.size()];
+    double values[flows_.size()];
     for (int time = initialTime; time <= endTime; time += step) {
-        for (int i = 0; i < flows.size(); i++) {
-            values[i] = flows[i]->execute();
+        for (int i = 0; i < flows_.size(); i++) {
+            values[i] = flows_[i]->execute();
         }
-        for (int i = 0; i < flows.size(); i++) {
-            System *source = flows[i]->getSource();
-            System *target = flows[i]->getTarget();
+        for (int i = 0; i < flows_.size(); i++) {
+            System *source = flows_[i]->getSource();
+            System *target = flows_[i]->getTarget();
             if (source != nullptr) {
                 source->setValue(source->getValue() - values[i]);
             }
@@ -89,15 +127,15 @@ void ModelImpl::simulate(int initialTime, int endTime, int step) {
 }
 
 void ModelImpl::add(Flow *f) {
-    flows.push_back(f);
+    flows_.push_back(f);
 }
 
 void ModelImpl::add(System *s) {
-    systems.push_back(s);
+    systems_.push_back(s);
 }
 
 Flow *ModelImpl::getFlow(string name) {
-    for (auto &flow : flows) {
+    for (auto &flow : flows_) {
         if (flow->getName() == name) {
             return flow;
         }
@@ -106,7 +144,7 @@ Flow *ModelImpl::getFlow(string name) {
 }
 
 System *ModelImpl::getSystem(string name) {
-    for (auto &system : systems) {
+    for (auto &system : systems_) {
         if (system->getName() == name) {
             return system;
         }
@@ -114,16 +152,20 @@ System *ModelImpl::getSystem(string name) {
     return nullptr;
 }
 
-bool ModelImpl::remove(string name) {
-    for (auto it = flows.begin(); it != flows.end(); ++it) {
+bool ModelImpl::deleteFlow(string name) {
+    for (auto it = flows_.begin(); it != flows_.end(); ++it) {
         if ((*it)->getName() == name) {
-            flows.erase(it);
+            flows_.erase(it);
             return true;
         }
     }
-    for (auto it = systems.begin(); it != systems.end(); ++it) {
+    return false;
+}
+
+bool ModelImpl::deleteSystem(string name) {
+    for (auto it = systems_.begin(); it != systems_.end(); ++it) {
         if ((*it)->getName() == name) {
-            systems.erase(it);
+            systems_.erase(it);
             return true;
         }
     }
@@ -131,11 +173,11 @@ bool ModelImpl::remove(string name) {
 }
 
 string ModelImpl::getName() const {
-    return name;
+    return name_;
 }
 
 void ModelImpl::setName(string name) {
-    this->name = name;
+    this->name_ = name;
 }
 
 string ModelImpl::report() {
@@ -143,61 +185,71 @@ string ModelImpl::report() {
     ss << "===========================================================" << endl;
     ss << "Modelo: " << this->getName() << endl;
     ss << "----------------------- Sistemas --------------------------" << endl;
-    for (auto &system:systems) {
+    for (auto &system:systems_) {
         ss << "Sistema: " << system->getName() << " - " << system->getValue() << endl;
     }
     ss << "------------------------ Fluxos ---------------------------" << endl;
-    for (auto &flow:flows) {
+    for (auto &flow:flows_) {
         ss << "Fluxo: " << flow->getName() << endl;
     }
     ss << "===========================================================" << endl;
     return ss.str();
 }
 
-ModelImpl &ModelImpl::operator=(const ModelImpl &rhs) {
-    if (&rhs == this) {
-        return *this;
-    }
-
-    for (auto &system:rhs.systems) {
-        auto *newSystem = dynamic_cast<SystemImpl *>(system);
-        auto *copySystem = new SystemImpl((*newSystem));
-        this->add(copySystem);
-    }
-
-    for (auto &flow:rhs.flows) {
-        auto *flowExp = dynamic_cast<FlowExp *>(flow);
-        if (flowExp != nullptr) {
-            Flow *copyFlow = new FlowExp((*flowExp));
-            for (System *system : systems) {
-                if ((copyFlow->getSource() != nullptr) && *(copyFlow->getSource()) == (*system)) {
-                    copyFlow->setSource(system);
-                } else if ((copyFlow->getTarget() != nullptr) && *(copyFlow->getTarget()) == (*system)) {
-                    copyFlow->setTarget(system);
-                }
-            }
-            this->add(copyFlow);
-            continue;
-        }
-        auto *flowLog = dynamic_cast<FlowLog *>(flow);
-        if (flowLog != nullptr) {
-            Flow *copyFlow = new FlowLog((*flowLog));
-            for (System *system: systems) {
-                if ((copyFlow->getSource() != nullptr) && *(copyFlow->getSource()) == (*system)) {
-                    copyFlow->setSource(system);
-                } else if ((copyFlow->getTarget() != nullptr) && *(copyFlow->getTarget()) == (*system)) {
-                    copyFlow->setTarget(system);
-                }
-            }
-            this->add(copyFlow);
-            continue;
-        }
-    }
-
-    this->setName(rhs.getName());
-
-    return *this;
+System *ModelImpl::createSystem(string name) {
+    return this->createSystem(name, 0);
 }
+
+System *ModelImpl::createSystem(string name, double initValue) {
+    System *system = new SystemImpl(name, initValue);
+    add(system);
+    return system;
+}
+
+//ModelImpl &ModelImpl::operator=(const ModelImpl &rhs) {
+//    if (&rhs == this) {
+//        return *this;
+//    }
+//
+//    for (auto &system:rhs.systems_) {
+//        auto *newSystem = dynamic_cast<SystemImpl *>(system);
+//        auto *copySystem = new SystemImpl((*newSystem));
+//        this->add(copySystem);
+//    }
+//
+//    for (auto &flow:rhs.flows_) {
+//        auto *flowExp = dynamic_cast<FlowExp *>(flow);
+//        if (flowExp != nullptr) {
+//            Flow *copyFlow = new FlowExp((*flowExp));
+//            for (System *system : systems_) {
+//                if ((copyFlow->getSource() != nullptr) && *(copyFlow->getSource()) == (*system)) {
+//                    copyFlow->setSource(system);
+//                } else if ((copyFlow->getTarget() != nullptr) && *(copyFlow->getTarget()) == (*system)) {
+//                    copyFlow->setTarget(system);
+//                }
+//            }
+//            this->add(copyFlow);
+//            continue;
+//        }
+//        auto *flowLog = dynamic_cast<FlowLog *>(flow);
+//        if (flowLog != nullptr) {
+//            Flow *copyFlow = new FlowLog((*flowLog));
+//            for (System *system: systems_) {
+//                if ((copyFlow->getSource() != nullptr) && *(copyFlow->getSource()) == (*system)) {
+//                    copyFlow->setSource(system);
+//                } else if ((copyFlow->getTarget() != nullptr) && *(copyFlow->getTarget()) == (*system)) {
+//                    copyFlow->setTarget(system);
+//                }
+//            }
+//            this->add(copyFlow);
+//            continue;
+//        }
+//    }
+//
+//    this->setName(rhs.getName());
+//
+//    return *this;
+//}
 
 bool ModelImpl::operator==(const Model &rhs) {
     bool resp = this->getName() == rhs.getName();
@@ -205,9 +257,9 @@ bool ModelImpl::operator==(const Model &rhs) {
     ModelImpl model = (ModelImpl &) rhs;
 
     bool aux;
-    for (System *system:systems) {
+    for (System *system:systems_) {
         aux = false;
-        for (System *rhsSystem:model.systems) {
+        for (System *rhsSystem:model.systems_) {
             if ((*system) == (*rhsSystem)) {
                 aux = true;
                 continue;
@@ -218,9 +270,9 @@ bool ModelImpl::operator==(const Model &rhs) {
         }
     }
 
-    for (auto &flow:flows) {
+    for (auto &flow:flows_) {
         aux = false;
-        for (auto &rhsFlow:model.flows) {
+        for (auto &rhsFlow:model.flows_) {
             if (flow == rhsFlow) {
                 aux = true;
                 continue;

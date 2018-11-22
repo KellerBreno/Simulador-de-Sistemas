@@ -4,7 +4,7 @@
 
 #include "FlowExp.h"
 
-FlowExp::FlowExp(const string &name, double tax) : FlowImpl(name), tax(tax) {}
+FlowExp::FlowExp(const string &name) : FlowImpl(name), tax(0.01) {}
 
 FlowExp::FlowExp(const FlowExp &rhs) : FlowImpl(rhs.getName()) {
     if (&rhs == this) {

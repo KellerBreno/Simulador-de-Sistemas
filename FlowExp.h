@@ -5,7 +5,7 @@
 #ifndef SIMULADOR_FLOWEXP_H
 #define SIMULADOR_FLOWEXP_H
 
-#include "FlowImpl.h"
+#include "src/FlowImpl.h"
 
 class FlowExp : public FlowImpl {
 
@@ -13,7 +13,7 @@ private:
     double tax;
 
 public:
-    FlowExp(const string &name, double tax);
+    FlowExp(const string &name);
 
     FlowExp(const FlowExp &rhs);
 
