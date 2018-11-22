@@ -26,14 +26,6 @@ bool Model::deleteModel(string name) {
 }
 
 bool ModelImpl::deleteModel(string name) {
-//    for (Model *m:models_) {
-//        if (m->getName() == name) {
-//            delete (ModelImpl *) m;
-//            //delete
-//            return true;
-//        }
-//    }
-
     for (auto it = models_.begin(); it != models_.end(); ++it) {
         if ((*it)->getName() == name) {
             models_.erase(it);
@@ -126,14 +118,6 @@ void ModelImpl::simulate(int initialTime, int endTime, int step) {
     }
 }
 
-void ModelImpl::add(Flow *f) {
-    flows_.push_back(f);
-}
-
-void ModelImpl::add(System *s) {
-    systems_.push_back(s);
-}
-
 Flow *ModelImpl::getFlow(string name) {
     for (auto &flow : flows_) {
         if (flow->getName() == name) {
@@ -156,6 +140,8 @@ bool ModelImpl::deleteFlow(string name) {
     for (auto it = flows_.begin(); it != flows_.end(); ++it) {
         if ((*it)->getName() == name) {
             flows_.erase(it);
+            // TODO Conhecer tipo
+            delete (*it);
             return true;
         }
     }
@@ -166,6 +152,7 @@ bool ModelImpl::deleteSystem(string name) {
     for (auto it = systems_.begin(); it != systems_.end(); ++it) {
         if ((*it)->getName() == name) {
             systems_.erase(it);
+            delete (SystemImpl*) (*it);
             return true;
         }
     }
@@ -204,6 +191,45 @@ System *ModelImpl::createSystem(string name, double initValue) {
     System *system = new SystemImpl(name, initValue);
     add(system);
     return system;
+}
+
+bool ModelImpl::operator==(const Model &rhs) {
+    bool resp = this->getName() == rhs.getName();
+
+    ModelImpl model = (ModelImpl &) rhs;
+
+    bool aux;
+    for (System *system:systems_) {
+        aux = false;
+        for (System *rhsSystem:model.systems_) {
+            if ((*system) == (*rhsSystem)) {
+                aux = true;
+                continue;
+            }
+        }
+        if (!aux) {
+            resp = false;
+        }
+    }
+
+    for (auto &flow:flows_) {
+        aux = false;
+        for (auto &rhsFlow:model.flows_) {
+            if (flow == rhsFlow) {
+                aux = true;
+                continue;
+            }
+        }
+        if (!aux) {
+            resp = false;
+        }
+    }
+
+    return resp;
+}
+
+bool ModelImpl::operator!=(const Model &rhs) {
+    return !(*this == rhs);
 }
 
 //ModelImpl &ModelImpl::operator=(const ModelImpl &rhs) {
@@ -251,41 +277,10 @@ System *ModelImpl::createSystem(string name, double initValue) {
 //    return *this;
 //}
 
-bool ModelImpl::operator==(const Model &rhs) {
-    bool resp = this->getName() == rhs.getName();
-
-    ModelImpl model = (ModelImpl &) rhs;
-
-    bool aux;
-    for (System *system:systems_) {
-        aux = false;
-        for (System *rhsSystem:model.systems_) {
-            if ((*system) == (*rhsSystem)) {
-                aux = true;
-                continue;
-            }
-        }
-        if (!aux) {
-            resp = false;
-        }
-    }
-
-    for (auto &flow:flows_) {
-        aux = false;
-        for (auto &rhsFlow:model.flows_) {
-            if (flow == rhsFlow) {
-                aux = true;
-                continue;
-            }
-        }
-        if (!aux) {
-            resp = false;
-        }
-    }
-
-    return resp;
+void ModelImpl::add(Flow *f) {
+    flows_.push_back(f);
 }
 
-bool ModelImpl::operator!=(const Model &rhs) {
-    return !(*this == rhs);
+void ModelImpl::add(System *s) {
+    systems_.push_back(s);
 }

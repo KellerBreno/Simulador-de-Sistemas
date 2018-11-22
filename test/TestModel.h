@@ -13,19 +13,18 @@ public:
 private:
     static void unitConstructor();
 
-    static void unitCopyConstructor();
+    // static void unitCopyConstructor();
 
-    static void unitOperator();
+    // static void unitOperator();
 
     static void unitSimulate();
 
-    static void unitAdd();
+    // Métodos protected
+    //static void unitAdd();
 
     static void unitGetFlow();
 
     static void unitGetSystem();
-
-    static void unitRemove();
 
     static void unitGetName();
 
@@ -33,8 +32,20 @@ private:
 
     static void unitReport();
 
-    static void unitEqual();
-};
+    static void unitEqualDifferent();
 
+    static void unitDeleteSystem();
+
+    static void unitDeleteFlow();
+
+    static void unitCreateSystem();
+
+    static void unitCreateFlow();
+
+    static void unitCreateModel();
+
+    static void unitDeleteModel();
+
+};
 
 #endif //SIMULADOR_TESTMODEL_H

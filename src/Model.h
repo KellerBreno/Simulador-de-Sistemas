@@ -50,17 +50,15 @@ public:
 
     template<typename T_FLOW_IMPL>
     Flow *createFlow(string name) {
-        Flow *flow = new T_FLOW_IMPL(name);
-        add(flow);
-        return flow;
+        return createFlow<T_FLOW_IMPL>(name, nullptr, nullptr);
     };
-
-    // TODO Não é possivel copiar sem conhecer a implementação de flow
-    // virtual Model &operator=(const Model &rhs) = 0;
 
     virtual bool operator==(const Model &rhs) = 0;
 
     virtual bool operator!=(const Model &rhs) = 0;
+
+    // TODO Não é possivel copiar sem conhecer a implementação de flow
+    // virtual Model &operator=(const Model &rhs) = 0;
 
 protected:
     virtual void add(Flow *f) = 0;

@@ -6,13 +6,9 @@
 
 FlowLog::FlowLog(const string &name) : FlowImpl(name) {}
 
-FlowLog::FlowLog(const FlowLog &rhs) : FlowImpl(rhs.getName()) {
-    if (&rhs == this) {
-        return;
-    }
-    this->setTarget(rhs.getTarget());
-    this->setSource(rhs.getSource());
-}
+FlowLog::FlowLog(const string &name, System *source, System *target) : FlowImpl(name, source, target) {}
+
+FlowLog::FlowLog(const Flow &rhs) : FlowImpl(rhs) {}
 
 FlowLog::~FlowLog() {
 
@@ -24,14 +20,4 @@ double FlowLog::execute() {
     }
     double aux = this->getTarget()->getValue();
     return 0.01 * aux * (1 - (aux / 70));
-}
-
-FlowLog &FlowLog::operator=(const FlowLog &rhs) {
-    if (&rhs == this) {
-        return *this;
-    }
-    this->setTarget(rhs.getTarget());
-    this->setSource(rhs.getSource());
-    this->setName(rhs.getName());
-    return *this;
 }

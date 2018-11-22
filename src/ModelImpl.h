@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "Model.h"
+#include "../test/TestModel.h"
 
 using namespace std;
 
@@ -52,11 +53,11 @@ public:
 
     System *createSystem(string name, double initValue) override;
 
-    // Model &operator=(const Model &rhs) override;
-
     bool operator==(const Model &rhs) override;
 
     bool operator!=(const Model &rhs) override;
+
+    // Model &operator=(const Model &rhs) override;
 
 protected:
     void add(Flow *f) override;

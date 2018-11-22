@@ -4,16 +4,11 @@
 
 #include "FlowExp.h"
 
-FlowExp::FlowExp(const string &name) : FlowImpl(name), tax(0.01) {}
+FlowExp::FlowExp(const string &name) : FlowImpl(name) {}
 
-FlowExp::FlowExp(const FlowExp &rhs) : FlowImpl(rhs.getName()) {
-    if (&rhs == this) {
-        return;
-    }
-    this->setTarget(rhs.getTarget());
-    this->setSource(rhs.getSource());
-    this->setTax(rhs.getTax());
-}
+FlowExp::FlowExp(const string &name, System *source, System *target) : FlowImpl(name, source, target) {}
+
+FlowExp::FlowExp(const Flow &rhs) : FlowImpl(rhs) {}
 
 FlowExp::~FlowExp() {
 
@@ -23,24 +18,5 @@ double FlowExp::execute() {
     if (this->getSource() == nullptr) {
         return 0;
     }
-    return tax * this->getSource()->getValue();
-}
-
-double FlowExp::getTax() const {
-    return tax;
-}
-
-void FlowExp::setTax(double tax) {
-    this->tax = tax;
-}
-
-FlowExp &FlowExp::operator=(const FlowExp &rhs) {
-    if (&rhs == this) {
-        return *this;
-    }
-    this->setTarget(rhs.getTarget());
-    this->setSource(rhs.getSource());
-    this->setName(rhs.getName());
-    this->setTax(rhs.getTax());
-    return *this;
+    return 0.01 * this->getSource()->getValue();
 }

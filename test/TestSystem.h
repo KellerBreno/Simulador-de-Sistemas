@@ -24,7 +24,7 @@ private:
 
     static void unitSetName();
 
-    static void unitEqual();
+    static void unitEqualDifferent();
 };
 
 

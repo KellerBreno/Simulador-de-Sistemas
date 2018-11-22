@@ -12,13 +12,13 @@ using namespace std;
 class SystemImpl : public System {
 
 private:
-    string name;
-    double value{};
+    string name_;
+    double value_;
 
 public:
     SystemImpl(const string &name, double value);
 
-    SystemImpl(const SystemImpl &rhs);
+    SystemImpl(const System &rhs);
 
     virtual ~SystemImpl();
 
@@ -30,11 +30,11 @@ public:
 
     void setName(string name) override;
 
-    SystemImpl &operator=(const SystemImpl &rhs);
-
     bool operator==(const System &rhs) override;
 
     bool operator!=(const System &rhs) override;
+
+    System& operator=(const System& rhs) override;
 };
 
 

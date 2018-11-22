@@ -22,6 +22,8 @@ public:
     virtual bool operator==(const System &rhs) = 0;
 
     virtual bool operator!=(const System &rhs) = 0;
+
+    virtual System& operator=(const System& rhs) = 0;
 };
 
 
