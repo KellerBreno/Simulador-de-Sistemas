@@ -40,7 +40,7 @@ bool SystemImpl::operator!=(const System &rhs) {
     return !(*this == rhs);
 }
 
-System &SystemImpl::operator=(const System &rhs) {
+SystemImpl &SystemImpl::operator=(const SystemImpl &rhs) {
     if (&rhs == this) {
         return *this;
     }

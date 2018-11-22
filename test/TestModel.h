@@ -32,7 +32,8 @@ private:
 
     static void unitReport();
 
-    static void unitEqualDifferent();
+    // Dependente da copia de modelos
+    // static void unitEqualDifferent();
 
     static void unitDeleteSystem();
 

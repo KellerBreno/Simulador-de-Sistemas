@@ -81,6 +81,8 @@ void TestFlow::unitConstructor() {
     delete (FlowExp *) otherExp;
     delete (FlowExp *) anotherExp;
     delete (FlowExp *) anotherOtherExp;
+    delete (SystemImpl *) source;
+    delete (SystemImpl *) target;
 
     cout << "OK" << endl;
 }
@@ -222,6 +224,8 @@ void TestFlow::unitGetSource() {
 
     delete (FlowLog *) log;
     delete (FlowExp *) exp;
+    delete (SystemImpl *) s1;
+    delete (SystemImpl *) s2;
 
     cout << "OK" << endl;
 }
@@ -299,6 +303,8 @@ void TestFlow::unitGetTarget() {
     delete (FlowLog *) anotherLog;
     delete (FlowExp *) exp;
     delete (FlowExp *) anotherExp;
+    delete (SystemImpl *) s1;
+    delete (SystemImpl *) s2;
 
     cout << "OK" << endl;
 }

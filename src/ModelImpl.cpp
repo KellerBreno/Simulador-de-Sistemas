@@ -16,6 +16,9 @@ Model *Model::createModel(string name) {
 }
 
 Model *ModelImpl::createModel(string name) {
+    if (name.empty()) {
+        return nullptr;
+    }
     Model *m = new ModelImpl(name);
     models_.push_back(m);
     return m;
@@ -27,9 +30,10 @@ bool Model::deleteModel(string name) {
 
 bool ModelImpl::deleteModel(string name) {
     for (auto it = models_.begin(); it != models_.end(); ++it) {
-        if ((*it)->getName() == name) {
+        ModelImpl *m = dynamic_cast<ModelImpl*>(*it);
+        if (m->getName() == name) {
             models_.erase(it);
-            delete (ModelImpl *) (*it);
+            delete m;
             return true;
         }
     }
@@ -128,7 +132,7 @@ Flow *ModelImpl::getFlow(string name) {
 }
 
 System *ModelImpl::getSystem(string name) {
-    for (auto &system : systems_) {
+    for (System* &system : systems_) {
         if (system->getName() == name) {
             return system;
         }
@@ -138,10 +142,10 @@ System *ModelImpl::getSystem(string name) {
 
 bool ModelImpl::deleteFlow(string name) {
     for (auto it = flows_.begin(); it != flows_.end(); ++it) {
-        if ((*it)->getName() == name) {
+        FlowImpl *f = dynamic_cast<FlowImpl*>(*it);
+        if (f->getName() == name) {
             flows_.erase(it);
-            // TODO Conhecer tipo
-            delete (*it);
+            delete f;
             return true;
         }
     }
@@ -150,9 +154,10 @@ bool ModelImpl::deleteFlow(string name) {
 
 bool ModelImpl::deleteSystem(string name) {
     for (auto it = systems_.begin(); it != systems_.end(); ++it) {
-        if ((*it)->getName() == name) {
+        SystemImpl *s = dynamic_cast<SystemImpl*>(*it);
+        if (s->getName() == name) {
             systems_.erase(it);
-            delete (SystemImpl*) (*it);
+            delete s;
             return true;
         }
     }

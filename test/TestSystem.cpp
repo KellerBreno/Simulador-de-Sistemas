@@ -63,16 +63,16 @@ void TestSystem::unitCopyConstructor() {
 void TestSystem::unitOperator() {
     cout << "operator=: ";
 
-    System *system = new SystemImpl("s1", 0);
-    System *newSystem = new SystemImpl("s2", 50);
+    SystemImpl *system = new SystemImpl("s1", 0);
+    SystemImpl *newSystem = new SystemImpl("s2", 50);
     (*newSystem) = (*system);
 
     assert(system != newSystem);
     assert(system->getName() == newSystem->getName());
     assert(system->getValue() == newSystem->getValue());
 
-    delete (SystemImpl *) system;
-    delete (SystemImpl *) newSystem;
+    delete system;
+    delete newSystem;
 
     cout << "OK" << endl;
 }
