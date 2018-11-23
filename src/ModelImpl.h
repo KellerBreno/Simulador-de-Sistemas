@@ -54,6 +54,8 @@ public:
 
     System *createSystem(string name, double initValue) override;
 
+    System *createSystem(System *system) override;
+
     bool operator==(const Model &rhs) override;
 
     bool operator!=(const Model &rhs) override;

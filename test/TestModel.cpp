@@ -404,6 +404,10 @@ void TestModel::unitCreateSystem() {
     assert(s2->getName() == "s2");
     assert(fabs(s2->getValue() - 100) < 0.0001);
 
+    System *s3 = m->createSystem(s2);
+    assert (s2 != s3);
+    assert((*s2) == (*s3));
+
     Model::deleteModel("model");
 
     cout << "OK" << endl;

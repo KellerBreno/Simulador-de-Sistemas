@@ -24,12 +24,12 @@ Model *ModelImpl::createModel(string name) {
     return m;
 };
 
-Model *Model::createModel(Model *model){
+Model *Model::createModel(Model *model) {
     return ModelImpl::createModel(model);
 }
 
-Model *ModelImpl::createModel(Model *model){
-    ModelImpl *cast = dynamic_cast<ModelImpl*>(model);
+Model *ModelImpl::createModel(Model *model) {
+    ModelImpl *cast = dynamic_cast<ModelImpl *>(model);
     Model *m = new ModelImpl((*cast));
     models_.push_back(m);
     return m;
@@ -63,7 +63,7 @@ ModelImpl::ModelImpl(const ModelImpl &rhs) {
     }
 
     for (Flow *flow:rhs.flows_) {
-        Flow *copy = flow->clone();
+        Flow *copy = this->createFlow(flow);
         for (System *system : systems_) {
             if ((copy->getSource() != nullptr) && *(copy->getSource()) == (*system)) {
                 copy->setSource(system);
@@ -71,7 +71,6 @@ ModelImpl::ModelImpl(const ModelImpl &rhs) {
                 copy->setTarget(system);
             }
         }
-        this->add(copy);
     }
 
     this->setName(rhs.getName());
@@ -188,6 +187,12 @@ System *ModelImpl::createSystem(string name, double initValue) {
     System *system = new SystemImpl(name, initValue);
     add(system);
     return system;
+}
+
+System *ModelImpl::createSystem(System *system) {
+    System *copy = new SystemImpl(system->getName(), system->getValue());
+    add(copy);
+    return copy;
 }
 
 bool ModelImpl::operator==(const Model &rhs) {

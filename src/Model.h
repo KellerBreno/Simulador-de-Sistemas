@@ -43,6 +43,8 @@ public:
 
     virtual System *createSystem(string name, double initValue) = 0;
 
+    virtual System *createSystem(System *system) = 0;
+
     template<typename T_FLOW_IMPL>
     Flow *createFlow(string name, System *s1, System *s2) {
         Flow *flow = new T_FLOW_IMPL(name, s1, s2);
@@ -54,6 +56,12 @@ public:
     Flow *createFlow(string name) {
         return createFlow<T_FLOW_IMPL>(name, nullptr, nullptr);
     };
+
+    Flow* createFlow(Flow *flow){
+        Flow *copy = flow->clone();
+        add(copy);
+        return copy;
+    }
 
     virtual bool operator==(const Model &rhs) = 0;
 
