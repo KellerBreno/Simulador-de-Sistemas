@@ -22,12 +22,13 @@ public:
 
     static Model *createModel(string name);
 
+    static Model *createModel(Model *model);
+
     static bool deleteModel(string name);
 
     ModelImpl(const string &name);
 
-    // TODO Não é possivel copiar sem conhecer a implementação de flow
-    // ModelImpl(const ModelImpl &rhs);
+    ModelImpl(const ModelImpl &rhs);
 
     virtual ~ModelImpl();
 

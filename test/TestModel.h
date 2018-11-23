@@ -13,7 +13,7 @@ public:
 private:
     static void unitConstructor();
 
-    // static void unitCopyConstructor();
+    static void unitCopyConstructor();
 
     // static void unitOperator();
 
@@ -45,8 +45,9 @@ private:
 
     static void unitCreateModel();
 
-    static void unitDeleteModel();
+    static void unitCreateModelCopy();
 
+    static void unitDeleteModel();
 };
 
 #endif //SIMULADOR_TESTMODEL_H

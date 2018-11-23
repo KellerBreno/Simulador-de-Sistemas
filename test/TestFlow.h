@@ -31,6 +31,8 @@ private:
     static void unitSetName();
 
     static void unitEqualDifferent();
+
+    static void unitClone();
 };
 
 #endif //SIMULADOR_TESTFLOW_H

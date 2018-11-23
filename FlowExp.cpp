@@ -20,3 +20,8 @@ double FlowExp::execute() {
     }
     return 0.01 * this->getSource()->getValue();
 }
+
+Flow *FlowExp::clone() {
+    Flow *flow = new FlowExp(*this);
+    return flow;
+}

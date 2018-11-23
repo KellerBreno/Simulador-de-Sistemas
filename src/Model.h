@@ -17,6 +17,8 @@ public:
 
     static Model *createModel(string name);
 
+    static Model *createModel(Model *model);
+
     static bool deleteModel(string name);
 
     virtual void simulate(int initialTime, int endTime) = 0;

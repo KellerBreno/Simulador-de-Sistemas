@@ -16,6 +16,7 @@ void TestFlow::run() {
     TestFlow::unitConstructor();
     TestFlow::unitEqualDifferent();
     TestFlow::unitCopyConstructor();
+    TestFlow::unitClone();
     TestFlow::unitOperator();
     TestFlow::unitGetName();
     TestFlow::unitSetName();
@@ -432,6 +433,42 @@ void TestFlow::unitEqualDifferent() {
     delete (FlowLog *) f2;
     delete (FlowExp *) f3;
     delete (FlowExp *) f4;
+
+    cout << "OK" << endl;
+}
+
+void TestFlow::unitClone() {
+    cout << "clone: ";
+
+    System *s1 = new SystemImpl("s1", 0);
+    System *s2 = new SystemImpl("s2", 0);
+
+    Flow *log = new FlowLog("log");
+    log->setSource(s1);
+    log->setTarget(s2);
+    Flow *newLog = log->clone();
+
+    assert(newLog != log);
+    assert(log->getName() == newLog->getName());
+    assert(log->getSource() == newLog->getSource());
+    assert(log->getTarget() == newLog->getTarget());
+
+    Flow *exp = new FlowExp("exp");
+    exp->setSource(s1);
+    exp->setTarget(s2);
+    Flow *newExp = exp->clone();
+
+    assert(newExp != exp);
+    assert(exp->getName() == newExp->getName());
+    assert(exp->getSource() == newExp->getSource());
+    assert(exp->getTarget() == newExp->getTarget());
+
+    delete (SystemImpl *) s1;
+    delete (SystemImpl *) s2;
+    delete (FlowLog *) log;
+    delete (FlowLog *) newLog;
+    delete (FlowExp *) exp;
+    delete (FlowExp *) newExp;
 
     cout << "OK" << endl;
 }

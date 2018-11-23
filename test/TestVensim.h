@@ -17,7 +17,7 @@ private:
 
     static void modelWithLoop();
 
-    // static void modelCopy();
+    static void modelCopy();
 
     // static void modelAtrib();
 };

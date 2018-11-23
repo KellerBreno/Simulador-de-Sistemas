@@ -24,13 +24,24 @@ Model *ModelImpl::createModel(string name) {
     return m;
 };
 
+Model *Model::createModel(Model *model){
+    return ModelImpl::createModel(model);
+}
+
+Model *ModelImpl::createModel(Model *model){
+    ModelImpl *cast = dynamic_cast<ModelImpl*>(model);
+    Model *m = new ModelImpl((*cast));
+    models_.push_back(m);
+    return m;
+}
+
 bool Model::deleteModel(string name) {
     return ModelImpl::deleteModel(name);
 }
 
 bool ModelImpl::deleteModel(string name) {
     for (auto it = models_.begin(); it != models_.end(); ++it) {
-        ModelImpl *m = dynamic_cast<ModelImpl*>(*it);
+        ModelImpl *m = dynamic_cast<ModelImpl *>(*it);
         if (m->getName() == name) {
             models_.erase(it);
             delete m;
@@ -42,48 +53,29 @@ bool ModelImpl::deleteModel(string name) {
 
 ModelImpl::ModelImpl(const string &name) : name_(name) {}
 
-//ModelImpl::ModelImpl(const ModelImpl &rhs) {
-//    if (&rhs == this) {
-//        return;
-//    }
-//
-//    for (auto &system:rhs.systems_) {
-//        auto *newSystem = dynamic_cast<SystemImpl *>(system);
-//        auto *copySystem = new SystemImpl((*newSystem));
-//        this->add(copySystem);
-//    }
-//
-//    for (auto &flow:rhs.flows_) {
-//        auto *flowExp = dynamic_cast<FlowExp *>(flow);
-//        if (flowExp != nullptr) {
-//            Flow *copyFlow = new FlowExp((*flowExp));
-//            for (System *system : systems_) {
-//                if ((copyFlow->getSource() != nullptr) && *(copyFlow->getSource()) == (*system)) {
-//                    copyFlow->setSource(system);
-//                } else if ((copyFlow->getTarget() != nullptr) && *(copyFlow->getTarget()) == (*system)) {
-//                    copyFlow->setTarget(system);
-//                }
-//            }
-//            this->add(copyFlow);
-//            continue;
-//        }
-//        auto *flowLog = dynamic_cast<FlowLog *>(flow);
-//        if (flowLog != nullptr) {
-//            Flow *copyFlow = new FlowLog((*flowLog));
-//            for (System *system : systems_) {
-//                if ((copyFlow->getSource() != nullptr) && *(copyFlow->getSource()) == (*system)) {
-//                    copyFlow->setSource(system);
-//                } else if ((copyFlow->getTarget() != nullptr) && *(copyFlow->getTarget()) == (*system)) {
-//                    copyFlow->setTarget(system);
-//                }
-//            }
-//            this->add(copyFlow);
-//            continue;
-//        }
-//    }
-//
-//    this->setName(rhs.getName());
-//}
+ModelImpl::ModelImpl(const ModelImpl &rhs) {
+    if (&rhs == this) {
+        return;
+    }
+
+    for (System *system:rhs.systems_) {
+        this->createSystem(system->getName(), system->getValue());
+    }
+
+    for (Flow *flow:rhs.flows_) {
+        Flow *copy = flow->clone();
+        for (System *system : systems_) {
+            if ((copy->getSource() != nullptr) && *(copy->getSource()) == (*system)) {
+                copy->setSource(system);
+            } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == (*system)) {
+                copy->setTarget(system);
+            }
+        }
+        this->add(copy);
+    }
+
+    this->setName(rhs.getName());
+}
 
 ModelImpl::~ModelImpl() {
     for (auto &system : systems_) {
@@ -132,7 +124,7 @@ Flow *ModelImpl::getFlow(string name) {
 }
 
 System *ModelImpl::getSystem(string name) {
-    for (System* &system : systems_) {
+    for (System *&system : systems_) {
         if (system->getName() == name) {
             return system;
         }
@@ -142,7 +134,7 @@ System *ModelImpl::getSystem(string name) {
 
 bool ModelImpl::deleteFlow(string name) {
     for (auto it = flows_.begin(); it != flows_.end(); ++it) {
-        FlowImpl *f = dynamic_cast<FlowImpl*>(*it);
+        FlowImpl *f = dynamic_cast<FlowImpl *>(*it);
         if (f->getName() == name) {
             flows_.erase(it);
             delete f;
@@ -154,7 +146,7 @@ bool ModelImpl::deleteFlow(string name) {
 
 bool ModelImpl::deleteSystem(string name) {
     for (auto it = systems_.begin(); it != systems_.end(); ++it) {
-        SystemImpl *s = dynamic_cast<SystemImpl*>(*it);
+        SystemImpl *s = dynamic_cast<SystemImpl *>(*it);
         if (s->getName() == name) {
             systems_.erase(it);
             delete s;

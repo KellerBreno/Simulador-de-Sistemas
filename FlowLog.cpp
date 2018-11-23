@@ -21,3 +21,8 @@ double FlowLog::execute() {
     double aux = this->getTarget()->getValue();
     return 0.01 * aux * (1 - (aux / 70));
 }
+
+Flow *FlowLog::clone() {
+    Flow *flow = new FlowLog(*this);
+    return flow;
+}

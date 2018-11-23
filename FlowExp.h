@@ -19,6 +19,8 @@ public:
     virtual ~FlowExp();
 
     double execute() override;
+
+    Flow* clone() override;
 };
 
 
