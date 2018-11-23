@@ -19,7 +19,7 @@ private:
 
     static void modelCopy();
 
-    // static void modelAtrib();
+    static void modelAtrib();
 };
 
 

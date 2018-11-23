@@ -62,7 +62,7 @@ public:
 
     bool operator!=(const Model &rhs) override;
 
-    // Model &operator=(const Model &rhs) override;
+    Model &operator=(Model &rhs) override;
 
     flowIterator beginFlows() override;
 

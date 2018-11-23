@@ -71,16 +71,16 @@ public:
 
     virtual bool operator!=(const Model &rhs) = 0;
 
-    // TODO Não é possivel copiar sem conhecer a implementação de flow e iteradores
-    // virtual Model &operator=(const Model &rhs) = 0;
+    // TODO implementação para const
+    virtual Model &operator=(Model &rhs) = 0;
 
-     virtual flowIterator beginFlows() = 0;
+    virtual flowIterator beginFlows() = 0;
 
-     virtual flowIterator endFlows() = 0;
+    virtual flowIterator endFlows() = 0;
 
-     virtual systemIterator beginSystems() = 0;
+    virtual systemIterator beginSystems() = 0;
 
-     virtual systemIterator endSystems() = 0;
+    virtual systemIterator endSystems() = 0;
 
 protected:
     virtual void add(Flow *f) = 0;

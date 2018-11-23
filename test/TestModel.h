@@ -15,7 +15,7 @@ private:
 
     static void unitCopyConstructor();
 
-    // static void unitOperator();
+    static void unitOperator();
 
     static void unitSimulate();
 
