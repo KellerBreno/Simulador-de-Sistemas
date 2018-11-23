@@ -34,7 +34,7 @@ public:
 
     bool operator!=(const System &rhs) override;
 
-    SystemImpl& operator=(const SystemImpl& rhs);
+    SystemImpl &operator=(const SystemImpl &rhs);
 };
 
 

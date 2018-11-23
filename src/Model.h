@@ -57,7 +57,7 @@ public:
         return createFlow<T_FLOW_IMPL>(name, nullptr, nullptr);
     };
 
-    Flow* createFlow(Flow *flow){
+    Flow *createFlow(Flow *flow) {
         Flow *copy = flow->clone();
         add(copy);
         return copy;
@@ -67,8 +67,17 @@ public:
 
     virtual bool operator!=(const Model &rhs) = 0;
 
-    // TODO Não é possivel copiar sem conhecer a implementação de flow
+    // TODO Não é possivel copiar sem conhecer a implementação de flow e iteradores
     // virtual Model &operator=(const Model &rhs) = 0;
+
+    // TODO especificar iteradores sem forçar tipagem de implementação
+    // virtual flowIterator beginFlows() = 0;
+
+    // virtual flowIterator endFlows() = 0;
+
+    // virtual systemIterator beginSystems() = 0;
+
+    // virtual systemIterator endSystems() = 0;
 
 protected:
     virtual void add(Flow *f) = 0;

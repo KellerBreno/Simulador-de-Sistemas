@@ -5,8 +5,9 @@
 #ifndef SIMULADOR_FLOWIMPL_H
 #define SIMULADOR_FLOWIMPL_H
 
-
 #include "Flow.h"
+
+using namespace std;
 
 class FlowImpl : public Flow {
 private:
@@ -39,7 +40,7 @@ public:
 
     bool operator!=(const Flow &rhs) override;
 
-    Flow& operator=(const Flow& rhs) override;
+    Flow &operator=(const Flow &rhs) override;
 };
 
 

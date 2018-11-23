@@ -3,11 +3,11 @@
 //
 
 #include "FlowImpl.h"
-#include "SystemImpl.h"
 
 FlowImpl::FlowImpl(const string &name) : name_(name), source_(nullptr), target_(nullptr) {}
 
-FlowImpl::FlowImpl(const string &name, System *source, System *target) : name_(name), source_(source), target_(target) {}
+FlowImpl::FlowImpl(const string &name, System *source, System *target) : name_(name), source_(source),
+                                                                         target_(target) {}
 
 FlowImpl::FlowImpl(const Flow &rhs) {
     if (&rhs == this) {
@@ -59,7 +59,7 @@ bool FlowImpl::operator!=(const Flow &rhs) {
     return !(*this == rhs);
 }
 
-Flow& FlowImpl::operator=(const Flow& rhs) {
+Flow &FlowImpl::operator=(const Flow &rhs) {
     if (&rhs == this) {
         return *this;
     }

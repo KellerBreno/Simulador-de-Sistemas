@@ -10,9 +10,7 @@ FlowLog::FlowLog(const string &name, System *source, System *target) : FlowImpl(
 
 FlowLog::FlowLog(const Flow &rhs) : FlowImpl(rhs) {}
 
-FlowLog::~FlowLog() {
-
-}
+FlowLog::~FlowLog() {}
 
 double FlowLog::execute() {
     if (this->getTarget() == nullptr) {

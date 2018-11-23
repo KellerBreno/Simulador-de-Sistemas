@@ -7,7 +7,6 @@
 
 #include <vector>
 #include "Model.h"
-#include "../test/TestModel.h"
 
 using namespace std;
 
@@ -19,6 +18,9 @@ private:
     string name_;
 
 public:
+
+    typedef vector<Flow *>::iterator flowIterator;
+    typedef vector<System *>::iterator systemIterator;
 
     static Model *createModel(string name);
 
@@ -61,6 +63,14 @@ public:
     bool operator!=(const Model &rhs) override;
 
     // Model &operator=(const Model &rhs) override;
+
+    // flowIterator beginFlows() override;
+
+    // flowIterator endFlows() override;
+
+    // systemIterator beginSystems() override;
+
+    // systemIterator endSystems() override;
 
 protected:
     void add(Flow *f) override;

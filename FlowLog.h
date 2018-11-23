@@ -20,7 +20,7 @@ public:
 
     double execute() override;
 
-    Flow* clone() override;
+    Flow *clone() override;
 };
 
 

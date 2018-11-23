@@ -10,9 +10,7 @@ FlowExp::FlowExp(const string &name, System *source, System *target) : FlowImpl(
 
 FlowExp::FlowExp(const Flow &rhs) : FlowImpl(rhs) {}
 
-FlowExp::~FlowExp() {
-
-}
+FlowExp::~FlowExp() {}
 
 double FlowExp::execute() {
     if (this->getSource() == nullptr) {

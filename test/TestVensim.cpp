@@ -8,7 +8,6 @@
 #include "TestVensim.h"
 #include "../src/Model.h"
 #include "../FlowExp.h"
-#include "../src/System.h"
 #include "../FlowLog.h"
 
 void TestVensim::run() {

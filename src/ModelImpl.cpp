@@ -5,9 +5,8 @@
 #include <iostream>
 #include <sstream>
 #include "ModelImpl.h"
-#include "../FlowExp.h"
-#include "../FlowLog.h"
 #include "SystemImpl.h"
+#include "FlowImpl.h"
 
 static vector<Model *> models_;
 
@@ -84,6 +83,7 @@ ModelImpl::~ModelImpl() {
     systems_.clear();
 
     for (auto &flow : flows_) {
+        // Assumindo que não foram adicionados novos atributos é possivel deleta-la assim
         delete (FlowImpl *) flow;
         flow = nullptr;
     }
@@ -286,3 +286,21 @@ void ModelImpl::add(Flow *f) {
 void ModelImpl::add(System *s) {
     systems_.push_back(s);
 }
+
+//ModelImpl::flowIterator ModelImpl::beginFlows() {
+//    return flows_.begin();
+//}
+//
+//ModelImpl::flowIterator ModelImpl::endFlows() {
+//    return flows_.end();
+//
+//}
+//
+//ModelImpl::systemIterator ModelImpl::beginSystems() {
+//    return systems_.begin();
+//
+//}
+//
+//ModelImpl::systemIterator ModelImpl::endSystems() {
+//    return systems_.end();
+//}
