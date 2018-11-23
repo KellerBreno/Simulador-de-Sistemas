@@ -6,14 +6,18 @@
 #define SIMULADOR_MODEL_H
 
 #include <string>
+#include <vector>
 #include "System.h"
 #include "Flow.h"
 
 using namespace std;
 
-// TODO Iterators
+// TODO especificar iteradores sem forçar tipagem de implementação
 class Model {
 public:
+
+    typedef vector<Flow *>::iterator flowIterator;
+    typedef vector<System *>::iterator systemIterator;
 
     static Model *createModel(string name);
 
@@ -70,14 +74,13 @@ public:
     // TODO Não é possivel copiar sem conhecer a implementação de flow e iteradores
     // virtual Model &operator=(const Model &rhs) = 0;
 
-    // TODO especificar iteradores sem forçar tipagem de implementação
-    // virtual flowIterator beginFlows() = 0;
+     virtual flowIterator beginFlows() = 0;
 
-    // virtual flowIterator endFlows() = 0;
+     virtual flowIterator endFlows() = 0;
 
-    // virtual systemIterator beginSystems() = 0;
+     virtual systemIterator beginSystems() = 0;
 
-    // virtual systemIterator endSystems() = 0;
+     virtual systemIterator endSystems() = 0;
 
 protected:
     virtual void add(Flow *f) = 0;

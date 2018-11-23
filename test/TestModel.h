@@ -48,6 +48,11 @@ private:
     static void unitCreateModelCopy();
 
     static void unitDeleteModel();
+
+    static void unitFlowIterator();
+
+    static void unitSystemIterator();
+
 };
 
 #endif //SIMULADOR_TESTMODEL_H

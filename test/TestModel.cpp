@@ -30,6 +30,8 @@ void TestModel::run() {
     TestModel::unitSetName();
     TestModel::unitSimulate();
     TestModel::unitReport();
+    TestModel::unitFlowIterator();
+    TestModel::unitSystemIterator();
     cout << "=================================================" << endl;
 }
 
@@ -482,6 +484,56 @@ void TestModel::unitDeleteModel() {
     Model *m1 = Model::createModel("teste");
 
     Model::deleteModel("teste");
+
+    cout << "OK" << endl;
+}
+
+void TestModel::unitFlowIterator() {
+    cout << "flowIterator: ";
+
+    Model *m = Model::createModel("model");
+    System *s1 = m->createSystem("s1");
+    System *s2 = m->createSystem("s2");
+    Flow *f1 = m->createFlow<FlowLog>("f1", s1, nullptr);
+    Flow *f2 = m->createFlow<FlowLog>("f2", nullptr, s2);
+    Flow *f3 = m->createFlow<FlowLog>("f3", s1, s2);
+
+    Model::flowIterator it = m->beginFlows();
+    assert((*it)->getName() == f1->getName());
+    assert((*it)->getSource() == f1->getSource());
+    assert((*it)->getTarget() == f1->getTarget());
+
+    int cont = 0;
+    for (; it != m->endFlows(); ++it) {
+        cont++;
+    }
+
+    assert(cont == 3);
+
+    Model::deleteModel("model");
+
+    cout << "OK" << endl;
+}
+
+void TestModel::unitSystemIterator() {
+    cout << "systemIterator: ";
+
+    Model *m = Model::createModel("model");
+    System *s1 = m->createSystem("s1", 50);
+    System *s2 = m->createSystem("s2");
+
+    Model::systemIterator it = m->beginSystems();
+    assert((*it)->getName() == s1->getName());
+    assert((*it)->getValue() == s1->getValue());
+
+    int cont = 0;
+    for (; it != m->endSystems(); ++it) {
+        cont++;
+    }
+
+    assert(cont == 2);
+
+    Model::deleteModel("model");
 
     cout << "OK" << endl;
 }

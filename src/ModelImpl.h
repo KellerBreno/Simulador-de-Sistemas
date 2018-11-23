@@ -19,8 +19,8 @@ private:
 
 public:
 
-    typedef vector<Flow *>::iterator flowIterator;
-    typedef vector<System *>::iterator systemIterator;
+//    typedef vector<Flow *>::iterator flowIterator;
+//    typedef vector<System *>::iterator systemIterator;
 
     static Model *createModel(string name);
 
@@ -64,13 +64,13 @@ public:
 
     // Model &operator=(const Model &rhs) override;
 
-    // flowIterator beginFlows() override;
+    flowIterator beginFlows() override;
 
-    // flowIterator endFlows() override;
+    flowIterator endFlows() override;
 
-    // systemIterator beginSystems() override;
+    systemIterator beginSystems() override;
 
-    // systemIterator endSystems() override;
+    systemIterator endSystems() override;
 
 protected:
     void add(Flow *f) override;

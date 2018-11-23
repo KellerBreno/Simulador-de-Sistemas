@@ -287,20 +287,20 @@ void ModelImpl::add(System *s) {
     systems_.push_back(s);
 }
 
-//ModelImpl::flowIterator ModelImpl::beginFlows() {
-//    return flows_.begin();
-//}
-//
-//ModelImpl::flowIterator ModelImpl::endFlows() {
-//    return flows_.end();
-//
-//}
-//
-//ModelImpl::systemIterator ModelImpl::beginSystems() {
-//    return systems_.begin();
-//
-//}
-//
-//ModelImpl::systemIterator ModelImpl::endSystems() {
-//    return systems_.end();
-//}
+Model::flowIterator ModelImpl::beginFlows() {
+    return flows_.begin();
+}
+
+Model::flowIterator ModelImpl::endFlows() {
+    return flows_.end();
+
+}
+
+Model::systemIterator ModelImpl::beginSystems() {
+    return systems_.begin();
+
+}
+
+Model::systemIterator ModelImpl::endSystems() {
+    return systems_.end();
+}
