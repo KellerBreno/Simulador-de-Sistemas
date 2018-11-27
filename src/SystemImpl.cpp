@@ -4,9 +4,9 @@
 
 #include "SystemImpl.h"
 
-SystemImpl::SystemImpl(const string &name, double value) : name(name), value(value) {}
+SystemImpl::SystemImpl(const string &name, double value) : name_(name), value_(value) {}
 
-SystemImpl::SystemImpl(const SystemImpl &rhs) {
+SystemImpl::SystemImpl(const System &rhs) {
     if (&rhs == this) {
         return;
     }
@@ -17,19 +17,27 @@ SystemImpl::SystemImpl(const SystemImpl &rhs) {
 SystemImpl::~SystemImpl() {}
 
 double SystemImpl::getValue() const {
-    return value;
+    return value_;
 }
 
 void SystemImpl::setValue(double value) {
-    this->value = value;
+    this->value_ = value;
 }
 
 string SystemImpl::getName() const {
-    return name;
+    return name_;
 }
 
 void SystemImpl::setName(string name) {
-    this->name = name;
+    this->name_ = name;
+}
+
+bool SystemImpl::operator==(const System &rhs) {
+    return (this->getValue() == rhs.getValue()) && (this->getName() == rhs.getName());
+}
+
+bool SystemImpl::operator!=(const System &rhs) {
+    return !(*this == rhs);
 }
 
 SystemImpl &SystemImpl::operator=(const SystemImpl &rhs) {
@@ -39,12 +47,4 @@ SystemImpl &SystemImpl::operator=(const SystemImpl &rhs) {
     this->setName(rhs.getName());
     this->setValue(rhs.getValue());
     return *this;
-}
-
-bool SystemImpl::operator==(const System &rhs) {
-    return (this->getValue() == rhs.getValue()) && (this->getName() == rhs.getName());
-}
-
-bool SystemImpl::operator!=(const System &rhs) {
-    return !(*this == rhs);
 }

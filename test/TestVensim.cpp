@@ -6,10 +6,11 @@
 #include <cassert>
 #include <cmath>
 #include "TestVensim.h"
-#include "../src/ModelImpl.h"
-#include "../src/FlowExp.h"
-#include "../src/SystemImpl.h"
-#include "../src/FlowLog.h"
+#include "../src/Model.h"
+
+FLOW(FlowExp, 0.01 * source)
+
+FLOW(FlowLog, 0.01 * target * (1 - (target / 70)))
 
 void TestVensim::run() {
     cout << "================= Testes Vensim =================" << endl;
@@ -24,27 +25,19 @@ void TestVensim::run() {
 void TestVensim::modelExp() {
     cout << "Teste Vensim 1: ";
 
-    System *p1 = new SystemImpl("pop1", 100);
-    System *p2 = new SystemImpl("pop2", 0);
-
-    Flow *exp = new FlowExp("exp", 0.01);
+    Model *m = Model::createModel("exponencial");
+    System *p1 = m->createSystem("pop1", 100);
+    System *p2 = m->createSystem("pop2");
+    Flow *exp = m->createFlow<FlowExp>("exp");
     exp->setSource(p1);
     exp->setTarget(p2);
-
-    Model *m = new ModelImpl("exponencial");
-    m->add(p1);
-    m->add(p2);
-    m->add(exp);
 
     m->simulate(1, 100);
 
     assert(fabs(p1->getValue() - 36.6032) < 0.0001);
     assert(fabs(p2->getValue() - 63.3968) < 0.0001);
 
-    delete (SystemImpl *) p1;
-    delete (SystemImpl *) p2;
-    delete (FlowExp *) exp;
-    delete (ModelImpl *) m;
+    Model::deleteModel("exponencial");
 
     cout << "OK" << endl;
 }
@@ -52,27 +45,20 @@ void TestVensim::modelExp() {
 void TestVensim::modelLog() {
     cout << "Teste Vensim 2: ";
 
-    System *p1 = new SystemImpl("pop1", 100);
-    System *p2 = new SystemImpl("pop2", 10);
+    Model *m = Model::createModel("logistico");
+    System *p1 = m->createSystem("pop1", 100);
+    System *p2 = m->createSystem("pop2", 10);
 
-    Flow *log = new FlowLog("log");
+    Flow *log = m->createFlow<FlowLog>("log");
     log->setSource(p1);
     log->setTarget(p2);
-
-    Model *m = new ModelImpl("logistico");
-    m->add(p1);
-    m->add(p2);
-    m->add(log);
 
     m->simulate(1, 100);
 
     assert(fabs(p1->getValue() - 88.2167) < 0.0001);
     assert(fabs(p2->getValue() - 21.7834) < 0.0001);
 
-    delete (SystemImpl *) p1;
-    delete (SystemImpl *) p2;
-    delete (FlowLog *) log;
-    delete (ModelImpl *) m;
+    Model::deleteModel("logistico");
 
     cout << "OK" << endl;
 }
@@ -80,48 +66,36 @@ void TestVensim::modelLog() {
 void TestVensim::modelWithLoop() {
     cout << "Teste Vensim 3: ";
 
-    System *q1 = new SystemImpl("Q1", 100);
-    System *q2 = new SystemImpl("Q2", 0);
-    System *q3 = new SystemImpl("Q3", 100);
-    System *q4 = new SystemImpl("Q4", 0);
-    System *q5 = new SystemImpl("Q5", 0);
+    Model *m = Model::createModel("complexo");
+    System *q1 = m->createSystem("Q1", 100);
+    System *q2 = m->createSystem("Q2");
+    System *q3 = m->createSystem("Q3", 100);
+    System *q4 = m->createSystem("Q4");
+    System *q5 = m->createSystem("Q5");
 
-    Flow *f = new FlowExp("f", 0.01);
+    Flow *f = m->createFlow<FlowExp>("f");
     f->setSource(q1);
     f->setTarget(q2);
 
-    Flow *g = new FlowExp("g", 0.01);
+    Flow *g = m->createFlow<FlowExp>("g");
     g->setSource(q1);
     g->setTarget(q3);
 
-    Flow *u = new FlowExp("u", 0.01);
+    Flow *u = m->createFlow<FlowExp>("u");
     u->setSource(q3);
     u->setTarget(q4);
 
-    Flow *v = new FlowExp("v", 0.01);
+    Flow *v = m->createFlow<FlowExp>("v");
     v->setSource(q4);
     v->setTarget(q1);
 
-    Flow *r = new FlowExp("r", 0.01);
+    Flow *r = m->createFlow<FlowExp>("r");
     r->setSource(q2);
     r->setTarget(q5);
 
-    Flow *t = new FlowExp("t", 0.01);
+    Flow *t = m->createFlow<FlowExp>("t");
     t->setSource(q2);
     t->setTarget(q3);
-
-    Model *m = new ModelImpl("complexo");
-    m->add(q1);
-    m->add(q2);
-    m->add(q3);
-    m->add(q4);
-    m->add(q5);
-    m->add(f);
-    m->add(g);
-    m->add(u);
-    m->add(v);
-    m->add(r);
-    m->add(t);
 
     m->simulate(1, 100);
 
@@ -131,18 +105,7 @@ void TestVensim::modelWithLoop() {
     assert(fabs(q4->getValue() - 56.1728) < 0.0001);
     assert(fabs(q5->getValue() - 16.4612) < 0.0001);
 
-    delete (SystemImpl *) q1;
-    delete (SystemImpl *) q2;
-    delete (SystemImpl *) q3;
-    delete (SystemImpl *) q4;
-    delete (SystemImpl *) q5;
-    delete (FlowExp *) f;
-    delete (FlowExp *) g;
-    delete (FlowExp *) u;
-    delete (FlowExp *) v;
-    delete (FlowExp *) r;
-    delete (FlowExp *) t;
-    delete (ModelImpl *) m;
+    Model::deleteModel("complexo");
 
     cout << "OK" << endl;
 }
@@ -150,64 +113,42 @@ void TestVensim::modelWithLoop() {
 void TestVensim::modelCopy() {
     cout << "Teste Construtor de Copia: ";
 
-    System *q1 = new SystemImpl("Q1", 100);
-    System *q2 = new SystemImpl("Q2", 0);
-    System *q3 = new SystemImpl("Q3", 100);
-    System *q4 = new SystemImpl("Q4", 0);
-    System *q5 = new SystemImpl("Q5", 0);
+    Model *m = Model::createModel("complexo");
 
-    Flow *f = new FlowExp("f", 0.01);
+    System *q1 = m->createSystem("Q1", 100);
+    System *q2 = m->createSystem("Q2", 0);
+    System *q3 = m->createSystem("Q3", 100);
+    System *q4 = m->createSystem("Q4", 0);
+    System *q5 = m->createSystem("Q5", 0);
+
+    Flow *f = m->createFlow<FlowExp>("f");
     f->setSource(q1);
     f->setTarget(q2);
 
-    Flow *g = new FlowExp("g", 0.01);
+    Flow *g = m->createFlow<FlowExp>("g");
     g->setSource(q1);
     g->setTarget(q3);
 
-    Flow *u = new FlowExp("u", 0.01);
+    Flow *u = m->createFlow<FlowExp>("u");
     u->setSource(q3);
     u->setTarget(q4);
 
-    Flow *v = new FlowExp("v", 0.01);
+    Flow *v = m->createFlow<FlowExp>("v");
     v->setSource(q4);
     v->setTarget(q1);
 
-    Flow *r = new FlowExp("r", 0.01);
+    Flow *r = m->createFlow<FlowExp>("r");
     r->setSource(q2);
     r->setTarget(q5);
 
-    Flow *t = new FlowExp("t", 0.01);
+    Flow *t = m->createFlow<FlowExp>("t");
     t->setSource(q2);
     t->setTarget(q3);
 
-    Model *m = new ModelImpl("complexo");
-    m->add(q1);
-    m->add(q2);
-    m->add(q3);
-    m->add(q4);
-    m->add(q5);
-    m->add(f);
-    m->add(g);
-    m->add(u);
-    m->add(v);
-    m->add(r);
-    m->add(t);
+    Model *newModel = Model::createModel(m);
+    newModel->setName("copy");
 
-    ModelImpl *cast = dynamic_cast<ModelImpl *>(m);
-    Model *newModel = new ModelImpl((*cast));
-
-    delete (SystemImpl *) q1;
-    delete (SystemImpl *) q2;
-    delete (SystemImpl *) q3;
-    delete (SystemImpl *) q4;
-    delete (SystemImpl *) q5;
-    delete (FlowExp *) f;
-    delete (FlowExp *) g;
-    delete (FlowExp *) u;
-    delete (FlowExp *) v;
-    delete (FlowExp *) r;
-    delete (FlowExp *) t;
-    delete (ModelImpl *) m;
+    Model::deleteModel("complexo");
 
     newModel->simulate(1, 100);
 
@@ -222,6 +163,8 @@ void TestVensim::modelCopy() {
     assert(fabs(nq3->getValue() - 77.1143) < 0.0001);
     assert(fabs(nq4->getValue() - 56.1728) < 0.0001);
     assert(fabs(nq5->getValue() - 16.4612) < 0.0001);
+
+    Model::deleteModel("copy");
 
     cout << "OK" << endl;
 }
@@ -229,65 +172,25 @@ void TestVensim::modelCopy() {
 void TestVensim::modelAtrib() {
     cout << "Teste Atribuição: ";
 
-    System *q1 = new SystemImpl("Q1", 100);
-    System *q2 = new SystemImpl("Q2", 0);
-    System *q3 = new SystemImpl("Q3", 100);
-    System *q4 = new SystemImpl("Q4", 0);
-    System *q5 = new SystemImpl("Q5", 0);
+    Model *model = Model::createModel("complexo");
 
-    Flow *f = new FlowExp("f", 0.01);
-    f->setSource(q1);
-    f->setTarget(q2);
+    System *q1 = model->createSystem("Q1", 100);
+    System *q2 = model->createSystem("Q2", 0);
+    System *q3 = model->createSystem("Q3", 100);
+    System *q4 = model->createSystem("Q4", 0);
+    System *q5 = model->createSystem("Q5", 0);
+    Flow *f = model->createFlow<FlowExp>("f", q1, q2);
+    Flow *g = model->createFlow<FlowExp>("g", q1, q3);
+    Flow *u = model->createFlow<FlowExp>("u", q3, q4);
+    Flow *v = model->createFlow<FlowExp>("v", q4, q1);
+    Flow *r = model->createFlow<FlowExp>("r", q2, q5);
+    Flow *t = model->createFlow<FlowExp>("t", q2, q3);
 
-    Flow *g = new FlowExp("g", 0.01);
-    g->setSource(q1);
-    g->setTarget(q3);
+    Model *newModel = Model::createModel("model");
+    (*newModel) = (*model);
+    newModel->setName("copy");
 
-    Flow *u = new FlowExp("u", 0.01);
-    u->setSource(q3);
-    u->setTarget(q4);
-
-    Flow *v = new FlowExp("v", 0.01);
-    v->setSource(q4);
-    v->setTarget(q1);
-
-    Flow *r = new FlowExp("r", 0.01);
-    r->setSource(q2);
-    r->setTarget(q5);
-
-    Flow *t = new FlowExp("t", 0.01);
-    t->setSource(q2);
-    t->setTarget(q3);
-
-    Model *m = new ModelImpl("complexo");
-    m->add(q1);
-    m->add(q2);
-    m->add(q3);
-    m->add(q4);
-    m->add(q5);
-    m->add(f);
-    m->add(g);
-    m->add(u);
-    m->add(v);
-    m->add(r);
-    m->add(t);
-
-    ModelImpl *cast = dynamic_cast<ModelImpl *>(m);
-    ModelImpl *newModel = new ModelImpl("model");
-    (*newModel) = (*cast);
-
-    delete (SystemImpl *) q1;
-    delete (SystemImpl *) q2;
-    delete (SystemImpl *) q3;
-    delete (SystemImpl *) q4;
-    delete (SystemImpl *) q5;
-    delete (FlowExp *) f;
-    delete (FlowExp *) g;
-    delete (FlowExp *) u;
-    delete (FlowExp *) v;
-    delete (FlowExp *) r;
-    delete (FlowExp *) t;
-    delete (ModelImpl *) m;
+    Model::deleteModel("complexo");
 
     newModel->simulate(1, 100);
 
@@ -302,6 +205,8 @@ void TestVensim::modelAtrib() {
     assert(fabs(nq3->getValue() - 77.1143) < 0.0001);
     assert(fabs(nq4->getValue() - 56.1728) < 0.0001);
     assert(fabs(nq5->getValue() - 16.4612) < 0.0001);
+
+    Model::deleteModel("copy");
 
     cout << "OK" << endl;
 }

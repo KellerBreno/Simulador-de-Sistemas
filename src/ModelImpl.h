@@ -13,11 +13,21 @@ using namespace std;
 class ModelImpl : public Model {
 
 private:
-    vector<Flow *> flows;
-    vector<System *> systems;
-    string name;
+    vector<Flow *> flows_;
+    vector<System *> systems_;
+    string name_;
 
 public:
+
+//    typedef vector<Flow *>::iterator iteratorFlow;
+//    typedef vector<System *>::iterator iteratorSystem;
+
+    static Model *createModel(string name);
+
+    static Model *createModel(Model *model);
+
+    static bool deleteModel(string name);
+
     ModelImpl(const string &name);
 
     ModelImpl(const ModelImpl &rhs);
@@ -28,15 +38,13 @@ public:
 
     void simulate(int initialTime, int endTime, int step) override;
 
-    void add(Flow *f) override;
-
-    void add(System *s) override;
-
     Flow *getFlow(string name) override;
 
     System *getSystem(string name) override;
 
-    bool remove(string name) override;
+    bool deleteFlow(string name) override;
+
+    bool deleteSystem(string name) override;
 
     string getName() const override;
 
@@ -44,11 +52,30 @@ public:
 
     string report() override;
 
-    ModelImpl &operator=(const ModelImpl &rhs);
+    System *createSystem(string name) override;
+
+    System *createSystem(string name, double initValue) override;
+
+    System *createSystem(System *system) override;
 
     bool operator==(const Model &rhs) override;
 
     bool operator!=(const Model &rhs) override;
+
+    Model &operator=(Model &rhs) override;
+
+    Model::flowIterator beginFlows() override;
+
+    Model::flowIterator endFlows() override;
+
+    Model::systemIterator beginSystems() override;
+
+    Model::systemIterator endSystems() override;
+
+protected:
+    void add(Flow *f) override;
+
+    void add(System *s) override;
 };
 
 

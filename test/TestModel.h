@@ -25,16 +25,32 @@ private:
 
     static void unitGetSystem();
 
-    static void unitRemove();
-
     static void unitGetName();
 
     static void unitSetName();
 
     static void unitReport();
 
-    static void unitEqual();
-};
+    static void unitEqualDifferent();
 
+    static void unitDeleteSystem();
+
+    static void unitDeleteFlow();
+
+    static void unitCreateSystem();
+
+    static void unitCreateFlow();
+
+    static void unitCreateModel();
+
+    static void unitCreateModelCopy();
+
+    static void unitDeleteModel();
+
+    static void unitFlowIterator();
+
+    static void unitSystemIterator();
+
+};
 
 #endif //SIMULADOR_TESTMODEL_H
