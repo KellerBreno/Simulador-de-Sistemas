@@ -13,7 +13,7 @@
             NAME(const string &name, System *source, System *target) : FlowImpl(name, source, target) {} \
             NAME(const Flow &rhs) : FlowImpl(rhs) {} \
             virtual ~NAME(){} \
-            double execute() { \
+            double execute() override { \
                 double source, target; \
                 if (this->getSource() == nullptr) { \
                     source = 0; \
@@ -28,7 +28,7 @@
                 return EQUATION; \
             } \
         protected: \
-            Flow *clone() { \
+            Flow *clone() override { \
                 Flow *flow = new NAME(*this); \
                 return flow; \
             } \

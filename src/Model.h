@@ -11,7 +11,7 @@
 #include "Flow.h"
 #include "FlowImpl.h"
 
-class ModelImpl;
+// class ModelImpl;
 
 using namespace std;
 
@@ -26,8 +26,8 @@ public:
     // typedef ModelImpl::flowIterator flowIterator;
     // typedef ModelImpl::systemIterator systemIterator;
 
-    typedef typename vector<Flow *>::iterator flowIterator;
-    typedef typename vector<System *>::iterator systemIterator;
+    typedef vector<Flow *>::iterator flowIterator;
+    typedef vector<System *>::iterator systemIterator;
 
     static Model *createModel(string name);
 

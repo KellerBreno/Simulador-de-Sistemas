@@ -19,8 +19,8 @@ private:
 
 public:
 
-//    typedef vector<Flow *>::iterator iteratorFlow;
-//    typedef vector<System *>::iterator iteratorSystem;
+    // typedef vector<Flow *>::iterator flowIterator;
+    // typedef vector<System *>::iterator systemIterator;
 
     static Model *createModel(string name);
 
