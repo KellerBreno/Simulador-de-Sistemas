@@ -20,6 +20,7 @@ public:
 
     double execute() override;
 
+protected:
     Flow *clone() override;
 };
 

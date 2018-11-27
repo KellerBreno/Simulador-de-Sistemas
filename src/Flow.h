@@ -12,6 +12,8 @@ using namespace std;
 
 class Flow {
 public:
+    friend class Model;
+
     virtual double execute() = 0;
 
     virtual System *getSource() const = 0;
@@ -26,13 +28,15 @@ public:
 
     virtual void setName(string name) = 0;
 
-    virtual Flow *clone() = 0;
-
     virtual bool operator==(const Flow &rhs) = 0;
 
     virtual bool operator!=(const Flow &rhs) = 0;
 
     virtual Flow &operator=(const Flow &rhs) = 0;
+
+protected:
+    virtual Flow *clone() = 0;
+
 };
 
 
