@@ -19,8 +19,7 @@ private:
 
     static void unitSimulate();
 
-    // Métodos protected
-    //static void unitAdd();
+    static void unitAdd();
 
     static void unitGetFlow();
 
@@ -32,8 +31,7 @@ private:
 
     static void unitReport();
 
-    // Dependente da copia de modelos
-    // static void unitEqualDifferent();
+    static void unitEqualDifferent();
 
     static void unitDeleteSystem();
 

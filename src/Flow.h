@@ -14,6 +14,9 @@ class Flow {
 public:
     friend class Model;
 
+    // Testes Fluxos
+    friend class TestFlow;
+
     virtual double execute() = 0;
 
     virtual System *getSource() const = 0;

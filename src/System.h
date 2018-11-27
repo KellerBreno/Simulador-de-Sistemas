@@ -11,6 +11,9 @@ using namespace std;
 
 class System {
 public:
+    // Testes Sistema
+    friend class TestSystem;
+
     virtual double getValue() const = 0;
 
     virtual void setValue(double value) = 0;

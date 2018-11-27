@@ -18,6 +18,8 @@ using namespace std;
 // TODO especificar iteradores sem forçar tipagem de implementação
 class Model {
 public:
+    // Testes Modelo
+    friend class TestModel;
 
     // Problema: O compilador nao consegue saber que existem os tipos flowIterator e systemIterator somente com a
     // declaração imcompleta de  class ModelImpl

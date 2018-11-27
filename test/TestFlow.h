@@ -32,7 +32,7 @@ private:
 
     static void unitEqualDifferent();
 
-//    static void unitClone();
+    static void unitClone();
 };
 
 #endif //SIMULADOR_TESTFLOW_H
