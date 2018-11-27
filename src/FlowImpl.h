@@ -5,6 +5,27 @@
 #ifndef SIMULADOR_FLOWIMPL_H
 #define SIMULADOR_FLOWIMPL_H
 
+// TODO operators para system e execute generico
+#define FLOW(NAME, EQUATION) \
+    class NAME : public FlowImpl { \
+        public: \
+            NAME(const string &name) : FlowImpl(name) {} \
+            NAME(const string &name, System *source, System *target) : FlowImpl(name, source, target) {} \
+            NAME(const Flow &rhs) : FlowImpl(rhs) {} \
+            virtual ~NAME(){} \
+            double execute() { \
+                if (this->getSource() == nullptr) { \
+                    return 0; \
+                } \
+                return EQUATION; \
+            } \
+        protected: \
+            Flow *clone() { \
+                Flow *flow = new NAME(*this); \
+                return flow; \
+            } \
+        };
+
 #include "Flow.h"
 
 using namespace std;

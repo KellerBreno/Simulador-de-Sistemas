@@ -16,8 +16,8 @@ using namespace std;
 class Model {
 public:
 
-    typedef vector<Flow *>::iterator flowIterator;
-    typedef vector<System *>::iterator systemIterator;
+    typedef typename vector<Flow *>::iterator flowIterator;
+    typedef typename vector<System *>::iterator systemIterator;
 
     static Model *createModel(string name);
 

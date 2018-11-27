@@ -278,7 +278,6 @@ Model::flowIterator ModelImpl::endFlows() {
 
 Model::systemIterator ModelImpl::beginSystems() {
     return systems_.begin();
-
 }
 
 Model::systemIterator ModelImpl::endSystems() {
