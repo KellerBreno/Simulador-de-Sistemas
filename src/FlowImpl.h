@@ -5,7 +5,7 @@
 #ifndef SIMULADOR_FLOWIMPL_H
 #define SIMULADOR_FLOWIMPL_H
 
-// TODO operators para system e execute generico
+// TODO operadores aritmeticos para system
 #define FLOW(NAME, EQUATION) \
     class NAME : public FlowImpl { \
         public: \
@@ -14,9 +14,17 @@
             NAME(const Flow &rhs) : FlowImpl(rhs) {} \
             virtual ~NAME(){} \
             double execute() { \
+                double source, target; \
                 if (this->getSource() == nullptr) { \
-                    return 0; \
-                } \
+                    source = 0; \
+                } else {\
+                    source = this->getSource()->getValue();\
+                }\
+                if (this->getTarget() == nullptr) { \
+                    target = 0; \
+                } else {\
+                    target = this->getTarget()->getValue();\
+                }\
                 return EQUATION; \
             } \
         protected: \

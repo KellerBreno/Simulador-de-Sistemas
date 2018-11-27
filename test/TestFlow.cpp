@@ -7,9 +7,12 @@
 #include <cmath>
 #include "TestFlow.h"
 #include "../src/Flow.h"
-#include "../FlowExp.h"
-#include "../FlowLog.h"
 #include "../src/SystemImpl.h"
+#include "../src/FlowImpl.h"
+
+FLOW(FlowExp, 0.01 * source)
+
+FLOW(FlowLog, 0.01 * target * (1 - (target / 70)))
 
 void TestFlow::run() {
     cout << "============= Testes Unitários Flow =============" << endl;

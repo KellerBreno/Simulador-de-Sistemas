@@ -9,12 +9,20 @@
 #include <vector>
 #include "System.h"
 #include "Flow.h"
+#include "FlowImpl.h"
+
+class ModelImpl;
 
 using namespace std;
 
 // TODO especificar iteradores sem forçar tipagem de implementação
 class Model {
 public:
+
+    // Problema: O compilador nao consegue saber que existem os tipos flowIterator e systemIterator somente com a
+    // declaração imcompleta de  class ModelImpl
+    // typedef ModelImpl::flowIterator flowIterator;
+    // typedef ModelImpl::systemIterator systemIterator;
 
     typedef typename vector<Flow *>::iterator flowIterator;
     typedef typename vector<System *>::iterator systemIterator;

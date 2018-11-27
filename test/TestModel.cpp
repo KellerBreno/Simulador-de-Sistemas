@@ -7,8 +7,10 @@
 #include <cmath>
 #include "TestModel.h"
 #include "../src/ModelImpl.h"
-#include "../FlowExp.h"
-#include "../FlowLog.h"
+
+FLOW(FlowExp, 0.01 * source)
+
+FLOW(FlowLog, 0.01 * target * (1 - (target / 70)))
 
 void TestModel::run() {
     cout << "============ Testes Unitários Model =============" << endl;

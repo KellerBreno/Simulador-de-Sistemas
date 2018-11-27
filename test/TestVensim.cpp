@@ -7,8 +7,10 @@
 #include <cmath>
 #include "TestVensim.h"
 #include "../src/Model.h"
-#include "../FlowExp.h"
-#include "../FlowLog.h"
+
+FLOW(FlowExp, 0.01 * source)
+
+FLOW(FlowLog, 0.01 * target * (1 - (target / 70)))
 
 void TestVensim::run() {
     cout << "================= Testes Vensim =================" << endl;
