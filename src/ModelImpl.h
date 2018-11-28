@@ -36,6 +36,12 @@ private:
      */
     string name_;
 
+protected:
+    /*!
+     * Modelos gerenciados pela fábrica
+     */
+    static vector<Model *> models_;
+
 public:
 
     // typedef vector<Flow *>::iterator flowIterator;

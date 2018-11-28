@@ -11,7 +11,9 @@
 #include "ModelImpl.h"
 #include "SystemImpl.h"
 
-static vector<Model *> models_;
+vector<Model *> ModelImpl::models_;
+
+// static vector<Model *> models_;
 
 Model *Model::createModel(string name) {
     return ModelImpl::createModel(name);
