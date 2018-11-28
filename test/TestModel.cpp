@@ -1,16 +1,25 @@
-//
-// Created by brenokeller on 11/8/18.
-//
+/*!
+* \file TestModel.cpp
+* Arquivo contendo a Implementação da Classe de testes de Modelo
+*
+* \author Breno Keller
+* \since 8/11/18
+*/
 
 #include <iostream>
 #include <cassert>
 #include <cmath>
 #include "TestModel.h"
 #include "../src/ModelImpl.h"
-#include "../src/SystemImpl.h"
 
+/*!
+ * \brief Fluxo Exponencial para testes
+ */
 FLOW(FlowExp, 0.01 * source)
 
+/*!
+ * \brief Fluxo Logístico para testes
+ */
 FLOW(FlowLog, 0.01 * target * (1 - (target / 70)))
 
 void TestModel::run() {

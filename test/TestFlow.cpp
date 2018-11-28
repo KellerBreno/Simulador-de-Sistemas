@@ -1,6 +1,10 @@
-//
-// Created by brenokeller on 11/8/18.
-//
+/*!
+* \file TestFlow.cpp
+* Arquivo contendo a Implementação da Classe de testes de Fluxo
+*
+* \author Breno Keller
+* \since 8/11/18
+*/
 
 #include <iostream>
 #include <cassert>
@@ -10,8 +14,14 @@
 #include "../src/SystemImpl.h"
 #include "../src/FlowImpl.h"
 
+/*!
+ * \brief Fluxo Exponencial para testes
+ */
 FLOW(FlowExp, 0.01 * source)
 
+/*!
+ * \brief Fluxo Logístico para testes
+ */
 FLOW(FlowLog, 0.01 * target * (1 - (target / 70)))
 
 void TestFlow::run() {

@@ -15,9 +15,9 @@
 using namespace std;
 
 /*!
- * \class ModelImpl
- * \brief Classe para gerenciamento de modelos
- */
+* \class ModelImpl
+* \brief Classe para gerenciamento de modelos
+*/
 class ModelImpl : public Model {
 
 private:
@@ -73,14 +73,14 @@ public:
     ModelImpl(const string &name);
 
     /*!
-     * \brief Construtor de copia de modelo
+     * \brief Construtor de cópia de modelo
      * \param rhs Modelo a ser copiado
      * \sa ModelImpl(const string&)
      */
     ModelImpl(const ModelImpl &rhs);
 
     /*!
-     * \brief Destrutor de modelos, desaloca os elementos alocados pela fabrica
+     * \brief Destrutor de modelos, desaloca os elementos alocados pela fábrica
      */
     virtual ~ModelImpl();
 
