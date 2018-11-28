@@ -1,6 +1,10 @@
-//
-// Created by brenokeller on 11/8/18.
-//
+/*!
+* \file FlowImpl.cpp
+* Arquivo contendo a Implementação da Classe Abstrata FlowImpl
+*
+* \author Breno Keller
+* \since 08/11/18
+*/
 
 #include "FlowImpl.h"
 
