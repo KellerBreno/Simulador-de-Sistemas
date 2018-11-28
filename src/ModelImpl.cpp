@@ -1,12 +1,15 @@
-//
-// Created by brenokeller on 10/31/18.
-//
+/*!
+* \file ModelImpl.cpp
+* Arquivo contendo a Implementação da Classe ModelImpl
+*
+* \author Breno Keller
+* \since 31/10/18
+*/
 
 #include <iostream>
 #include <sstream>
 #include "ModelImpl.h"
 #include "SystemImpl.h"
-#include "FlowImpl.h"
 
 static vector<Model *> models_;
 

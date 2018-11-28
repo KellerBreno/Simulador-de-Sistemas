@@ -1,6 +1,10 @@
-//
-// Created by brenokeller on 11/6/18.
-//
+/*!
+* \file TestVensim.cpp
+* Arquivo contendo a Implementação da Classe de testes funcionais
+*
+* \author Breno Keller
+* \since 6/11/18
+*/
 
 #include <iostream>
 #include <cassert>
@@ -8,8 +12,14 @@
 #include "TestVensim.h"
 #include "../src/Model.h"
 
+/*!
+ * \brief Fluxo Exponencial para testes
+ */
 FLOW(FlowExp, 0.01 * source)
 
+/*!
+ * \brief Fluxo Logístico para testes
+ */
 FLOW(FlowLog, 0.01 * target * (1 - (target / 70)))
 
 void TestVensim::run() {

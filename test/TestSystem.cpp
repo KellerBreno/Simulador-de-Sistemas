@@ -1,6 +1,10 @@
-//
-// Created by brenokeller on 11/6/18.
-//
+/*!
+* \file TestSystem.cpp
+* Arquivo contendo a Implementação da Classe de testes de sistema
+*
+* \author Breno Keller
+* \since 6/11/18
+*/
 
 #include <iostream>
 #include <cmath>

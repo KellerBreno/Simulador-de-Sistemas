@@ -1,6 +1,10 @@
-//
-// Created by brenokeller on 10/31/18.
-//
+/*!
+* \file SystemImpl.cpp
+* Arquivo contendo a Implementação da Classe System
+*
+* \author Breno Keller
+* \since 31/10/18
+*/
 
 #include "SystemImpl.h"
 
