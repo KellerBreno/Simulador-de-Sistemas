@@ -11,6 +11,7 @@
 #include <cmath>
 #include "TestModel.h"
 #include "../src/ModelImpl.h"
+#include "../src/SystemImpl.h"
 
 /*!
  * \brief Fluxo Exponencial para testes
