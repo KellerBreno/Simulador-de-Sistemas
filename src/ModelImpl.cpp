@@ -9,7 +9,7 @@
 #include <iostream>
 #include <sstream>
 #include "ModelImpl.h"
-#include "SystemImpl.h"
+#include "SystemHandle.h"
 
 vector<Model *> ModelImpl::models_;
 
@@ -82,7 +82,7 @@ ModelImpl::ModelImpl(const ModelImpl &rhs) {
 
 ModelImpl::~ModelImpl() {
     for (auto &system : systems_) {
-        delete (SystemImpl *) system;
+        delete (SystemHandle *) system;
         system = nullptr;
     }
     systems_.clear();
@@ -150,7 +150,7 @@ bool ModelImpl::deleteFlow(string name) {
 
 bool ModelImpl::deleteSystem(string name) {
     for (auto it = systems_.begin(); it != systems_.end(); ++it) {
-        SystemImpl *s = dynamic_cast<SystemImpl *>(*it);
+        SystemHandle *s = dynamic_cast<SystemHandle *>(*it);
         if (s->getName() == name) {
             systems_.erase(it);
             delete s;
@@ -189,13 +189,13 @@ System *ModelImpl::createSystem(string name) {
 }
 
 System *ModelImpl::createSystem(string name, double initValue) {
-    System *system = new SystemImpl(name, initValue);
+    System *system = new SystemHandle(name, initValue);
     add(system);
     return system;
 }
 
 System *ModelImpl::createSystem(System *system) {
-    System *copy = new SystemImpl(system->getName(), system->getValue());
+    System *copy = new SystemHandle(system->getName(), system->getValue());
     add(copy);
     return copy;
 }

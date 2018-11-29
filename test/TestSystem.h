@@ -29,7 +29,7 @@ private:
     /*!
      * \brief Teste para construtor de cópia
      */
-    static void unitCopyConstructor();
+//    static void unitCopyConstructor();
 
     /*!
      * \brief Teste para operador de atribuição

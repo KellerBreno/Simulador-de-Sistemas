@@ -22,4 +22,6 @@ add_executable(Simulador
         src/SystemImpl.h
         src/FlowImpl.cpp
         src/FlowImpl.h
-        src/HandleBody.h)
+        src/HandleBody.h
+        src/SystemHandle.cpp
+        src/SystemHandle.h)

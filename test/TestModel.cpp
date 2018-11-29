@@ -11,7 +11,7 @@
 #include <cmath>
 #include "TestModel.h"
 #include "../src/ModelImpl.h"
-#include "../src/SystemImpl.h"
+#include "../src/SystemHandle.h"
 
 /*!
  * \brief Fluxo Exponencial para testes
@@ -201,7 +201,7 @@ void TestModel::unitAdd() {
 
     Model *model = Model::createModel("model");
 
-    System *s1 = new SystemImpl("s1", 0);
+    System *s1 = new SystemHandle("s1", 0);
     Flow *f1 = new FlowLog("f1");
     Flow *f2 = new FlowExp("f2");
 

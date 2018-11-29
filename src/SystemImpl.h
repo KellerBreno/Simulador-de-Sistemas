@@ -9,7 +9,8 @@
 #ifndef SIMULADOR_SYSTEMIMPL_H
 #define SIMULADOR_SYSTEMIMPL_H
 
-#include "System.h"
+#include "HandleBody.h"
+#include <string>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ using namespace std;
 * \class SystemImpl
 * \brief Classe para gerenciar o comportamento de um sistema
 */
-class SystemImpl : public System {
+class SystemImpl : public Body {
 
 private:
     /*!
@@ -31,6 +32,9 @@ private:
     double value_;
 
 public:
+
+    SystemImpl();
+
     /*!
      * \brief Construtor padrão de sistema
      * \param name Nome do sistema
@@ -44,24 +48,24 @@ public:
      * \param rhs Objeto a ser copiado
      * \sa SystemImpl(const string&, double)
      */
-    SystemImpl(const System &rhs);
+    SystemImpl(const SystemImpl &rhs);
 
     /*!
      * \brief Destrutor padrão
      */
     virtual ~SystemImpl();
 
-    double getValue() const override;
+    double getValue() const;
 
-    void setValue(double value) override;
+    void setValue(double value);
 
-    string getName() const override;
+    string getName() const;
 
-    void setName(string name) override;
+    void setName(string name);
 
-    bool operator==(const System &rhs) override;
+    bool operator==(const SystemImpl &rhs);
 
-    bool operator!=(const System &rhs) override;
+    bool operator!=(const SystemImpl &rhs);
 
     /*!
      * \brief Operador de atribuição para SystemImpl
