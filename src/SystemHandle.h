@@ -12,6 +12,8 @@ class SystemHandle : public System, public Handle<SystemImpl> {
 public:
     SystemHandle(string name, double value);
 
+    virtual ~SystemHandle();
+
     double getValue() const override;
 
     void setValue(double value) override;

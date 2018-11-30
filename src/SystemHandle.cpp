@@ -4,9 +4,13 @@
 
 #include "SystemHandle.h"
 
-SystemHandle::SystemHandle(string name, double value) : Handle() {
+SystemHandle::SystemHandle(string name, double value) : Handle<SystemImpl>() {
     pImpl_->setName(name);
     pImpl_->setValue(value);
+}
+
+SystemHandle::~SystemHandle() {
+
 }
 
 double SystemHandle::getValue() const {

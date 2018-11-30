@@ -145,7 +145,7 @@ void TestModel::unitOperator() {
 
     assert(model->getName() == newModel->getName());
 
-    newModel->setName("model");
+    newModel->setName("newModel");
 
     Model::deleteModel("model");
     Model::deleteModel("newModel");
@@ -352,6 +352,7 @@ void TestModel::unitEqualDifferent() {
 
     (*m2) = (*m1);
     assert((*m2) == (*m1));
+    m2->setName("model2");
 
     Model::deleteModel("model1");
     Model::deleteModel("model2");
@@ -365,6 +366,7 @@ void TestModel::unitEqualDifferent() {
 
     (*m4) = (*m3);
     assert((*m3) == (*m4));
+    m4->setName("model4");
 
     Model::deleteModel("model3");
     Model::deleteModel("model4");

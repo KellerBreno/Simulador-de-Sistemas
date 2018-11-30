@@ -238,6 +238,8 @@ void TestFlow::unitGetSource() {
 
     delete (FlowLog *) log;
     delete (FlowExp *) exp;
+    delete (FlowLog *) anotherLog;
+    delete (FlowExp *) anotherExp;
     delete (SystemHandle *) s1;
     delete (SystemHandle *) s2;
 
