@@ -11,49 +11,11 @@
 #include "ModelImpl.h"
 #include "SystemHandle.h"
 
-vector<Model *> ModelImpl::models_;
-
 // static vector<Model *> models_;
 
-Model *Model::createModel(string name) {
-    return ModelImpl::createModel(name);
+ModelImpl::ModelImpl() {
+
 }
-
-Model *ModelImpl::createModel(string name) {
-    if (name.empty()) {
-        return nullptr;
-    }
-    Model *m = new ModelImpl(name);
-    models_.push_back(m);
-    return m;
-};
-
-Model *Model::createModel(Model *model) {
-    return ModelImpl::createModel(model);
-}
-
-Model *ModelImpl::createModel(Model *model) {
-    ModelImpl *cast = dynamic_cast<ModelImpl *>(model);
-    Model *m = new ModelImpl((*cast));
-    models_.push_back(m);
-    return m;
-}
-
-bool Model::deleteModel(string name) {
-    return ModelImpl::deleteModel(name);
-}
-
-bool ModelImpl::deleteModel(string name) {
-    for (auto it = models_.begin(); it != models_.end(); ++it) {
-        ModelImpl *m = dynamic_cast<ModelImpl *>(*it);
-        if (m->getName() == name) {
-            models_.erase(it);
-            delete m;
-            return true;
-        }
-    }
-    return false;
-};
 
 ModelImpl::ModelImpl(const string &name) : name_(name) {}
 
@@ -201,10 +163,10 @@ System *ModelImpl::createSystem(System *system) {
     return copy;
 }
 
-bool ModelImpl::operator==(const Model &rhs) {
+bool ModelImpl::operator==(const ModelImpl &rhs) {
     bool resp = this->getName() == rhs.getName();
 
-    ModelImpl model = (ModelImpl &) rhs;
+    ModelImpl model = rhs;
 
     bool aux;
     for (System *system:systems_) {
@@ -236,11 +198,11 @@ bool ModelImpl::operator==(const Model &rhs) {
     return resp;
 }
 
-bool ModelImpl::operator!=(const Model &rhs) {
+bool ModelImpl::operator!=(const ModelImpl &rhs) {
     return !(*this == rhs);
 }
 
-Model &ModelImpl::operator=(Model &rhs) {
+ModelImpl &ModelImpl::operator=(ModelImpl &rhs) {
     if (&rhs == this) {
         return *this;
     }

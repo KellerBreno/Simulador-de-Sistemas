@@ -25,6 +25,8 @@ public:
      */
     friend class Model;
 
+    friend class ModelImpl;
+
     /*!
      * Classe amiga para testes de Flow
     */

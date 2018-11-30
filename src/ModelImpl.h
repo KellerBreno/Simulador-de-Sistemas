@@ -10,6 +10,8 @@
 #define SIMULADOR_MODELIMPL_H
 
 #include <vector>
+#include "HandleBody.h"
+#include "Flow.h"
 #include "Model.h"
 
 using namespace std;
@@ -18,7 +20,7 @@ using namespace std;
 * \class ModelImpl
 * \brief Classe para gerenciamento de modelos
 */
-class ModelImpl : public Model {
+class ModelImpl : public Body {
 
 private:
     /*!
@@ -36,40 +38,12 @@ private:
      */
     string name_;
 
-protected:
-    /*!
-     * Modelos gerenciados pela fábrica
-     */
-    static vector<Model *> models_;
-
 public:
 
     // typedef vector<Flow *>::iterator flowIterator;
     // typedef vector<System *>::iterator systemIterator;
 
-    /*!
-     * \brief Método de fábrica para criar modelos informando o nome
-     * \param name Nome do modelo a ser criado
-     * \return Ponteiro para modelo criado
-     * \sa Model::createModel(string)
-     */
-    static Model *createModel(string name);
-
-    /*!
-     * \brief Método de fábrica para criar cópia de modelos
-     * \param model Ponteiro para o modelo a ser copiado
-     * \return Ponteiro para modelo criado
-     * \sa Model::createModel(Model*)
-     */
-    static Model *createModel(Model *model);
-
-    /*!
-     * \brief Método para deletar um modelo
-     * \param name Nome do modelo a ser deletado
-     * \return verdadeiro caso modelo seja deletado, falso caso contrário ou não exista modelo com esse nome
-     * \sa Model::deleteModel(name)
-     */
-    static bool deleteModel(string name);
+    ModelImpl();
 
     /*!
      * \brief Construtor padrão de modelo
@@ -90,48 +64,53 @@ public:
      */
     virtual ~ModelImpl();
 
-    void simulate(int initialTime, int endTime) override;
+    void simulate(int initialTime, int endTime);
 
-    void simulate(int initialTime, int endTime, int step) override;
+    void simulate(int initialTime, int endTime, int step);
 
-    Flow *getFlow(string name) override;
+    Flow *getFlow(string name);
 
-    System *getSystem(string name) override;
+    System *getSystem(string name);
 
-    bool deleteFlow(string name) override;
+    bool deleteFlow(string name);
 
-    bool deleteSystem(string name) override;
+    bool deleteSystem(string name);
 
-    string getName() const override;
+    string getName() const;
 
-    void setName(string name) override;
+    void setName(string name);
 
-    string report() override;
+    string report();
 
-    System *createSystem(string name) override;
+    System *createSystem(string name);
 
-    System *createSystem(string name, double initValue) override;
+    System *createSystem(string name, double initValue);
 
-    System *createSystem(System *system) override;
+    System *createSystem(System *system);
 
-    bool operator==(const Model &rhs) override;
+    Flow *createFlow(Flow *flow) {
+        Flow *copy = flow->clone();
+        add(copy);
+        return copy;
+    }
 
-    bool operator!=(const Model &rhs) override;
+    bool operator==(const ModelImpl &rhs);
 
-    Model &operator=(Model &rhs) override;
+    bool operator!=(const ModelImpl &rhs);
 
-    Model::flowIterator beginFlows() override;
+    ModelImpl &operator=(ModelImpl &rhs);
 
-    Model::flowIterator endFlows() override;
+    Model::flowIterator beginFlows();
 
-    Model::systemIterator beginSystems() override;
+    Model::flowIterator endFlows();
 
-    Model::systemIterator endSystems() override;
+    Model::systemIterator beginSystems();
 
-protected:
-    void add(Flow *f) override;
+    Model::systemIterator endSystems();
 
-    void add(System *s) override;
+    void add(Flow *f);
+
+    void add(System *s);
 };
 
 
