@@ -202,8 +202,8 @@ void TestModel::unitAdd() {
     Model *model = Model::createModel("model");
 
     System *s1 = new SystemHandle("s1", 0);
-    Flow *f1 = new FlowLog("f1");
-    Flow *f2 = new FlowExp("f2");
+    Flow *f1 = new FlowHandle<FlowLog>("f1");
+    Flow *f2 = new FlowHandle<FlowExp>("f2");
 
     model->add(s1);
     model->add(f1);

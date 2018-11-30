@@ -8,12 +8,14 @@
 
 #include "FlowImpl.h"
 
+FlowImpl::FlowImpl() : source_(nullptr), target_(nullptr) {}
+
 FlowImpl::FlowImpl(const string &name) : name_(name), source_(nullptr), target_(nullptr) {}
 
 FlowImpl::FlowImpl(const string &name, System *source, System *target) : name_(name), source_(source),
                                                                          target_(target) {}
 
-FlowImpl::FlowImpl(const Flow &rhs) {
+FlowImpl::FlowImpl(const FlowImpl &rhs) {
     if (&rhs == this) {
         return;
     }
@@ -50,7 +52,7 @@ void FlowImpl::setName(string name) {
     this->name_ = name;
 }
 
-bool FlowImpl::operator==(const Flow &rhs) {
+bool FlowImpl::operator==(const FlowImpl &rhs) {
     bool resp = this->getName() == rhs.getName();
 
     resp = resp && (this->getSource() == rhs.getSource());
@@ -59,11 +61,11 @@ bool FlowImpl::operator==(const Flow &rhs) {
     return resp;
 }
 
-bool FlowImpl::operator!=(const Flow &rhs) {
+bool FlowImpl::operator!=(const FlowImpl &rhs) {
     return !(*this == rhs);
 }
 
-Flow &FlowImpl::operator=(const Flow &rhs) {
+FlowImpl &FlowImpl::operator=(const FlowImpl &rhs) {
     if (&rhs == this) {
         return *this;
     }

@@ -11,7 +11,7 @@
 
 #include <string>
 #include <vector>
-#include "FlowImpl.h"
+#include "FlowHandle.h"
 
 // class ModelImpl;
 
@@ -163,7 +163,7 @@ public:
      */
     template<typename T_FLOW_IMPL>
     Flow *createFlow(string name, System *s1, System *s2) {
-        Flow *flow = new T_FLOW_IMPL(name, s1, s2);
+        Flow *flow = new FlowHandle<T_FLOW_IMPL>(name, s1, s2);
         add(flow);
         return flow;
     };

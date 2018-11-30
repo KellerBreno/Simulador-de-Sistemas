@@ -10,21 +10,36 @@
 
 class SystemHandle : public System, public Handle<SystemImpl> {
 public:
-    SystemHandle(string name, double value);
+    SystemHandle(string name, double value) : Handle<SystemImpl>() {
+        pImpl_->setName(name);
+        pImpl_->setValue(value);
+    }
 
-    virtual ~SystemHandle();
+    virtual ~SystemHandle() {}
 
-    double getValue() const override;
+    double getValue() const override {
+        return pImpl_->getValue();
+    }
 
-    void setValue(double value) override;
+    void setValue(double value) override {
+        pImpl_->setValue(value);
+    }
 
-    string getName() const override;
+    string getName() const override {
+        return pImpl_->getName();
+    }
 
-    void setName(string name) override;
+    void setName(string name) override {
+        pImpl_->setName(name);
+    }
 
-    bool operator==(const System &rhs) override;
+    bool operator==(const System &rhs) {
+        return (this->getValue() == rhs.getValue()) && (this->getName() == rhs.getName());
+    }
 
-    bool operator!=(const System &rhs) override;
+    bool operator!=(const System &rhs) override {
+        return !(operator==(rhs));
+    }
 };
 
 

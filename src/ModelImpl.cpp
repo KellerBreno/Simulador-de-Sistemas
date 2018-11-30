@@ -138,7 +138,8 @@ System *ModelImpl::getSystem(string name) {
 
 bool ModelImpl::deleteFlow(string name) {
     for (auto it = flows_.begin(); it != flows_.end(); ++it) {
-        FlowImpl *f = dynamic_cast<FlowImpl *>(*it);
+        // TODO Slicing
+        Flow *f = dynamic_cast<Flow *>(*it);
         if (f->getName() == name) {
             flows_.erase(it);
             delete f;
