@@ -43,6 +43,8 @@ public:
 
     ModelHandle(string name);
 
+    virtual ~ModelHandle();
+
     void simulate(int initialTime, int endTime) override;
 
     void simulate(int initialTime, int endTime, int step) override;

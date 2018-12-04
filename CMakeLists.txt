@@ -13,6 +13,8 @@ add_executable(Simulador
         test/TestFlow.h
         test/TestModel.cpp
         test/TestModel.h
+        test/TestHandleBody.cpp
+        test/TestHandleBody.h
         src/Model.h
         src/System.h
         src/Flow.h

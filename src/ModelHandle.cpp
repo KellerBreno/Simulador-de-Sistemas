@@ -65,6 +65,10 @@ ModelHandle::ModelHandle(string name) : Handle() {
     pImpl_->setName(name);
 }
 
+ModelHandle::~ModelHandle() {
+
+}
+
 void ModelHandle::simulate(int initialTime, int endTime) {
     pImpl_->simulate(initialTime, endTime);
 }

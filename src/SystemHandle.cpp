@@ -4,7 +4,7 @@
 
 #include "SystemHandle.h"
 
-SystemHandle::SystemHandle(string name, double value) : Handle<SystemBody>() {
+SystemHandle::SystemHandle(string name, double value) : Handle() {
     pImpl_->setName(name);
     pImpl_->setValue(value);
 }

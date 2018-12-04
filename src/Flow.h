@@ -25,7 +25,7 @@ public:
      */
     friend class Model;
 
-    friend class ModelImpl;
+    friend class ModelBody;
 
     /*!
      * Classe amiga para testes de Flow

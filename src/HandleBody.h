@@ -9,6 +9,14 @@
 #if !defined( HANDLE_BODY )
 #define HANDLE_BODY
 
+#define DEBUG
+#ifdef DEBUG
+extern int numHandleCreated;
+extern int numHandleDeleted;
+extern int numBodyCreated;
+extern int numBodyDeleted;
+#endif
+
 /** 
  * \brief
  *
@@ -25,10 +33,18 @@ public:
     Handle<T>() {
         pImpl_ = new T;
         pImpl_->attach();
+#ifdef DEBUG
+        numHandleCreated++;
+#endif
     }
 
     /// Destructor
-    virtual ~Handle<T>() { pImpl_->detach(); }
+    virtual ~Handle<T>() {
+        pImpl_->detach();
+#ifdef DEBUG
+        numHandleDeleted++;
+#endif
+    }
 
     /// copy constructor
     Handle<T>(const Handle &hd) : pImpl_(hd.pImpl_) { pImpl_->attach(); }
@@ -59,7 +75,11 @@ protected:
 class Body {
 public:
     /// Constructor: zero references when the object is being built
-    Body() : refCount_(0) {}
+    Body() : refCount_(0) {
+#ifdef DEBUG
+        numBodyCreated++;
+#endif
+    }
 
 
     /// Increases the number of references to this object
@@ -77,7 +97,11 @@ public:
     int refCount() { return refCount_; }
 
     /// Destructor
-    virtual ~Body() {}
+    virtual ~Body() {
+#ifdef DEBUG
+        numBodyDeleted++;
+#endif
+    }
 
 private:
 
