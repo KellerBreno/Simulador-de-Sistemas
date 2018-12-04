@@ -9,51 +9,13 @@
 #include <iostream>
 #include <sstream>
 #include "ModelImpl.h"
-#include "SystemImpl.h"
-
-vector<Model *> ModelImpl::models_;
+#include "SystemHandle.h"
 
 // static vector<Model *> models_;
 
-Model *Model::createModel(string name) {
-    return ModelImpl::createModel(name);
+ModelImpl::ModelImpl() {
+
 }
-
-Model *ModelImpl::createModel(string name) {
-    if (name.empty()) {
-        return nullptr;
-    }
-    Model *m = new ModelImpl(name);
-    models_.push_back(m);
-    return m;
-};
-
-Model *Model::createModel(Model *model) {
-    return ModelImpl::createModel(model);
-}
-
-Model *ModelImpl::createModel(Model *model) {
-    ModelImpl *cast = dynamic_cast<ModelImpl *>(model);
-    Model *m = new ModelImpl((*cast));
-    models_.push_back(m);
-    return m;
-}
-
-bool Model::deleteModel(string name) {
-    return ModelImpl::deleteModel(name);
-}
-
-bool ModelImpl::deleteModel(string name) {
-    for (auto it = models_.begin(); it != models_.end(); ++it) {
-        ModelImpl *m = dynamic_cast<ModelImpl *>(*it);
-        if (m->getName() == name) {
-            models_.erase(it);
-            delete m;
-            return true;
-        }
-    }
-    return false;
-};
 
 ModelImpl::ModelImpl(const string &name) : name_(name) {}
 
@@ -82,7 +44,7 @@ ModelImpl::ModelImpl(const ModelImpl &rhs) {
 
 ModelImpl::~ModelImpl() {
     for (auto &system : systems_) {
-        delete (SystemImpl *) system;
+        delete (SystemHandle *) system;
         system = nullptr;
     }
     systems_.clear();
@@ -138,7 +100,8 @@ System *ModelImpl::getSystem(string name) {
 
 bool ModelImpl::deleteFlow(string name) {
     for (auto it = flows_.begin(); it != flows_.end(); ++it) {
-        FlowImpl *f = dynamic_cast<FlowImpl *>(*it);
+        // TODO Slicing
+        Flow *f = dynamic_cast<Flow *>(*it);
         if (f->getName() == name) {
             flows_.erase(it);
             delete f;
@@ -150,7 +113,7 @@ bool ModelImpl::deleteFlow(string name) {
 
 bool ModelImpl::deleteSystem(string name) {
     for (auto it = systems_.begin(); it != systems_.end(); ++it) {
-        SystemImpl *s = dynamic_cast<SystemImpl *>(*it);
+        SystemHandle *s = dynamic_cast<SystemHandle *>(*it);
         if (s->getName() == name) {
             systems_.erase(it);
             delete s;
@@ -189,21 +152,21 @@ System *ModelImpl::createSystem(string name) {
 }
 
 System *ModelImpl::createSystem(string name, double initValue) {
-    System *system = new SystemImpl(name, initValue);
+    System *system = new SystemHandle(name, initValue);
     add(system);
     return system;
 }
 
 System *ModelImpl::createSystem(System *system) {
-    System *copy = new SystemImpl(system->getName(), system->getValue());
+    System *copy = new SystemHandle(system->getName(), system->getValue());
     add(copy);
     return copy;
 }
 
-bool ModelImpl::operator==(const Model &rhs) {
+bool ModelImpl::operator==(const ModelImpl &rhs) {
     bool resp = this->getName() == rhs.getName();
 
-    ModelImpl model = (ModelImpl &) rhs;
+    ModelImpl model = rhs;
 
     bool aux;
     for (System *system:systems_) {
@@ -235,11 +198,11 @@ bool ModelImpl::operator==(const Model &rhs) {
     return resp;
 }
 
-bool ModelImpl::operator!=(const Model &rhs) {
+bool ModelImpl::operator!=(const ModelImpl &rhs) {
     return !(*this == rhs);
 }
 
-Model &ModelImpl::operator=(Model &rhs) {
+ModelImpl &ModelImpl::operator=(ModelImpl &rhs) {
     if (&rhs == this) {
         return *this;
     }

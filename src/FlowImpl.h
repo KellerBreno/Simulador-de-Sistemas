@@ -10,6 +10,7 @@
 #define SIMULADOR_FLOWIMPL_H
 
 #include "Flow.h"
+#include "HandleBody.h"
 
 // TODO operadores aritmeticos para system
 /*!
@@ -24,11 +25,12 @@
 #define FLOW(NAME, EQUATION) \
    class NAME : public FlowImpl { \
        public: \
+           NAME() : FlowImpl() {} \
            NAME(const string &name) : FlowImpl(name) {} \
            NAME(const string &name, System *source, System *target) : FlowImpl(name, source, target) {} \
-           NAME(const Flow &rhs) : FlowImpl(rhs) {} \
+           NAME(const FlowImpl &rhs) : FlowImpl(rhs) {} \
            virtual ~NAME(){} \
-           double execute() override { \
+           double execute() override{ \
                double source, target; \
                if (this->getSource() == nullptr) { \
                    source = 0; \
@@ -42,11 +44,6 @@
                }\
                return EQUATION; \
            } \
-       protected: \
-           Flow *clone() override { \
-               Flow *flow = new NAME(*this); \
-               return flow; \
-           } \
        };
 
 using namespace std;
@@ -55,7 +52,7 @@ using namespace std;
 * \class FlowImpl
 * \brief Classe para gerenciar o comportamento de um fluxo
 */
-class FlowImpl : public Flow {
+class FlowImpl : public Body {
 private:
     /*!
      * Ponteiro para o sistema de origem
@@ -73,6 +70,9 @@ private:
     string name_;
 
 public:
+
+    FlowImpl();
+
     /*!
      * \brief Construtor padrão de fluxo
      * \param name Nome do fluxo
@@ -94,30 +94,32 @@ public:
      * \param rhs Objeto a ser copiado
      * \sa FlowImpl(const string&), FlowImpl(const string&, System*, System*)
      */
-    FlowImpl(const Flow &rhs);
+    FlowImpl(const FlowImpl &rhs);
 
     /*!
      * \brief Destrutor padrão
      */
     virtual ~FlowImpl();
 
-    System *getSource() const override;
+    System *getSource() const;
 
-    void setSource(System *source) override;
+    void setSource(System *source);
 
-    System *getTarget() const override;
+    System *getTarget() const;
 
-    void setTarget(System *target) override;
+    void setTarget(System *target);
 
-    string getName() const override;
+    string getName() const;
 
-    void setName(string name) override;
+    void setName(string name);
 
-    bool operator==(const Flow &rhs) override;
+    virtual double execute() = 0;
 
-    bool operator!=(const Flow &rhs) override;
+    bool operator==(const FlowImpl &rhs);
 
-    Flow &operator=(const Flow &rhs) override;
+    bool operator!=(const FlowImpl &rhs);
+
+    FlowImpl &operator=(const FlowImpl &rhs);
 };
 
 

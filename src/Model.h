@@ -11,7 +11,7 @@
 
 #include <string>
 #include <vector>
-#include "FlowImpl.h"
+#include "FlowHandle.h"
 
 // class ModelImpl;
 
@@ -163,7 +163,7 @@ public:
      */
     template<typename T_FLOW_IMPL>
     Flow *createFlow(string name, System *s1, System *s2) {
-        Flow *flow = new T_FLOW_IMPL(name, s1, s2);
+        Flow *flow = new FlowHandle<T_FLOW_IMPL>(name, s1, s2);
         add(flow);
         return flow;
     };
@@ -210,31 +210,31 @@ public:
      * \param rhs Objeto a ser atribuído
      * \return Referência do objeto atribuído, permitindo encadeamento
      */
-    virtual Model &operator=(Model &rhs) = 0;
+//    virtual Model &operator=(Model &rhs) = 0;
 
     /*!
      * \brief Método para acesso o início do iterador de fluxos
      * \return Inicio do iterador de fluxos
      */
-    virtual flowIterator beginFlows() = 0;
+    virtual flowIterator beginFlows() const = 0;
 
     /*!
      * \brief Método para acesso o final do iterador de fluxos
      * \return Final do iterador de fluxos
      */
-    virtual flowIterator endFlows() = 0;
+    virtual flowIterator endFlows() const = 0;
 
     /*!
     * \brief Método para acesso o início do iterador de sistemas
     * \return Inicio do iterador de sistemas
     */
-    virtual systemIterator beginSystems() = 0;
+    virtual systemIterator beginSystems() const = 0;
 
     /*!
     * \brief Método para acesso o final do iterador de sistemas
     * \return Final do iterador de sistemas
     */
-    virtual systemIterator endSystems() = 0;
+    virtual systemIterator endSystems() const = 0;
 
 protected:
     /*!

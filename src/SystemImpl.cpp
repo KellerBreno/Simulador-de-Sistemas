@@ -8,9 +8,11 @@
 
 #include "SystemImpl.h"
 
+SystemImpl::SystemImpl() {}
+
 SystemImpl::SystemImpl(const string &name, double value) : name_(name), value_(value) {}
 
-SystemImpl::SystemImpl(const System &rhs) {
+SystemImpl::SystemImpl(const SystemImpl &rhs) {
     if (&rhs == this) {
         return;
     }
@@ -36,11 +38,11 @@ void SystemImpl::setName(string name) {
     this->name_ = name;
 }
 
-bool SystemImpl::operator==(const System &rhs) {
+bool SystemImpl::operator==(const SystemImpl &rhs) {
     return (this->getValue() == rhs.getValue()) && (this->getName() == rhs.getName());
 }
 
-bool SystemImpl::operator!=(const System &rhs) {
+bool SystemImpl::operator!=(const SystemImpl &rhs) {
     return !(*this == rhs);
 }
 

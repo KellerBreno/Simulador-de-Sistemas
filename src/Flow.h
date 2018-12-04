@@ -25,6 +25,8 @@ public:
      */
     friend class Model;
 
+    friend class ModelImpl;
+
     /*!
      * Classe amiga para testes de Flow
     */
@@ -88,7 +90,7 @@ public:
      * \param rhs Objeto a ser atribuído
      * \return Referência do objeto atribuído, permitindo encadeamento
      */
-    virtual Flow &operator=(const Flow &rhs) = 0;
+//    virtual Flow &operator=(const Flow &rhs) = 0;
 
 protected:
     /*!
