@@ -6,10 +6,10 @@
 #define SIMULADOR_MODELHANDLE_H
 
 #include "Model.h"
-#include "ModelImpl.h"
+#include "ModelBody.h"
 #include "HandleBody.h"
 
-class ModelHandle : public Model, public Handle<ModelImpl> {
+class ModelHandle : public Model, public Handle<ModelBody> {
 protected:
     /*!
      * Modelos gerenciados pela fábrica
@@ -23,14 +23,7 @@ public:
      * \return Ponteiro para modelo criado
      * \sa Model::createModel(string)
      */
-    static Model *createModel(string name) {
-        if (name.empty()) {
-            return nullptr;
-        }
-        Model *m = new ModelHandle(name);
-        models_.push_back(m);
-        return m;
-    }
+    static Model *createModel(string name);
 
     /*!
      * \brief Método de fábrica para criar cópia de modelos
@@ -38,27 +31,7 @@ public:
      * \return Ponteiro para modelo criado
      * \sa Model::createModel(Model*)
      */
-    static Model *createModel(Model *model) {
-        Model *m = new ModelHandle(model->getName());
-
-        for (Model::systemIterator it = model->beginSystems(); it != model->endSystems(); ++it) {
-            m->createSystem((*it)->getName(), (*it)->getValue());
-        }
-
-        for (Model::flowIterator it = model->beginFlows(); it != model->endFlows(); ++it) {
-            Flow *copy = m->createFlow((*it));
-            for (Model::systemIterator itSystem = m->beginSystems(); itSystem != m->endSystems();
-                 ++itSystem) {
-                if ((copy->getSource() != nullptr) && *(copy->getSource()) == *((*itSystem))) {
-                    copy->setSource((*itSystem));
-                } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == *((*itSystem))) {
-                    copy->setTarget((*itSystem));
-                }
-            }
-        }
-        models_.push_back(m);
-        return m;
-    }
+    static Model *createModel(Model *model);
 
     /*!
      * \brief Método para deletar um modelo
@@ -66,190 +39,56 @@ public:
      * \return verdadeiro caso modelo seja deletado, falso caso contrário ou não exista modelo com esse nome
      * \sa Model::deleteModel(name)
      */
-    static bool deleteModel(string name) {
-        for (auto it = models_.begin(); it != models_.end(); ++it) {
-            ModelHandle *m = dynamic_cast<ModelHandle *>(*it);
-            if (m->getName() == name) {
-                models_.erase(it);
-                delete m;
-                return true;
-            }
-        }
-        return false;
-    }
+    static bool deleteModel(string name);
 
-    ModelHandle(string name) : Handle() {
-        pImpl_->setName(name);
-    }
+    ModelHandle(string name);
 
-    void simulate(int initialTime, int endTime) override {
-        pImpl_->simulate(initialTime, endTime);
-    }
+    void simulate(int initialTime, int endTime) override;
 
-    void simulate(int initialTime, int endTime, int step) override {
-        pImpl_->simulate(initialTime, endTime, step);
-    }
+    void simulate(int initialTime, int endTime, int step) override;
 
-    Flow *getFlow(string name) override {
-        return pImpl_->getFlow(name);
-    }
+    Flow *getFlow(string name) override;
 
-    System *getSystem(string name) override {
-        return pImpl_->getSystem(name);
-    }
+    System *getSystem(string name) override;
 
-    bool deleteFlow(string name) override {
-        return pImpl_->deleteFlow(name);
-    }
+    bool deleteFlow(string name) override;
 
-    bool deleteSystem(string name) override {
-        return pImpl_->deleteSystem(name);
-    }
+    bool deleteSystem(string name) override;
 
-    string getName() const override {
-        return pImpl_->getName();
-    }
+    string getName() const override;
 
-    void setName(string name) override {
-        pImpl_->setName(name);
-    }
+    void setName(string name) override;
 
-    string report() override {
-        return pImpl_->report();
-    }
+    string report() override;
 
-    System *createSystem(string name) override {
-        return pImpl_->createSystem(name);
-    }
+    System *createSystem(string name) override;
 
-    System *createSystem(string name, double initValue) override {
-        return pImpl_->createSystem(name, initValue);
-    }
+    System *createSystem(string name, double initValue) override;
 
-    System *createSystem(System *system) override {
-        return pImpl_->createSystem(system);
-    }
+    System *createSystem(System *system) override;
 
-    bool operator==(const Model &rhs) override {
-        bool resp = this->getName() == rhs.getName();
+    bool operator==(const Model &rhs) override;
 
-        bool aux;
-        for (Model::systemIterator it = this->beginSystems(); it != this->endSystems(); ++it) {
-            aux = false;
-            for (Model::systemIterator rhsIt = rhs.beginSystems(); rhsIt != rhs.endSystems(); ++rhsIt) {
-                if (*(*it) == *(*rhsIt)) {
-                    aux = true;
-                    continue;
-                }
-            }
-            if (!aux) {
-                resp = false;
-            }
-        }
+    bool operator!=(const Model &rhs) override;
 
-        for (Model::flowIterator it = this->beginFlows(); it != this->endFlows(); ++it) {
-            aux = false;
-            for (Model::flowIterator rhsIt = rhs.beginFlows(); rhsIt != rhs.endFlows(); ++rhsIt) {
-                if (*(*it) == *(*rhsIt)) {
-                    aux = true;
-                    continue;
-                }
-            }
-            if (!aux) {
-                resp = false;
-            }
-        }
+    Model &operator=(Model &rhs) override;
 
-        return resp;
-    }
+    flowIterator beginFlows() const override;
 
-    bool operator!=(const Model &rhs) override {
-        return !(operator==(rhs));
-    }
+    flowIterator endFlows() const override;
 
-    Model &operator=(Model &rhs) override {
-        for (Model::systemIterator it = this->beginSystems(); it != this->endSystems(); ++it) {
-            // TODO Slicing
-            delete (*it);
-            (*it) = nullptr;
-        }
+    void clearFlows() override;
 
-        for (Model::flowIterator it = this->beginFlows(); it != this->endFlows(); ++it) {
-            // TODO Slicing
-            delete (*it);
-            (*it) = nullptr;
-        }
+    systemIterator beginSystems() const override;
 
-        this->clearFlows();
-        this->clearSystems();
+    systemIterator endSystems() const override;
 
-        for (Model::systemIterator it = rhs.beginSystems(); it != rhs.endSystems(); ++it) {
-            this->createSystem((*it)->getName(), (*it)->getValue());
-        }
-
-        for (Model::flowIterator it = rhs.beginFlows(); it != rhs.endFlows(); ++it) {
-            Flow *copy = this->createFlow((*it));
-            for (Model::systemIterator itSystem = this->beginSystems(); itSystem != this->endSystems();
-                 ++itSystem) {
-                if ((copy->getSource() != nullptr) && *(copy->getSource()) == *((*itSystem))) {
-                    copy->setSource((*itSystem));
-                } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == *((*itSystem))) {
-                    copy->setTarget((*itSystem));
-                }
-            }
-        }
-
-        this->setName(rhs.getName());
-
-        return *this;
-    }
-
-    flowIterator beginFlows() const override {
-        return pImpl_->beginFlows();
-    }
-
-    flowIterator endFlows() const override {
-        return pImpl_->endFlows();
-    }
-
-    void clearFlows() override {
-        pImpl_->clearFlows();
-    }
-
-    systemIterator beginSystems() const override {
-        return pImpl_->beginSystems();
-    }
-
-    systemIterator endSystems() const override {
-        return pImpl_->endSystems();
-    }
-
-    void clearSystems() override {
-        pImpl_->clearSystems();
-    }
+    void clearSystems() override;
 
 protected:
-    void add(Flow *f) override {
-        pImpl_->add(f);
-    }
+    void add(Flow *f) override;
 
-    void add(System *s) override {
-        pImpl_->add(s);
-    }
+    void add(System *s) override;
 };
-
-vector<Model *> ModelHandle::models_;
-
-Model *Model::createModel(string name) {
-    return ModelHandle::createModel(name);
-}
-
-Model *Model::createModel(Model *model) {
-    return ModelHandle::createModel(model);
-}
-
-bool Model::deleteModel(string name) {
-    return ModelHandle::deleteModel(name);
-}
 
 #endif //SIMULADOR_MODELHANDLE_H

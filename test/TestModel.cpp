@@ -82,8 +82,8 @@ void TestModel::unitConstructor() {
 //    Flow *f1 = model->createFlow<FlowLog>("f1");
 //    Flow *f2 = model->createFlow<FlowExp>("f2");
 //
-//    ModelImpl *cast = dynamic_cast<ModelImpl *>(model);
-//    Model *newModel = new ModelImpl((*cast));
+//    ModelBody *cast = dynamic_cast<ModelBody *>(model);
+//    Model *newModel = new ModelBody((*cast));
 //    assert(newModel != model);
 //
 //    System *s3 = newModel->getSystem("s1");
@@ -105,7 +105,7 @@ void TestModel::unitConstructor() {
 //    assert(model->getName() == newModel->getName());
 //
 //    Model::deleteModel("model");
-//    delete (ModelImpl *) newModel;
+//    delete (ModelBody *) newModel;
 //
 //    cout << "OK" << endl;
 //}

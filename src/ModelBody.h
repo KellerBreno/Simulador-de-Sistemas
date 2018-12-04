@@ -20,7 +20,7 @@ using namespace std;
 * \class ModelImpl
 * \brief Classe para gerenciamento de modelos
 */
-class ModelImpl : public Body {
+class ModelBody : public Body {
 
 private:
     /*!
@@ -43,26 +43,26 @@ public:
     // typedef vector<Flow *>::iterator flowIterator;
     // typedef vector<System *>::iterator systemIterator;
 
-    ModelImpl();
+    ModelBody();
 
     /*!
      * \brief Construtor padrão de modelo
      * \param name Nome do modelo
      * \sa ModelImpl(const ModelImpl&)
      */
-    ModelImpl(const string &name);
+    ModelBody(const string &name);
 
     /*!
      * \brief Construtor de cópia de modelo
      * \param rhs Modelo a ser copiado
      * \sa ModelImpl(const string&)
      */
-    ModelImpl(const ModelImpl &rhs);
+    ModelBody(const ModelBody &rhs);
 
     /*!
      * \brief Destrutor de modelos, desaloca os elementos alocados pela fábrica
      */
-    virtual ~ModelImpl();
+    virtual ~ModelBody();
 
     void simulate(int initialTime, int endTime);
 
@@ -94,11 +94,11 @@ public:
         return copy;
     }
 
-    bool operator==(const ModelImpl &rhs);
+    bool operator==(const ModelBody &rhs);
 
-    bool operator!=(const ModelImpl &rhs);
+    bool operator!=(const ModelBody &rhs);
 
-    ModelImpl &operator=(ModelImpl &rhs);
+    ModelBody &operator=(ModelBody &rhs);
 
     Model::flowIterator beginFlows();
 

@@ -8,18 +8,18 @@
 
 #include <iostream>
 #include <sstream>
-#include "ModelImpl.h"
+#include "ModelBody.h"
 #include "SystemHandle.h"
 
 // static vector<Model *> models_;
 
-ModelImpl::ModelImpl() {
+ModelBody::ModelBody() {
 
 }
 
-ModelImpl::ModelImpl(const string &name) : name_(name) {}
+ModelBody::ModelBody(const string &name) : name_(name) {}
 
-ModelImpl::ModelImpl(const ModelImpl &rhs) {
+ModelBody::ModelBody(const ModelBody &rhs) {
     if (&rhs == this) {
         return;
     }
@@ -42,7 +42,7 @@ ModelImpl::ModelImpl(const ModelImpl &rhs) {
     this->setName(rhs.getName());
 }
 
-ModelImpl::~ModelImpl() {
+ModelBody::~ModelBody() {
     for (auto &system : systems_) {
         delete (SystemHandle *) system;
         system = nullptr;
@@ -57,11 +57,11 @@ ModelImpl::~ModelImpl() {
     flows_.clear();
 }
 
-void ModelImpl::simulate(int initialTime, int endTime) {
+void ModelBody::simulate(int initialTime, int endTime) {
     simulate(initialTime, endTime, 1);
 }
 
-void ModelImpl::simulate(int initialTime, int endTime, int step) {
+void ModelBody::simulate(int initialTime, int endTime, int step) {
     double values[flows_.size()];
     for (int time = initialTime; time <= endTime; time += step) {
         for (int i = 0; i < flows_.size(); i++) {
@@ -80,7 +80,7 @@ void ModelImpl::simulate(int initialTime, int endTime, int step) {
     }
 }
 
-Flow *ModelImpl::getFlow(string name) {
+Flow *ModelBody::getFlow(string name) {
     for (auto &flow : flows_) {
         if (flow->getName() == name) {
             return flow;
@@ -89,7 +89,7 @@ Flow *ModelImpl::getFlow(string name) {
     return nullptr;
 }
 
-System *ModelImpl::getSystem(string name) {
+System *ModelBody::getSystem(string name) {
     for (System *&system : systems_) {
         if (system->getName() == name) {
             return system;
@@ -98,7 +98,7 @@ System *ModelImpl::getSystem(string name) {
     return nullptr;
 }
 
-bool ModelImpl::deleteFlow(string name) {
+bool ModelBody::deleteFlow(string name) {
     for (auto it = flows_.begin(); it != flows_.end(); ++it) {
         // TODO Slicing
         Flow *f = dynamic_cast<Flow *>(*it);
@@ -111,7 +111,7 @@ bool ModelImpl::deleteFlow(string name) {
     return false;
 }
 
-bool ModelImpl::deleteSystem(string name) {
+bool ModelBody::deleteSystem(string name) {
     for (auto it = systems_.begin(); it != systems_.end(); ++it) {
         SystemHandle *s = dynamic_cast<SystemHandle *>(*it);
         if (s->getName() == name) {
@@ -123,15 +123,15 @@ bool ModelImpl::deleteSystem(string name) {
     return false;
 }
 
-string ModelImpl::getName() const {
+string ModelBody::getName() const {
     return name_;
 }
 
-void ModelImpl::setName(string name) {
+void ModelBody::setName(string name) {
     this->name_ = name;
 }
 
-string ModelImpl::report() {
+string ModelBody::report() {
     stringstream ss;
     ss << "===========================================================" << endl;
     ss << "Modelo: " << this->getName() << endl;
@@ -147,26 +147,26 @@ string ModelImpl::report() {
     return ss.str();
 }
 
-System *ModelImpl::createSystem(string name) {
+System *ModelBody::createSystem(string name) {
     return this->createSystem(name, 0);
 }
 
-System *ModelImpl::createSystem(string name, double initValue) {
+System *ModelBody::createSystem(string name, double initValue) {
     System *system = new SystemHandle(name, initValue);
     add(system);
     return system;
 }
 
-System *ModelImpl::createSystem(System *system) {
+System *ModelBody::createSystem(System *system) {
     System *copy = new SystemHandle(system->getName(), system->getValue());
     add(copy);
     return copy;
 }
 
-bool ModelImpl::operator==(const ModelImpl &rhs) {
+bool ModelBody::operator==(const ModelBody &rhs) {
     bool resp = this->getName() == rhs.getName();
 
-    ModelImpl model = rhs;
+    ModelBody model = rhs;
 
     bool aux;
     for (System *system:systems_) {
@@ -198,11 +198,11 @@ bool ModelImpl::operator==(const ModelImpl &rhs) {
     return resp;
 }
 
-bool ModelImpl::operator!=(const ModelImpl &rhs) {
+bool ModelBody::operator!=(const ModelBody &rhs) {
     return !(*this == rhs);
 }
 
-ModelImpl &ModelImpl::operator=(ModelImpl &rhs) {
+ModelBody &ModelBody::operator=(ModelBody &rhs) {
     if (&rhs == this) {
         return *this;
     }
@@ -227,34 +227,34 @@ ModelImpl &ModelImpl::operator=(ModelImpl &rhs) {
     return *this;
 }
 
-void ModelImpl::add(Flow *f) {
+void ModelBody::add(Flow *f) {
     flows_.push_back(f);
 }
 
-void ModelImpl::add(System *s) {
+void ModelBody::add(System *s) {
     systems_.push_back(s);
 }
 
-Model::flowIterator ModelImpl::beginFlows() {
+Model::flowIterator ModelBody::beginFlows() {
     return flows_.begin();
 }
 
-Model::flowIterator ModelImpl::endFlows() {
+Model::flowIterator ModelBody::endFlows() {
     return flows_.end();
 }
 
-void ModelImpl::clearFlows() {
+void ModelBody::clearFlows() {
     flows_.clear();
 }
 
-Model::systemIterator ModelImpl::beginSystems() {
+Model::systemIterator ModelBody::beginSystems() {
     return systems_.begin();
 }
 
-Model::systemIterator ModelImpl::endSystems() {
+Model::systemIterator ModelBody::endSystems() {
     return systems_.end();
 }
 
-void ModelImpl::clearSystems() {
+void ModelBody::clearSystems() {
     systems_.clear();
 }

@@ -67,8 +67,8 @@ void TestSystem::unitConstructor() {
 void TestSystem::unitOperator() {
     cout << "operator=: ";
 
-    SystemImpl *system = new SystemImpl("s1", 0);
-    SystemImpl *newSystem = new SystemImpl("s2", 50);
+    SystemBody *system = new SystemBody("s1", 0);
+    SystemBody *newSystem = new SystemBody("s2", 50);
     (*newSystem) = (*system);
 
     assert(system != newSystem);

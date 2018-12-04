@@ -6,13 +6,13 @@
 * \since 31/10/18
 */
 
-#include "SystemImpl.h"
+#include "SystemBody.h"
 
-SystemImpl::SystemImpl() {}
+SystemBody::SystemBody() {}
 
-SystemImpl::SystemImpl(const string &name, double value) : name_(name), value_(value) {}
+SystemBody::SystemBody(const string &name, double value) : name_(name), value_(value) {}
 
-SystemImpl::SystemImpl(const SystemImpl &rhs) {
+SystemBody::SystemBody(const SystemBody &rhs) {
     if (&rhs == this) {
         return;
     }
@@ -20,33 +20,33 @@ SystemImpl::SystemImpl(const SystemImpl &rhs) {
     this->setValue(rhs.getValue());
 }
 
-SystemImpl::~SystemImpl() {}
+SystemBody::~SystemBody() {}
 
-double SystemImpl::getValue() const {
+double SystemBody::getValue() const {
     return value_;
 }
 
-void SystemImpl::setValue(double value) {
+void SystemBody::setValue(double value) {
     this->value_ = value;
 }
 
-string SystemImpl::getName() const {
+string SystemBody::getName() const {
     return name_;
 }
 
-void SystemImpl::setName(string name) {
+void SystemBody::setName(string name) {
     this->name_ = name;
 }
 
-bool SystemImpl::operator==(const SystemImpl &rhs) {
+bool SystemBody::operator==(const SystemBody &rhs) {
     return (this->getValue() == rhs.getValue()) && (this->getName() == rhs.getName());
 }
 
-bool SystemImpl::operator!=(const SystemImpl &rhs) {
+bool SystemBody::operator!=(const SystemBody &rhs) {
     return !(*this == rhs);
 }
 
-SystemImpl &SystemImpl::operator=(const SystemImpl &rhs) {
+SystemBody &SystemBody::operator=(const SystemBody &rhs) {
     if (&rhs == this) {
         return *this;
     }

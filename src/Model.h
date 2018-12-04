@@ -13,7 +13,7 @@
 #include <vector>
 #include "FlowHandle.h"
 
-// class ModelImpl;
+// class ModelBody;
 
 using namespace std;
 
@@ -30,9 +30,9 @@ public:
     friend class TestModel;
 
     // Problema: O compilador não consegue saber que existem os tipos flowIterator e systemIterator somente com a
-    // declaração imcompleta de  class ModelImpl
-    // typedef ModelImpl::flowIterator flowIterator;
-    // typedef ModelImpl::systemIterator systemIterator;
+    // declaração imcompleta de  class ModelBody
+    // typedef ModelBody::flowIterator flowIterator;
+    // typedef ModelBody::systemIterator systemIterator;
 
     /*!
      * Iterador de fluxos

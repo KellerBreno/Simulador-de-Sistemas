@@ -18,7 +18,7 @@ using namespace std;
 * \class SystemImpl
 * \brief Classe para gerenciar o comportamento de um sistema
 */
-class SystemImpl : public Body {
+class SystemBody : public Body {
 
 private:
     /*!
@@ -33,7 +33,7 @@ private:
 
 public:
 
-    SystemImpl();
+    SystemBody();
 
     /*!
      * \brief Construtor padrão de sistema
@@ -41,19 +41,19 @@ public:
      * \param value Valor inicial do sistema
      * \sa SystemImpl(const System&)
      */
-    SystemImpl(const string &name, double value);
+    SystemBody(const string &name, double value);
 
     /*!
      * \brief Construtor de cópia de sistema
      * \param rhs Objeto a ser copiado
      * \sa SystemImpl(const string&, double)
      */
-    SystemImpl(const SystemImpl &rhs);
+    SystemBody(const SystemBody &rhs);
 
     /*!
      * \brief Destrutor padrão
      */
-    virtual ~SystemImpl();
+    virtual ~SystemBody();
 
     double getValue() const;
 
@@ -63,16 +63,16 @@ public:
 
     void setName(string name);
 
-    bool operator==(const SystemImpl &rhs);
+    bool operator==(const SystemBody &rhs);
 
-    bool operator!=(const SystemImpl &rhs);
+    bool operator!=(const SystemBody &rhs);
 
     /*!
      * \brief Operador de atribuição para SystemImpl
      * \param rhs Objeto a ser atribuído
      * \return Referência do objeto atribuído, permitindo encadeamento
      */
-    SystemImpl &operator=(const SystemImpl &rhs);
+    SystemBody &operator=(const SystemBody &rhs);
 };
 
 
