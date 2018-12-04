@@ -27,8 +27,8 @@ void TestVensim::run() {
     TestVensim::modelExp();
     TestVensim::modelLog();
     TestVensim::modelWithLoop();
-//    TestVensim::modelCopy();
-//    TestVensim::modelAtrib();
+    TestVensim::modelCopy();
+    TestVensim::modelAtrib();
     cout << "=================================================" << endl;
 }
 
@@ -120,65 +120,65 @@ void TestVensim::modelWithLoop() {
     cout << "OK" << endl;
 }
 
-//void TestVensim::modelCopy() {
-//    cout << "Teste Construtor de Copia: ";
-//
-//    Model *m = Model::createModel("complexo");
-//
-//    System *q1 = m->createSystem("Q1", 100);
-//    System *q2 = m->createSystem("Q2", 0);
-//    System *q3 = m->createSystem("Q3", 100);
-//    System *q4 = m->createSystem("Q4", 0);
-//    System *q5 = m->createSystem("Q5", 0);
-//
-//    Flow *f = m->createFlow<FlowExp>("f");
-//    f->setSource(q1);
-//    f->setTarget(q2);
-//
-//    Flow *g = m->createFlow<FlowExp>("g");
-//    g->setSource(q1);
-//    g->setTarget(q3);
-//
-//    Flow *u = m->createFlow<FlowExp>("u");
-//    u->setSource(q3);
-//    u->setTarget(q4);
-//
-//    Flow *v = m->createFlow<FlowExp>("v");
-//    v->setSource(q4);
-//    v->setTarget(q1);
-//
-//    Flow *r = m->createFlow<FlowExp>("r");
-//    r->setSource(q2);
-//    r->setTarget(q5);
-//
-//    Flow *t = m->createFlow<FlowExp>("t");
-//    t->setSource(q2);
-//    t->setTarget(q3);
-//
-//    Model *newModel = Model::createModel(m);
-//    newModel->setName("copy");
-//
-//    Model::deleteModel("complexo");
-//
-//    newModel->simulate(1, 100);
-//
-//    System *nq1 = newModel->getSystem("Q1");
-//    System *nq2 = newModel->getSystem("Q2");
-//    System *nq3 = newModel->getSystem("Q3");
-//    System *nq4 = newModel->getSystem("Q4");
-//    System *nq5 = newModel->getSystem("Q5");
-//
-//    assert(fabs(nq1->getValue() - 31.8513) < 0.0001);
-//    assert(fabs(nq2->getValue() - 18.4003) < 0.0001);
-//    assert(fabs(nq3->getValue() - 77.1143) < 0.0001);
-//    assert(fabs(nq4->getValue() - 56.1728) < 0.0001);
-//    assert(fabs(nq5->getValue() - 16.4612) < 0.0001);
-//
-//    Model::deleteModel("copy");
-//
-//    cout << "OK" << endl;
-//}
-//
+void TestVensim::modelCopy() {
+    cout << "Teste Construtor de Copia: ";
+
+    Model *m = Model::createModel("complexo");
+
+    System *q1 = m->createSystem("Q1", 100);
+    System *q2 = m->createSystem("Q2", 0);
+    System *q3 = m->createSystem("Q3", 100);
+    System *q4 = m->createSystem("Q4", 0);
+    System *q5 = m->createSystem("Q5", 0);
+
+    Flow *f = m->createFlow<FlowExp>("f");
+    f->setSource(q1);
+    f->setTarget(q2);
+
+    Flow *g = m->createFlow<FlowExp>("g");
+    g->setSource(q1);
+    g->setTarget(q3);
+
+    Flow *u = m->createFlow<FlowExp>("u");
+    u->setSource(q3);
+    u->setTarget(q4);
+
+    Flow *v = m->createFlow<FlowExp>("v");
+    v->setSource(q4);
+    v->setTarget(q1);
+
+    Flow *r = m->createFlow<FlowExp>("r");
+    r->setSource(q2);
+    r->setTarget(q5);
+
+    Flow *t = m->createFlow<FlowExp>("t");
+    t->setSource(q2);
+    t->setTarget(q3);
+
+    Model *newModel = Model::createModel(m);
+    newModel->setName("copy");
+
+    Model::deleteModel("complexo");
+
+    newModel->simulate(1, 100);
+
+    System *nq1 = newModel->getSystem("Q1");
+    System *nq2 = newModel->getSystem("Q2");
+    System *nq3 = newModel->getSystem("Q3");
+    System *nq4 = newModel->getSystem("Q4");
+    System *nq5 = newModel->getSystem("Q5");
+
+    assert(fabs(nq1->getValue() - 31.8513) < 0.0001);
+    assert(fabs(nq2->getValue() - 18.4003) < 0.0001);
+    assert(fabs(nq3->getValue() - 77.1143) < 0.0001);
+    assert(fabs(nq4->getValue() - 56.1728) < 0.0001);
+    assert(fabs(nq5->getValue() - 16.4612) < 0.0001);
+
+    Model::deleteModel("copy");
+
+    cout << "OK" << endl;
+}
+
 //void TestVensim::modelAtrib() {
 //    cout << "Teste Atribuição: ";
 //

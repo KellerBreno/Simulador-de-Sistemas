@@ -36,11 +36,11 @@ private:
      */
     static void modelWithLoop();
 
-//    /*!
-//     * \brief Teste de modelos copiados
-//     */
-//    static void modelCopy();
-//
+    /*!
+     * \brief Teste de modelos copiados
+     */
+    static void modelCopy();
+
 //    /*!
 //     * \brief Teste de modelos atribuídos
 //     */

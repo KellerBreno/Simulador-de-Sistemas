@@ -30,16 +30,12 @@
            NAME(const string &name, System *source, System *target) : FlowImpl(name, source, target) {} \
            NAME(const FlowImpl &rhs) : FlowImpl(rhs) {} \
            virtual ~NAME(){} \
-           double execute() override{ \
-               double source, target; \
-               if (this->getSource() == nullptr) { \
-                   source = 0; \
-               } else {\
+           double execute() override { \
+               double source = 0, target = 0; \
+               if (this->getSource() != nullptr) { \
                    source = this->getSource()->getValue();\
                }\
-               if (this->getTarget() == nullptr) { \
-                   target = 0; \
-               } else {\
+               if (this->getTarget() != nullptr) { \
                    target = this->getTarget()->getValue();\
                }\
                return EQUATION; \

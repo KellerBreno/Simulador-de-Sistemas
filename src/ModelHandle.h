@@ -47,11 +47,11 @@ public:
 
         for (Model::flowIterator it = model->beginFlows(); it != model->endFlows(); ++it) {
             Flow *copy = m->createFlow((*it));
-            for (Model::systemIterator itSystem = model->beginSystems(); itSystem != model->endSystems();
+            for (Model::systemIterator itSystem = m->beginSystems(); itSystem != m->endSystems();
                  ++itSystem) {
-                if ((copy->getSource() != nullptr) && (copy->getSource()) == ((*itSystem))) {
+                if ((copy->getSource() != nullptr) && *(copy->getSource()) == *((*itSystem))) {
                     copy->setSource((*itSystem));
-                } else if ((copy->getTarget() != nullptr) && (copy->getTarget()) == ((*itSystem))) {
+                } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == *((*itSystem))) {
                     copy->setTarget((*itSystem));
                 }
             }
