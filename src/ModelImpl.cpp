@@ -241,7 +241,10 @@ Model::flowIterator ModelImpl::beginFlows() {
 
 Model::flowIterator ModelImpl::endFlows() {
     return flows_.end();
+}
 
+void ModelImpl::clearFlows() {
+    flows_.clear();
 }
 
 Model::systemIterator ModelImpl::beginSystems() {
@@ -250,4 +253,8 @@ Model::systemIterator ModelImpl::beginSystems() {
 
 Model::systemIterator ModelImpl::endSystems() {
     return systems_.end();
+}
+
+void ModelImpl::clearSystems() {
+    systems_.clear();
 }

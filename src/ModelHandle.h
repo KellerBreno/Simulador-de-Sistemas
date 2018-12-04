@@ -167,6 +167,41 @@ public:
         return !(operator==(rhs));
     }
 
+    Model &operator=(Model &rhs) override {
+        for (Model::systemIterator it = this->beginSystems(); it != this->endSystems(); ++it) {
+            // TODO Slicing
+            delete (*it);
+            (*it) = nullptr;
+        }
+
+        for (Model::flowIterator it = this->beginFlows(); it != this->endFlows(); ++it) {
+            // TODO Slicing
+            delete (*it);
+            (*it) = nullptr;
+        }
+
+        this->clearFlows();
+        this->clearSystems();
+
+        for (Model::systemIterator it = rhs.beginSystems(); it != rhs.endSystems(); ++it) {
+            this->createSystem((*it)->getName(), (*it)->getValue());
+        }
+
+        for (Model::flowIterator it = rhs.beginFlows(); it != rhs.endFlows(); ++it) {
+            Flow *copy = this->createFlow((*it));
+            for (Model::systemIterator itSystem = this->beginSystems(); itSystem != this->endSystems();
+                 ++itSystem) {
+                if ((copy->getSource() != nullptr) && *(copy->getSource()) == *((*itSystem))) {
+                    copy->setSource((*itSystem));
+                } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == *((*itSystem))) {
+                    copy->setTarget((*itSystem));
+                }
+            }
+        }
+
+        return *this;
+    }
+
     flowIterator beginFlows() const override {
         return pImpl_->beginFlows();
     }
@@ -175,12 +210,20 @@ public:
         return pImpl_->endFlows();
     }
 
+    void clearFlows() override {
+        pImpl_->clearFlows();
+    }
+
     systemIterator beginSystems() const override {
         return pImpl_->beginSystems();
     }
 
     systemIterator endSystems() const override {
         return pImpl_->endSystems();
+    }
+
+    void clearSystems() override {
+        pImpl_->clearSystems();
     }
 
 protected:

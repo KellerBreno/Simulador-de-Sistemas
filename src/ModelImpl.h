@@ -104,9 +104,13 @@ public:
 
     Model::flowIterator endFlows();
 
+    void clearFlows();
+
     Model::systemIterator beginSystems();
 
     Model::systemIterator endSystems();
+
+    void clearSystems();
 
     void add(Flow *f);
 

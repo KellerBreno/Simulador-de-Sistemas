@@ -210,7 +210,7 @@ public:
      * \param rhs Objeto a ser atribuído
      * \return Referência do objeto atribuído, permitindo encadeamento
      */
-//    virtual Model &operator=(Model &rhs) = 0;
+    virtual Model &operator=(Model &rhs) = 0;
 
     /*!
      * \brief Método para acesso o início do iterador de fluxos
@@ -224,6 +224,8 @@ public:
      */
     virtual flowIterator endFlows() const = 0;
 
+    virtual void clearFlows() = 0;
+
     /*!
     * \brief Método para acesso o início do iterador de sistemas
     * \return Inicio do iterador de sistemas
@@ -235,6 +237,8 @@ public:
     * \return Final do iterador de sistemas
     */
     virtual systemIterator endSystems() const = 0;
+
+    virtual void clearSystems() = 0;
 
 protected:
     /*!
