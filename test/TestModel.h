@@ -26,15 +26,15 @@ private:
      */
     static void unitConstructor();
 
-    /*!
-     * \brief Teste para construtor de cópia
-     */
+//    /*!
+//     * \brief Teste para construtor de cópia
+//     */
 //    static void unitCopyConstructor();
 
     /*!
      * \brief Teste para operador de atribuição
      */
-//    static void unitOperator();
+    static void unitOperator();
 
     /*!
      * \brief Teste para Model::simulate()
@@ -74,7 +74,7 @@ private:
     /*!
      * \brief Teste para operadores de igualdade (==) e diferença (!=)
      */
-//    static void unitEqualDifferent();
+    static void unitEqualDifferent();
 
     /*!
      * \brief Teste para métodos de fabrica Model::deleteSystem()

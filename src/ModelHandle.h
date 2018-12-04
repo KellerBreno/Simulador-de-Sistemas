@@ -136,8 +136,8 @@ public:
         bool aux;
         for (Model::systemIterator it = this->beginSystems(); it != this->endSystems(); ++it) {
             aux = false;
-            for (Model::systemIterator rhsIt = rhs.beginSystems(); it != rhs.endSystems(); ++it) {
-                if ((*it) == (*rhsIt)) {
+            for (Model::systemIterator rhsIt = rhs.beginSystems(); rhsIt != rhs.endSystems(); ++rhsIt) {
+                if (*(*it) == *(*rhsIt)) {
                     aux = true;
                     continue;
                 }
@@ -149,8 +149,8 @@ public:
 
         for (Model::flowIterator it = this->beginFlows(); it != this->endFlows(); ++it) {
             aux = false;
-            for (Model::flowIterator rhsIt = rhs.beginFlows(); it != rhs.endFlows(); ++it) {
-                if ((*it) == (*rhsIt)) {
+            for (Model::flowIterator rhsIt = rhs.beginFlows(); rhsIt != rhs.endFlows(); ++rhsIt) {
+                if (*(*it) == *(*rhsIt)) {
                     aux = true;
                     continue;
                 }
@@ -198,6 +198,8 @@ public:
                 }
             }
         }
+
+        this->setName(rhs.getName());
 
         return *this;
     }

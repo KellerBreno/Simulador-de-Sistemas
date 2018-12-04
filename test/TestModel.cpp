@@ -29,9 +29,9 @@ void TestModel::run() {
     TestModel::unitCreateModel();
     TestModel::unitCreateModelCopy();
     TestModel::unitDeleteModel();
-//    TestModel::unitEqualDifferent();
+    TestModel::unitEqualDifferent();
 //    TestModel::unitCopyConstructor();
-//    TestModel::unitOperator();
+    TestModel::unitOperator();
     TestModel::unitAdd();
     TestModel::unitCreateSystem();
     TestModel::unitCreateFlow();
@@ -110,48 +110,48 @@ void TestModel::unitConstructor() {
 //    cout << "OK" << endl;
 //}
 
-//void TestModel::unitOperator() {
-//    cout << "operator=: ";
-//
-//    Model *model = Model::createModel("model");
-//    System *s1 = model->createSystem("s1", 0);
-//    System *s2 = model->createSystem("s2", 0);
-//    Flow *f1 = model->createFlow<FlowLog>("f1");
-//    Flow *f2 = model->createFlow<FlowExp>("f2");
-//
-//    Model *newModel = Model::createModel("newModel");
-//    (*newModel) = (*model);
-//    assert(newModel != model);
-//
-//    System *s3 = newModel->getSystem("s1");
-//    assert(s3 != nullptr);
-//    assert((*s3) == (*s1));
-//    assert(s3 != s1);
-//
-//    System *s4 = newModel->getSystem("s2");
-//    assert(s4 != nullptr);
-//    assert((*s4) == (*s2));
-//    assert(s4 != s2);
-//
-//    Flow *f3 = newModel->getFlow("f1");
-//    assert(f3 != nullptr);
-//    assert((*f3) == (*f1));
-//    assert(f3 != f1);
-//
-//    Flow *f4 = newModel->getFlow("f2");
-//    assert(f4 != nullptr);
-//    assert((*f4) == (*f2));
-//    assert(f4 != f2);
-//
-//    assert(model->getName() == newModel->getName());
-//
-//    newModel->setName("newModel");
-//
-//    Model::deleteModel("model");
-//    Model::deleteModel("newModel");
-//
-//    cout << "OK" << endl;
-//}
+void TestModel::unitOperator() {
+    cout << "operator=: ";
+
+    Model *model = Model::createModel("model");
+    System *s1 = model->createSystem("s1", 0);
+    System *s2 = model->createSystem("s2", 0);
+    Flow *f1 = model->createFlow<FlowLog>("f1");
+    Flow *f2 = model->createFlow<FlowExp>("f2");
+
+    Model *newModel = Model::createModel("newModel");
+    (*newModel) = (*model);
+    assert(newModel != model);
+
+    System *s3 = newModel->getSystem("s1");
+    assert(s3 != nullptr);
+    assert((*s3) == (*s1));
+    assert(s3 != s1);
+
+    System *s4 = newModel->getSystem("s2");
+    assert(s4 != nullptr);
+    assert((*s4) == (*s2));
+    assert(s4 != s2);
+
+    Flow *f3 = newModel->getFlow("f1");
+    assert(f3 != nullptr);
+    assert((*f3) == (*f1));
+    assert(f3 != f1);
+
+    Flow *f4 = newModel->getFlow("f2");
+    assert(f4 != nullptr);
+    assert((*f4) == (*f2));
+    assert(f4 != f2);
+
+    assert(model->getName() == newModel->getName());
+
+    newModel->setName("newModel");
+
+    Model::deleteModel("model");
+    Model::deleteModel("newModel");
+
+    cout << "OK" << endl;
+}
 
 void TestModel::unitSimulate() {
     cout << "simulate: ";
@@ -343,36 +343,36 @@ void TestModel::unitReport() {
     cout << "OK" << endl;
 }
 
-//void TestModel::unitEqualDifferent() {
-//    cout << "operator==: ";
-//
-//    Model *m1 = Model::createModel("model1");
-//    Model *m2 = Model::createModel("model2");
-//    assert((*m1) != (*m2));
-//
-//    (*m2) = (*m1);
-//    assert((*m2) == (*m1));
-//    m2->setName("model2");
-//
-//    Model::deleteModel("model1");
-//    Model::deleteModel("model2");
-//
-//    Model *m3 = Model::createModel("model3");
-//    Model *m4 = Model::createModel("model4");
-//
-//    System *s1 = m3->createSystem("s1", 0);
-//    System *s2 = m4->createSystem("s2", 0);
-//    assert((*m3) != (*m4));
-//
-//    (*m4) = (*m3);
-//    assert((*m3) == (*m4));
-//    m4->setName("model4");
-//
-//    Model::deleteModel("model3");
-//    Model::deleteModel("model4");
-//
-//    cout << "OK" << endl;
-//}
+void TestModel::unitEqualDifferent() {
+    cout << "operator==: ";
+
+    Model *m1 = Model::createModel("model1");
+    Model *m2 = Model::createModel("model2");
+    assert((*m1) != (*m2));
+
+    (*m2) = (*m1);
+    assert((*m2) == (*m1));
+    m2->setName("model2");
+
+    Model::deleteModel("model1");
+    Model::deleteModel("model2");
+
+    Model *m3 = Model::createModel("model3");
+    Model *m4 = Model::createModel("model4");
+
+    System *s1 = m3->createSystem("s1", 0);
+    System *s2 = m4->createSystem("s2", 0);
+    assert((*m3) != (*m4));
+
+    (*m4) = (*m3);
+    assert((*m3) == (*m4));
+    m4->setName("model4");
+
+    Model::deleteModel("model3");
+    Model::deleteModel("model4");
+
+    cout << "OK" << endl;
+}
 
 void TestModel::unitDeleteSystem() {
     cout << "deleteSystem: ";
