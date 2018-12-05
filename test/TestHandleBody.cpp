@@ -21,14 +21,6 @@ void TestHandleBody::run() {
 }
 
 void TestHandleBody::test() {
-    {
-        Model *m1 = Model::createModel("a");
-        Model *m2 = Model::createModel("b");
-        (*m1) = (*m2);
-        Model::deleteModel("a");
-        Model::deleteModel("a");
-    }
-
     cout << "\t\tCriados\t|\tDeletados\t|" << endl;
     cout << "Handle: \t" << numHandleCreated << "\t|\t\t" << numHandleDeleted << "\t|" << endl;
     cout << "Body: \t\t" << numBodyCreated << "\t|\t\t" << numBodyDeleted << "\t|" << endl;

@@ -6,7 +6,7 @@
 #define SIMULADOR_FLOWHANDLE_H
 
 #include "Flow.h"
-#include "FlowImpl.h"
+#include "FlowBody.h"
 #include "HandleBody.h"
 
 template<class T_FLOW_IMPL>

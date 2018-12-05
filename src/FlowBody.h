@@ -23,12 +23,12 @@
 * \param EQUATION Equação do fluxo
 */
 #define FLOW(NAME, EQUATION) \
-   class NAME : public FlowImpl { \
+   class NAME : public FlowBody { \
        public: \
-           NAME() : FlowImpl() {} \
-           NAME(const string &name) : FlowImpl(name) {} \
-           NAME(const string &name, System *source, System *target) : FlowImpl(name, source, target) {} \
-           NAME(const FlowImpl &rhs) : FlowImpl(rhs) {} \
+           NAME() : FlowBody() {} \
+           NAME(const string &name) : FlowBody(name) {} \
+           NAME(const string &name, System *source, System *target) : FlowBody(name, source, target) {} \
+           NAME(const FlowBody &rhs) : FlowBody(rhs) {} \
            virtual ~NAME(){} \
            double execute() override { \
                double source = 0, target = 0; \
@@ -48,7 +48,7 @@ using namespace std;
 * \class FlowImpl
 * \brief Classe para gerenciar o comportamento de um fluxo
 */
-class FlowImpl : public Body {
+class FlowBody : public Body {
 private:
     /*!
      * Ponteiro para o sistema de origem
@@ -67,14 +67,14 @@ private:
 
 public:
 
-    FlowImpl();
+    FlowBody();
 
     /*!
      * \brief Construtor padrão de fluxo
      * \param name Nome do fluxo
      * \sa FlowImpl(const string&, System*, System*), FlowImpl(const Flow&)
      */
-    FlowImpl(const string &name);
+    FlowBody(const string &name);
 
     /*!
      * \brief Construtor completo de fluxo
@@ -83,19 +83,19 @@ public:
      * \param target Sistema de Destino
      * \sa FlowImpl(const string&), FlowImpl(const Flow&)
      */
-    FlowImpl(const string &name, System *source, System *target);
+    FlowBody(const string &name, System *source, System *target);
 
     /*!
      * \brief Construtor de cópia de fluxo
      * \param rhs Objeto a ser copiado
      * \sa FlowImpl(const string&), FlowImpl(const string&, System*, System*)
      */
-    FlowImpl(const FlowImpl &rhs);
+    FlowBody(const FlowBody &rhs);
 
     /*!
      * \brief Destrutor padrão
      */
-    virtual ~FlowImpl();
+    virtual ~FlowBody();
 
     System *getSource() const;
 
@@ -111,11 +111,11 @@ public:
 
     virtual double execute() = 0;
 
-    bool operator==(const FlowImpl &rhs);
+    bool operator==(const FlowBody &rhs);
 
-    bool operator!=(const FlowImpl &rhs);
+    bool operator!=(const FlowBody &rhs);
 
-    FlowImpl &operator=(const FlowImpl &rhs);
+    FlowBody &operator=(const FlowBody &rhs);
 };
 
 

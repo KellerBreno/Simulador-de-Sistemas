@@ -11,8 +11,6 @@
 #include "ModelBody.h"
 #include "SystemHandle.h"
 
-// static vector<Model *> models_;
-
 ModelBody::ModelBody() {
 
 }
@@ -51,7 +49,7 @@ ModelBody::~ModelBody() {
 
     for (auto &flow : flows_) {
         // Assumindo que não foram adicionados novos atributos é possivel deleta-la assim
-        delete (FlowImpl *) flow;
+        delete (FlowBody *) flow;
         flow = nullptr;
     }
     flows_.clear();

@@ -6,9 +6,9 @@
 
 int main() {
     TestVensim::run();
-    TestHandleBody::run();
     TestSystem::run();
     TestFlow::run();
     TestModel::run();
+    TestHandleBody::run();
     return 0;
 }
