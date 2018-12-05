@@ -75,17 +75,21 @@ public:
 
     Model &operator=(Model &rhs) override;
 
-    flowIterator beginFlows() const override;
-
-    flowIterator endFlows() const override;
-
     void clearFlows() override;
 
-    systemIterator beginSystems() const override;
-
-    systemIterator endSystems() const override;
-
     void clearSystems() override;
+
+    bool beginSystems() const override;
+
+    bool nextSystem() const override;
+
+    System *getCurrentSystem() const override;
+
+    bool beginFlows() const override;
+
+    bool nextFlow() const override;
+
+    Flow *getCurrentFlow() const override;
 
 protected:
     void add(Flow *f) override;

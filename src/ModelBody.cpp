@@ -205,19 +205,23 @@ ModelBody &ModelBody::operator=(ModelBody &rhs) {
         return *this;
     }
 
-    for (Model::systemIterator it = rhs.beginSystems(); it != rhs.endSystems(); ++it) {
-        this->createSystem((*it));
+    if (rhs.beginSystems()) {
+        do {
+            this->createSystem(rhs.getCurrentSystem());
+        } while (rhs.nextSystem());
     }
 
-    for (Model::flowIterator it = rhs.beginFlows(); it != rhs.endFlows(); ++it) {
-        Flow *copy = this->createFlow((*it));
-        for (System *system : systems_) {
-            if ((copy->getSource() != nullptr) && *(copy->getSource()) == (*system)) {
-                copy->setSource(system);
-            } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == (*system)) {
-                copy->setTarget(system);
+    if (rhs.beginFlows()) {
+        do {
+            Flow *copy = this->createFlow(rhs.getCurrentFlow());
+            for (System *system : systems_) {
+                if ((copy->getSource() != nullptr) && *(copy->getSource()) == (*system)) {
+                    copy->setSource(system);
+                } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == (*system)) {
+                    copy->setTarget(system);
+                }
             }
-        }
+        } while (rhs.nextFlow());
     }
 
     this->setName(rhs.getName());
@@ -233,26 +237,44 @@ void ModelBody::add(System *s) {
     systems_.push_back(s);
 }
 
-Model::flowIterator ModelBody::beginFlows() {
-    return flows_.begin();
-}
-
-Model::flowIterator ModelBody::endFlows() {
-    return flows_.end();
-}
-
 void ModelBody::clearFlows() {
     flows_.clear();
 }
 
-Model::systemIterator ModelBody::beginSystems() {
-    return systems_.begin();
-}
-
-Model::systemIterator ModelBody::endSystems() {
-    return systems_.end();
-}
-
 void ModelBody::clearSystems() {
     systems_.clear();
+}
+
+bool ModelBody::beginSystems() {
+    if (systems_.empty()) {
+        return false;
+    }
+    itSystem = systems_.begin();
+    return true;
+}
+
+bool ModelBody::nextSystem() {
+    ++itSystem;
+    return (itSystem != systems_.end());
+}
+
+System *ModelBody::getCurrentSystem() {
+    return (*itSystem);
+}
+
+bool ModelBody::beginFlows() {
+    if (flows_.empty()) {
+        return false;
+    }
+    itFlow = flows_.begin();
+    return true;
+}
+
+bool ModelBody::nextFlow() {
+    ++itFlow;
+    return (itFlow != flows_.end());
+}
+
+Flow *ModelBody::getCurrentFlow() {
+    return (*itFlow);
 }

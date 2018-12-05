@@ -214,8 +214,10 @@ void TestModel::unitAdd() {
     assert(s2 == s1);
 
     int cont = 0;
-    for (Model::systemIterator it = model->beginSystems(); it != model->endSystems(); ++it) {
-        cont++;
+    if (model->beginSystems()) {
+        do {
+            cont++;
+        } while (model->nextSystem());
     }
     assert(cont == 1);
 
@@ -228,8 +230,10 @@ void TestModel::unitAdd() {
     assert(f4 == f2);
 
     cont = 0;
-    for (Model::flowIterator it = model->beginFlows(); it != model->endFlows(); ++it) {
-        cont++;
+    if (model->beginFlows()) {
+        do {
+            cont++;
+        } while (model->nextFlow());
     }
     assert(cont == 2);
 
@@ -523,16 +527,18 @@ void TestModel::unitFlowIterator() {
     Flow *f2 = m->createFlow<FlowLog>("f2", nullptr, s2);
     Flow *f3 = m->createFlow<FlowLog>("f3", s1, s2);
 
-    Model::flowIterator it = m->beginFlows();
-    assert((*it)->getName() == f1->getName());
-    assert((*it)->getSource() == f1->getSource());
-    assert((*it)->getTarget() == f1->getTarget());
+    m->beginFlows();
+    Flow *fIt = m->getCurrentFlow();
+    assert(fIt->getName() == f1->getName());
+    assert(fIt->getSource() == f1->getSource());
+    assert(fIt->getTarget() == f1->getTarget());
 
     int cont = 0;
-    for (; it != m->endFlows(); ++it) {
-        cont++;
+    if (m->beginFlows()) {
+        do {
+            cont++;
+        } while (m->nextFlow());
     }
-
     assert(cont == 3);
 
     Model::deleteModel("model");
@@ -547,15 +553,17 @@ void TestModel::unitSystemIterator() {
     System *s1 = m->createSystem("s1", 50);
     System *s2 = m->createSystem("s2");
 
-    Model::systemIterator it = m->beginSystems();
-    assert((*it)->getName() == s1->getName());
-    assert((*it)->getValue() == s1->getValue());
+    m->beginSystems();
+    System *sIt = m->getCurrentSystem();
+    assert(sIt->getName() == s1->getName());
+    assert(sIt->getValue() == s1->getValue());
 
     int cont = 0;
-    for (; it != m->endSystems(); ++it) {
-        cont++;
+    if (m->beginSystems()) {
+        do {
+            cont++;
+        } while (m->nextSystem());
     }
-
     assert(cont == 2);
 
     Model::deleteModel("model");

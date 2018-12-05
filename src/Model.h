@@ -29,21 +29,6 @@ public:
      */
     friend class TestModel;
 
-    // Problema: O compilador não consegue saber que existem os tipos flowIterator e systemIterator somente com a
-    // declaração imcompleta de  class ModelBody
-    // typedef ModelBody::flowIterator flowIterator;
-    // typedef ModelBody::systemIterator systemIterator;
-
-    /*!
-     * Iterador de fluxos
-     */
-    typedef vector<Flow *>::iterator flowIterator;
-
-    /*!
-     * Iterador de sistemas
-     */
-    typedef vector<System *>::iterator systemIterator;
-
     /*!
      * \brief Método de fábrica para criar modelos informando o nome
      * \param name Nome do modelo a ser criado
@@ -212,33 +197,21 @@ public:
      */
     virtual Model &operator=(Model &rhs) = 0;
 
-    /*!
-     * \brief Método para acesso o início do iterador de fluxos
-     * \return Inicio do iterador de fluxos
-     */
-    virtual flowIterator beginFlows() const = 0;
-
-    /*!
-     * \brief Método para acesso o final do iterador de fluxos
-     * \return Final do iterador de fluxos
-     */
-    virtual flowIterator endFlows() const = 0;
-
     virtual void clearFlows() = 0;
 
-    /*!
-    * \brief Método para acesso o início do iterador de sistemas
-    * \return Inicio do iterador de sistemas
-    */
-    virtual systemIterator beginSystems() const = 0;
-
-    /*!
-    * \brief Método para acesso o final do iterador de sistemas
-    * \return Final do iterador de sistemas
-    */
-    virtual systemIterator endSystems() const = 0;
-
     virtual void clearSystems() = 0;
+
+    virtual bool beginSystems() const = 0;
+
+    virtual bool nextSystem() const = 0;
+
+    virtual System *getCurrentSystem() const = 0;
+
+    virtual bool beginFlows() const = 0;
+
+    virtual bool nextFlow() const = 0;
+
+    virtual Flow *getCurrentFlow() const = 0;
 
 protected:
     /*!

@@ -38,10 +38,11 @@ private:
      */
     string name_;
 
-public:
+    vector<System *>::iterator itSystem;
 
-    // typedef vector<Flow *>::iterator flowIterator;
-    // typedef vector<System *>::iterator systemIterator;
+    vector<Flow *>::iterator itFlow;
+
+public:
 
     ModelBody();
 
@@ -100,17 +101,21 @@ public:
 
     ModelBody &operator=(ModelBody &rhs);
 
-    Model::flowIterator beginFlows();
-
-    Model::flowIterator endFlows();
-
     void clearFlows();
 
-    Model::systemIterator beginSystems();
-
-    Model::systemIterator endSystems();
-
     void clearSystems();
+
+    bool beginSystems();
+
+    bool nextSystem();
+
+    System *getCurrentSystem();
+
+    bool beginFlows();
+
+    bool nextFlow();
+
+    Flow *getCurrentFlow();
 
     void add(Flow *f);
 

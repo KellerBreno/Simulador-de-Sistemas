@@ -3,6 +3,7 @@
 //
 
 #include "ModelHandle.h"
+#include "SystemHandle.h"
 
 vector<Model *> ModelHandle::models_;
 
@@ -30,20 +31,27 @@ Model *ModelHandle::createModel(string name) {
 Model *ModelHandle::createModel(Model *model) {
     Model *m = new ModelHandle(model->getName());
 
-    for (Model::systemIterator it = model->beginSystems(); it != model->endSystems(); ++it) {
-        m->createSystem((*it)->getName(), (*it)->getValue());
+    if (model->beginSystems()) {
+        do {
+            System *s = model->getCurrentSystem();
+            m->createSystem(s->getName(), s->getValue());
+        } while (model->nextSystem());
     }
 
-    for (Model::flowIterator it = model->beginFlows(); it != model->endFlows(); ++it) {
-        Flow *copy = m->createFlow((*it));
-        for (Model::systemIterator itSystem = m->beginSystems(); itSystem != m->endSystems();
-             ++itSystem) {
-            if ((copy->getSource() != nullptr) && *(copy->getSource()) == *((*itSystem))) {
-                copy->setSource((*itSystem));
-            } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == *((*itSystem))) {
-                copy->setTarget((*itSystem));
+    if (model->beginFlows()) {
+        do {
+            Flow *copy = m->createFlow(model->getCurrentFlow());
+            if (m->beginSystems()) {
+                do {
+                    System *s = m->getCurrentSystem();
+                    if ((copy->getSource() != nullptr) && *(copy->getSource()) == *(s)) {
+                        copy->setSource(s);
+                    } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == *(s)) {
+                        copy->setTarget(s);
+                    }
+                } while (m->nextSystem());
             }
-        }
+        } while (model->nextFlow());
     }
     models_.push_back(m);
     return m;
@@ -121,32 +129,40 @@ bool ModelHandle::operator==(const Model &rhs) {
     bool resp = this->getName() == rhs.getName();
 
     bool aux;
-    for (Model::systemIterator it = this->beginSystems(); it != this->endSystems(); ++it) {
-        aux = false;
-        for (Model::systemIterator rhsIt = rhs.beginSystems(); rhsIt != rhs.endSystems(); ++rhsIt) {
-            if (*(*it) == *(*rhsIt)) {
-                aux = true;
-                continue;
+
+    if (this->beginSystems()) {
+        do {
+            aux = false;
+            if (rhs.beginSystems()) {
+                do {
+                    if (*(this->getCurrentSystem()) == *(rhs.getCurrentSystem())) {
+                        aux = true;
+                        continue;
+                    }
+                } while (rhs.nextSystem());
             }
-        }
-        if (!aux) {
-            resp = false;
-        }
+            if (!aux) {
+                resp = false;
+            }
+        } while (this->nextSystem());
     }
 
-    for (Model::flowIterator it = this->beginFlows(); it != this->endFlows(); ++it) {
-        aux = false;
-        for (Model::flowIterator rhsIt = rhs.beginFlows(); rhsIt != rhs.endFlows(); ++rhsIt) {
-            if (*(*it) == *(*rhsIt)) {
-                aux = true;
-                continue;
+    if (this->beginFlows()) {
+        do {
+            aux = false;
+            if (rhs.beginFlows()) {
+                do {
+                    if (*(this->getCurrentFlow()) == *(rhs.getCurrentFlow())) {
+                        aux = true;
+                        continue;
+                    }
+                } while (rhs.nextFlow());
+                if (!aux) {
+                    resp = false;
+                }
             }
-        }
-        if (!aux) {
-            resp = false;
-        }
+        } while (this->nextFlow());
     }
-
     return resp;
 }
 
@@ -155,35 +171,43 @@ bool ModelHandle::operator!=(const Model &rhs) {
 }
 
 Model &ModelHandle::operator=(Model &rhs) {
-    for (Model::systemIterator it = this->beginSystems(); it != this->endSystems(); ++it) {
-        // TODO Slicing
-        delete (*it);
-        (*it) = nullptr;
+    if (this->beginSystems()) {
+        do {
+            delete (SystemHandle *) this->getCurrentSystem();
+        } while (this->nextSystem());
     }
 
-    for (Model::flowIterator it = this->beginFlows(); it != this->endFlows(); ++it) {
-        // TODO Slicing
-        delete (*it);
-        (*it) = nullptr;
+    if (this->beginFlows()) {
+        do {
+            // TODO Slicing
+            delete (Handle *) this->getCurrentFlow();
+        } while (this->nextFlow());
     }
 
     this->clearFlows();
 
     this->clearSystems();
 
-    for (Model::systemIterator it = rhs.beginSystems(); it != rhs.endSystems(); ++it) {
-        this->createSystem((*it)->getName(), (*it)->getValue());
+    if (rhs.beginSystems()) {
+        do {
+            this->createSystem(rhs.getCurrentSystem());
+        } while (rhs.nextSystem());
     }
 
-    for (Model::flowIterator it = rhs.beginFlows(); it != rhs.endFlows(); ++it) {
-        Flow *copy = this->createFlow((*it));
-        for (Model::systemIterator itSystem = this->beginSystems(); itSystem != this->endSystems(); ++itSystem) {
-            if ((copy->getSource() != nullptr) && *(copy->getSource()) == *((*itSystem))) {
-                copy->setSource((*itSystem));
-            } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == *((*itSystem))) {
-                copy->setTarget((*itSystem));
+    if (rhs.beginFlows()) {
+        do {
+            Flow *copy = this->createFlow(rhs.getCurrentFlow());
+            if (this->beginSystems()) {
+                do {
+                    System *system = this->getCurrentSystem();
+                    if ((copy->getSource() != nullptr) && *(copy->getSource()) == (*system)) {
+                        copy->setSource(system);
+                    } else if ((copy->getTarget() != nullptr) && *(copy->getTarget()) == (*system)) {
+                        copy->setTarget(system);
+                    }
+                } while (this->nextSystem());
             }
-        }
+        } while (rhs.nextFlow());
     }
 
     this->setName(rhs.getName());
@@ -191,24 +215,8 @@ Model &ModelHandle::operator=(Model &rhs) {
     return *this;
 }
 
-Model::flowIterator ModelHandle::beginFlows() const {
-    return pImpl_->beginFlows();
-}
-
-Model::flowIterator ModelHandle::endFlows() const {
-    return pImpl_->endFlows();
-}
-
 void ModelHandle::clearFlows() {
     pImpl_->clearFlows();
-}
-
-Model::systemIterator ModelHandle::beginSystems() const {
-    return pImpl_->beginSystems();
-}
-
-Model::systemIterator ModelHandle::endSystems() const {
-    return pImpl_->endSystems();
 }
 
 void ModelHandle::clearSystems() {
@@ -221,4 +229,28 @@ void ModelHandle::add(Flow *f) {
 
 void ModelHandle::add(System *s) {
     pImpl_->add(s);
+}
+
+bool ModelHandle::beginSystems() const {
+    return pImpl_->beginSystems();
+}
+
+bool ModelHandle::nextSystem() const {
+    return pImpl_->nextSystem();
+}
+
+System *ModelHandle::getCurrentSystem() const {
+    return pImpl_->getCurrentSystem();
+}
+
+bool ModelHandle::beginFlows() const {
+    return pImpl_->beginFlows();
+}
+
+bool ModelHandle::nextFlow() const {
+    return pImpl_->nextFlow();
+}
+
+Flow *ModelHandle::getCurrentFlow() const {
+    return pImpl_->getCurrentFlow();
 }
