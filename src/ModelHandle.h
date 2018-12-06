@@ -11,7 +11,6 @@
 
 #include "Model.h"
 #include "ModelBody.h"
-#include "HandleBody.h"
 
 /*!
  * \class ModelHandle

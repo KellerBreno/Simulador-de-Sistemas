@@ -9,7 +9,7 @@
 #ifndef SIMULADOR_FLOWIMPL_H
 #define SIMULADOR_FLOWIMPL_H
 
-#include "Flow.h"
+#include "System.h"
 #include "HandleBody.h"
 
 /*!

@@ -9,7 +9,6 @@
 #ifndef SIMULADOR_FLOW_H
 #define SIMULADOR_FLOW_H
 
-#include <string>
 #include "System.h"
 
 using namespace std;

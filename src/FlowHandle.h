@@ -11,7 +11,6 @@
 
 #include "Flow.h"
 #include "FlowBody.h"
-#include "HandleBody.h"
 
 /*!
  * \class FlowHandle

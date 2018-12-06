@@ -1,11 +1,13 @@
-//
-// Created by brenokeller on 12/4/18.
-//
+/*!
+* \file TestHandleBody.cpp
+* Arquivo contendo a Implementação da Classe de testes de HandleBody
+*
+* \author Breno Keller
+* \since 04/12/18
+*/
 
-#include "TestHandleBody.h"
-#include "../src/Model.h"
 #include <iostream>
-#include <cassert>
+#include "TestHandleBody.h"
 
 using namespace std;
 

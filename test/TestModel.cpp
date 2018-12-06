@@ -30,7 +30,6 @@ void TestModel::run() {
     TestModel::unitCreateModelCopy();
     TestModel::unitDeleteModel();
     TestModel::unitEqualDifferent();
-//    TestModel::unitCopyConstructor();
     TestModel::unitOperator();
     TestModel::unitAdd();
     TestModel::unitCreateSystem();
@@ -72,43 +71,6 @@ void TestModel::unitConstructor() {
 
     cout << "OK" << endl;
 }
-
-//void TestModel::unitCopyConstructor() {
-//    cout << "Copy Constructor: ";
-//
-//    Model *model = Model::createModel("model");
-//    System *s1 = model->createSystem("s1", 0);
-//    System *s2 = model->createSystem("s2", 0);
-//    Flow *f1 = model->createFlow<FlowLog>("f1");
-//    Flow *f2 = model->createFlow<FlowExp>("f2");
-//
-//    ModelBody *cast = dynamic_cast<ModelBody *>(model);
-//    Model *newModel = new ModelBody((*cast));
-//    assert(newModel != model);
-//
-//    System *s3 = newModel->getSystem("s1");
-//    assert(s3 != nullptr);
-//    assert((*s3) == (*s1));
-//
-//    System *s4 = newModel->getSystem("s2");
-//    assert(s4 != nullptr);
-//    assert((*s4) == (*s2));
-//
-//    Flow *f3 = newModel->getFlow("f1");
-//    assert(f3 != nullptr);
-//    assert((*f3) == (*f1));
-//
-//    Flow *f4 = newModel->getFlow("f2");
-//    assert(f4 != nullptr);
-//    assert((*f4) == (*f2));
-//
-//    assert(model->getName() == newModel->getName());
-//
-//    Model::deleteModel("model");
-//    delete (ModelBody *) newModel;
-//
-//    cout << "OK" << endl;
-//}
 
 void TestModel::unitOperator() {
     cout << "operator=: ";
@@ -467,7 +429,6 @@ void TestModel::unitCreateFlow() {
     cout << "OK" << endl;
 }
 
-//TODO testes para factory acesso ao vector models_
 void TestModel::unitCreateModel() {
     cout << "createModel: ";
 

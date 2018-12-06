@@ -48,8 +48,8 @@ ModelBody::~ModelBody() {
     systems_.clear();
 
     for (auto &flow : flows_) {
-        // Assumindo que não foram adicionados novos atributos é possivel deleta-la assim
-        delete (FlowBody *) flow;
+        // Slicing, não é possivel realizar o cast para delete
+        delete flow;
         flow = nullptr;
     }
     flows_.clear();

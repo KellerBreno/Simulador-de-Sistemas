@@ -27,11 +27,6 @@ private:
     static void unitConstructor();
 
     /*!
-     * \brief Teste para construtor de cópia
-     */
-//    static void unitCopyConstructor();
-
-    /*!
      * \brief Teste para operador de atribuição
      */
     static void unitOperator();

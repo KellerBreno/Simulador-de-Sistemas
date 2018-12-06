@@ -9,11 +9,7 @@
 #ifndef SIMULADOR_MODEL_H
 #define SIMULADOR_MODEL_H
 
-#include <string>
-#include <vector>
 #include "FlowHandle.h"
-
-using namespace std;
 
 /*!
 * \class Model

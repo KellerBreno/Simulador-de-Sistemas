@@ -12,12 +12,11 @@
 #include <vector>
 #include "HandleBody.h"
 #include "Flow.h"
-#include "Model.h"
 
 using namespace std;
 
 /*!
-* \class ModelImpl
+* \class ModelBody
 * \brief Classe para gerenciamento de modelos
 */
 class ModelBody : public Body {

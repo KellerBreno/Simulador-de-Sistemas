@@ -16,7 +16,6 @@ void TestSystem::run() {
     cout << "============ Testes Unitários System ============" << endl;
     TestSystem::unitConstructor();
     TestSystem::unitEqualDifferent();
-//    TestSystem::unitCopyConstructor();
     TestSystem::unitOperator();
     TestSystem::unitGetValue();
     TestSystem::unitSetValue();
@@ -47,22 +46,6 @@ void TestSystem::unitConstructor() {
 
     cout << "OK" << endl;
 }
-
-//void TestSystem::unitCopyConstructor() {
-//    cout << "Copy Constructor: ";
-//
-//    System *system = new SystemHandle("s1", 0);
-//    System *newSystem = new SystemHandle((*system));
-//
-//    assert(newSystem != system);
-//    assert(system->getName() == newSystem->getName());
-//    assert(system->getValue() == newSystem->getValue());
-//
-//    delete (SystemHandle *) system;
-//    delete (SystemHandle *) newSystem;
-//
-//    cout << "OK" << endl;
-//}
 
 void TestSystem::unitOperator() {
     cout << "operator=: ";
