@@ -1,21 +1,21 @@
 /*!
-* \file FlowImpl.cpp
-* Arquivo contendo a Implementação da Classe Abstrata FlowImpl
+* \file FlowBody.cpp
+* Arquivo contendo a Implementação da Classe Abstrata FlowBody
 *
 * \author Breno Keller
 * \since 08/11/18
 */
 
-#include "FlowImpl.h"
+#include "FlowBody.h"
 
-FlowImpl::FlowImpl() : source_(nullptr), target_(nullptr) {}
+FlowBody::FlowBody() : source_(nullptr), target_(nullptr) {}
 
-FlowImpl::FlowImpl(const string &name) : name_(name), source_(nullptr), target_(nullptr) {}
+FlowBody::FlowBody(const string &name) : name_(name), source_(nullptr), target_(nullptr) {}
 
-FlowImpl::FlowImpl(const string &name, System *source, System *target) : name_(name), source_(source),
+FlowBody::FlowBody(const string &name, System *source, System *target) : name_(name), source_(source),
                                                                          target_(target) {}
 
-FlowImpl::FlowImpl(const FlowImpl &rhs) {
+FlowBody::FlowBody(const FlowBody &rhs) {
     if (&rhs == this) {
         return;
     }
@@ -24,35 +24,35 @@ FlowImpl::FlowImpl(const FlowImpl &rhs) {
     this->setName(rhs.getName());
 }
 
-FlowImpl::~FlowImpl() {
+FlowBody::~FlowBody() {
 
 }
 
-System *FlowImpl::getSource() const {
+System *FlowBody::getSource() const {
     return source_;
 }
 
-void FlowImpl::setSource(System *source) {
+void FlowBody::setSource(System *source) {
     this->source_ = source;
 }
 
-System *FlowImpl::getTarget() const {
+System *FlowBody::getTarget() const {
     return target_;
 }
 
-void FlowImpl::setTarget(System *target) {
+void FlowBody::setTarget(System *target) {
     this->target_ = target;
 }
 
-string FlowImpl::getName() const {
+string FlowBody::getName() const {
     return name_;
 }
 
-void FlowImpl::setName(string name) {
+void FlowBody::setName(string name) {
     this->name_ = name;
 }
 
-bool FlowImpl::operator==(const FlowImpl &rhs) {
+bool FlowBody::operator==(const FlowBody &rhs) {
     bool resp = this->getName() == rhs.getName();
 
     resp = resp && (this->getSource() == rhs.getSource());
@@ -61,11 +61,11 @@ bool FlowImpl::operator==(const FlowImpl &rhs) {
     return resp;
 }
 
-bool FlowImpl::operator!=(const FlowImpl &rhs) {
+bool FlowBody::operator!=(const FlowBody &rhs) {
     return !(*this == rhs);
 }
 
-FlowImpl &FlowImpl::operator=(const FlowImpl &rhs) {
+FlowBody &FlowBody::operator=(const FlowBody &rhs) {
     if (&rhs == this) {
         return *this;
     }

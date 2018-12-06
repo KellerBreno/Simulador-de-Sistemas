@@ -1,45 +1,46 @@
-//
-// Created by brenokeller on 11/29/18.
-//
+/*!
+* \file SystemHandle.h
+* Arquivo contendo a Declaração da Classe SystemHandle
+*
+* \author Breno Keller
+* \since 29/11/18
+*/
 
 #ifndef SIMULADOR_SYSTEMHANDLE_H
 #define SIMULADOR_SYSTEMHANDLE_H
 
 #include "System.h"
-#include "SystemImpl.h"
+#include "SystemBody.h"
 
-class SystemHandle : public System, public Handle<SystemImpl> {
+/*!
+ * \class SystemHandle
+ * \brief Handle para Sistemas
+ */
+class SystemHandle : public System, public Handle<SystemBody> {
 public:
-    SystemHandle(string name, double value) : Handle<SystemImpl>() {
-        pImpl_->setName(name);
-        pImpl_->setValue(value);
-    }
+    /*!
+     * \brief Construtor base de SystemHandle
+     * \param name Nome do sistema
+     * \param value Valor inicial do sistema
+     */
+    SystemHandle(string name, double value);
 
-    virtual ~SystemHandle() {}
+    /*!
+     * \brief Destrutor padrão
+     */
+    virtual ~SystemHandle();
 
-    double getValue() const override {
-        return pImpl_->getValue();
-    }
+    double getValue() const override;
 
-    void setValue(double value) override {
-        pImpl_->setValue(value);
-    }
+    void setValue(double value) override;
 
-    string getName() const override {
-        return pImpl_->getName();
-    }
+    string getName() const override;
 
-    void setName(string name) override {
-        pImpl_->setName(name);
-    }
+    void setName(string name) override;
 
-    bool operator==(const System &rhs) {
-        return (this->getValue() == rhs.getValue()) && (this->getName() == rhs.getName());
-    }
+    bool operator==(const System &rhs) override;
 
-    bool operator!=(const System &rhs) override {
-        return !(operator==(rhs));
-    }
+    bool operator!=(const System &rhs) override;
 };
 
 

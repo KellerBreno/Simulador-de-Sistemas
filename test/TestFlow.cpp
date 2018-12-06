@@ -10,7 +10,6 @@
 #include <cassert>
 #include <cmath>
 #include "TestFlow.h"
-#include "../src/Flow.h"
 #include "../src/FlowHandle.h"
 #include "../src/SystemHandle.h"
 
@@ -28,7 +27,6 @@ void TestFlow::run() {
     cout << "============= Testes Unitários Flow =============" << endl;
     TestFlow::unitConstructor();
     TestFlow::unitEqualDifferent();
-//    TestFlow::unitCopyConstructor();
     TestFlow::unitClone();
     TestFlow::unitOperator();
     TestFlow::unitGetName();
@@ -101,42 +99,6 @@ void TestFlow::unitConstructor() {
     cout << "OK" << endl;
 }
 
-//void TestFlow::unitCopyConstructor() {
-//    cout << "Copy Constructor: ";
-//
-//    System *s1 = new SystemHandle("s1", 0);
-//    System *s2 = new SystemHandle("s2", 0);
-//
-//    Flow *log = new FlowHandle<FlowLog>("log");
-//    log->setSource(s1);
-//    log->setTarget(s2);
-//    Flow *newLog = new FlowHandle<FlowLog>((*log));
-//
-//    assert(newLog != log);
-//    assert(log->getName() == newLog->getName());
-//    assert(log->getSource() == newLog->getSource());
-//    assert(log->getTarget() == newLog->getTarget());
-//
-//    Flow *exp = new FlowHandle<FlowExp>("exp");
-//    exp->setSource(s1);
-//    exp->setTarget(s2);
-//    Flow *newExp = new FlowHandle<FlowExp>((*exp));
-//
-//    assert(newExp != exp);
-//    assert(exp->getName() == newExp->getName());
-//    assert(exp->getSource() == newExp->getSource());
-//    assert(exp->getTarget() == newExp->getTarget());
-//
-//    delete (SystemHandle *) s1;
-//    delete (SystemHandle *) s2;
-//    delete (FlowHandle<FlowLog> *) log;
-//    delete (FlowHandle<FlowLog> *) newLog;
-//    delete (FlowHandle<FlowExp> *) exp;
-//    delete (FlowHandle<FlowExp> *) newExp;
-//
-//    cout << "OK" << endl;
-//}
-
 void TestFlow::unitOperator() {
     cout << "operator=: ";
 
@@ -167,10 +129,10 @@ void TestFlow::unitOperator() {
 
     delete (SystemHandle *) s1;
     delete (SystemHandle *) s2;
-    delete (FlowHandle<FlowLog> *) log;
-    delete (FlowHandle<FlowLog> *) newLog;
-    delete (FlowHandle<FlowExp> *) exp;
-    delete (FlowHandle<FlowExp> *) newExp;
+    delete log;
+    delete newLog;
+    delete exp;
+    delete newExp;
 
     cout << "OK" << endl;
 }

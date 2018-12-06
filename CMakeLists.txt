@@ -13,16 +13,20 @@ add_executable(Simulador
         test/TestFlow.h
         test/TestModel.cpp
         test/TestModel.h
+        test/TestHandleBody.cpp
+        test/TestHandleBody.h
         src/Model.h
         src/System.h
         src/Flow.h
-        src/ModelImpl.cpp
-        src/ModelImpl.h
-        src/SystemImpl.cpp
-        src/SystemImpl.h
-        src/FlowImpl.cpp
-        src/FlowImpl.h
+        src/ModelBody.cpp
+        src/ModelBody.h
+        src/SystemBody.cpp
+        src/SystemBody.h
+        src/FlowBody.cpp
+        src/FlowBody.h
         src/HandleBody.h
+        src/SystemHandle.cpp
         src/SystemHandle.h
         src/FlowHandle.h
+        src/ModelHandle.cpp
         src/ModelHandle.h)

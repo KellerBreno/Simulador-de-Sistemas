@@ -1,27 +1,48 @@
-//
-// Created by brenokeller on 11/30/18.
-//
+/*!
+* \file FlowHandle.h
+* Arquivo contendo a Declaração e Implementação da Classe FlowHandle
+*
+* \author Breno Keller
+* \since 30/11/18
+*/
 
 #ifndef SIMULADOR_FLOWHANDLE_H
 #define SIMULADOR_FLOWHANDLE_H
 
 #include "Flow.h"
-#include "FlowImpl.h"
-#include "HandleBody.h"
+#include "FlowBody.h"
 
+/*!
+ * \class FlowHandle
+ * \brief Classe Handle para fluxos
+ * \tparam T_FLOW_IMPL Classe derivada FlowBody
+ */
 template<class T_FLOW_IMPL>
 class FlowHandle : public Flow, public Handle<T_FLOW_IMPL> {
 public:
+    /*!
+     * \brief Construtor basico
+     * \param name Nome do Fluxo
+     */
     FlowHandle(const string &name) : Handle<T_FLOW_IMPL>() {
         this->pImpl_->setName(name);
     }
 
+    /*!
+     * \brief Construtor completo
+     * \param name Nome do fluxo
+     * \param source Sistema origem
+     * \param target Sistema destino
+     */
     FlowHandle(const string &name, System *source, System *target) : Handle<T_FLOW_IMPL>() {
         this->pImpl_->setName(name);
         this->pImpl_->setSource(source);
         this->pImpl_->setTarget(target);
     }
 
+    /*!
+     * \brief Destrutor padrão
+     */
     virtual ~FlowHandle() {
 
     }

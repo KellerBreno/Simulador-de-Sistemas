@@ -32,6 +32,7 @@ public:
 
     /*!
      * \brief Método para alterar o valor do sistema
+     * \param value Novo valor no sistema
      */
     virtual void setValue(double value) = 0;
 
@@ -43,6 +44,7 @@ public:
 
     /*!
      * \brief Método para alterar o nome do sistema
+     * \param name Novo nome do sistema
      */
     virtual void setName(string name) = 0;
 
