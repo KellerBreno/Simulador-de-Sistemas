@@ -1,6 +1,10 @@
-//
-// Created by brenokeller on 12/4/18.
-//
+/*!
+* \file SystemHandle.cpp
+* Arquivo contendo a Implementação da Classe SystemHandle
+*
+* \author Breno Keller
+* \since 04/12/18
+*/
 
 #include "SystemHandle.h"
 

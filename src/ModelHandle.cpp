@@ -1,6 +1,10 @@
-//
-// Created by brenokeller on 12/4/18.
-//
+/*!
+* \file ModelHandle.h
+* Arquivo contendo a Implementação da Classe ModelHandle
+*
+* \author Breno Keller
+* \since 04/12/18
+*/
 
 #include "ModelHandle.h"
 #include "SystemHandle.h"

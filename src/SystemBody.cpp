@@ -1,6 +1,6 @@
 /*!
-* \file SystemImpl.cpp
-* Arquivo contendo a Implementação da Classe System
+* \file SystemBody.cpp
+* Arquivo contendo a Implementação da Classe SystemBody
 *
 * \author Breno Keller
 * \since 31/10/18

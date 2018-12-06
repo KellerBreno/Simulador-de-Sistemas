@@ -1,6 +1,6 @@
 /*!
-* \file ModelImpl.cpp
-* Arquivo contendo a Implementação da Classe ModelImpl
+* \file ModelBody.cpp
+* Arquivo contendo a Implementação da Classe ModelBody
 *
 * \author Breno Keller
 * \since 31/10/18

@@ -1,6 +1,10 @@
-//
-// Created by brenokeller on 11/30/18.
-//
+/*!
+* \file ModelHandle.h
+* Arquivo contendo a Declaração da Classe ModelHandle
+*
+* \author Breno Keller
+* \since 31/10/18
+*/
 
 #ifndef SIMULADOR_MODELHANDLE_H
 #define SIMULADOR_MODELHANDLE_H
@@ -9,10 +13,14 @@
 #include "ModelBody.h"
 #include "HandleBody.h"
 
+/*!
+ * \class ModelHandle
+ * \brief Classe Handle para modelos
+ */
 class ModelHandle : public Model, public Handle<ModelBody> {
 protected:
     /*!
-     * Modelos gerenciados pela fábrica
+     * \brief Modelos gerenciados pela fábrica
      */
     static vector<Model *> models_;
 
@@ -41,8 +49,15 @@ public:
      */
     static bool deleteModel(string name);
 
+    /*!
+     * \brief Construtor padrão
+     * \param name Nome do modelo
+     */
     ModelHandle(string name);
 
+    /*!
+     * \brief Destrutor padrão
+     */
     virtual ~ModelHandle();
 
     void simulate(int initialTime, int endTime) override;

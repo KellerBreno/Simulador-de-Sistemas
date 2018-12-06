@@ -13,11 +13,8 @@
 #include <vector>
 #include "FlowHandle.h"
 
-// class ModelBody;
-
 using namespace std;
 
-// TODO especificar iteradores sem forçar tipagem de implementação
 /*!
 * \class Model
 * \brief Interface para gerenciamento de modelos
@@ -189,7 +186,6 @@ public:
      */
     virtual bool operator!=(const Model &rhs) = 0;
 
-    // TODO implementação para const
     /*!
      * \brief Operador de atribuição para Modelo
      * \param rhs Objeto a ser atribuído
@@ -197,20 +193,50 @@ public:
      */
     virtual Model &operator=(Model &rhs) = 0;
 
+    /*!
+     * \brief Metodo para limpar os fluxos
+     */
     virtual void clearFlows() = 0;
 
+    /*!
+     * \brief Metodo para limpar os sistemas
+     */
     virtual void clearSystems() = 0;
 
+    /*!
+     * \brief Metodo para posicionar o iterador de Sistemas no inicio
+     * \return Verdadeiro caso consiga posicionar o iterador no primeiro elemento
+     */
     virtual bool beginSystems() const = 0;
 
+    /*!
+     * \brief Metodo para navega no iterador de sistemas em sentido crescente
+     * \return Verdadeiro caso consiga passar pra o proximo elemento
+     */
     virtual bool nextSystem() const = 0;
 
+    /*!
+     * \brief Metodo para acessar o elemento corrente do iterador
+     * \return Sistema correspondente a posição do iterador
+     */
     virtual System *getCurrentSystem() const = 0;
 
+    /*!
+     * \brief Metodo para posicionar o iterador de Fluxos no inicio
+     * \return Verdadeiro caso consiga posicionar o iterador no primeiro elemento
+     */
     virtual bool beginFlows() const = 0;
 
+    /*!
+     * \brief Metodo para navega no iterador de fluxos em sentido crescente
+     * \return Verdadeiro caso consiga passar pra o proximo elemento
+     */
     virtual bool nextFlow() const = 0;
 
+    /*!
+     * \brief Metodo para acessar o elemento corrente do iterador
+     * \return Fluxo correspondente a posição do iterador
+     */
     virtual Flow *getCurrentFlow() const = 0;
 
 protected:

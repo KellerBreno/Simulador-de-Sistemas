@@ -1,6 +1,6 @@
 /*!
-* \file FlowImpl.cpp
-* Arquivo contendo a Implementação da Classe Abstrata FlowImpl
+* \file FlowBody.cpp
+* Arquivo contendo a Implementação da Classe Abstrata FlowBody
 *
 * \author Breno Keller
 * \since 08/11/18

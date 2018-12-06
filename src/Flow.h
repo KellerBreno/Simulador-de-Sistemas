@@ -25,6 +25,9 @@ public:
      */
     friend class Model;
 
+    /*!
+     * Acesso como amiga para operações de cópia em ModelBody
+     */
     friend class ModelBody;
 
     /*!
@@ -46,6 +49,7 @@ public:
 
     /*!
      * \brief Método para alterar o sistema de origem
+     * \param source Novo sistema de origem
      */
     virtual void setSource(System *source) = 0;
 
@@ -57,6 +61,7 @@ public:
 
     /*!
      * \brief Método para alterar o sistema de destino
+     * \param target Novo sistema destino
      */
     virtual void setTarget(System *target) = 0;
 
@@ -68,6 +73,7 @@ public:
 
     /*!
      * \brief Método para acessar o nome do fluxo
+     * \param name Novo nome do fluxo
      */
     virtual void setName(string name) = 0;
 
@@ -84,13 +90,6 @@ public:
      * \return true se diferentes e false caso contrário
      */
     virtual bool operator!=(const Flow &rhs) = 0;
-
-    /*!
-     * \brief Operador de atribuição para Flow
-     * \param rhs Objeto a ser atribuído
-     * \return Referência do objeto atribuído, permitindo encadeamento
-     */
-//    virtual Flow &operator=(const Flow &rhs) = 0;
 
 protected:
     /*!
